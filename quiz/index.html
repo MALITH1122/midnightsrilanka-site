@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Midnight Sri Lanka · Quiz</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20789.37%20789.37'%3E%3Crect%20width='789.37'%20height='789.37'%20rx='170'%20fill='%2312142b'/%3E%3Cg%20transform='translate(130.7%20130.7)%20scale(.67)'%20fill='%23fff'%3E%3Cpath%20d='m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z'/%3E%3Crect%20x='357.64'%20y='357.64'%20width='74.09'%20height='74.09'/%3E%3Crect%20x='357.64'%20y='240.66'%20width='74.09'%20height='74.09'/%3E%3Crect%20x='357.64'%20y='123.69'%20width='74.09'%20height='74.09'/%3E%3C/g%3E%3C/svg%3E">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--sec:#0f0f0f;--card:#141414;--line:#2a2a2a;--line2:#3a3a3a;--ink:#fff;--mute:#9b9b9b;--acc:#0000ff;--acchov:#2a2aff;--bad:#ff5c6c;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:#000}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:"Outfit","Noto Sans Sinhala",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:300;line-height:1.55;-webkit-font-smoothing:antialiased}
+p{margin:0}a{color:inherit}
+.mute{color:var(--mute)}
+.mono{font-size:.85rem;letter-spacing:.02em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header.site{position:sticky;top:0;z-index:5;background:#0f0f0f;border-bottom:1px solid #222}
+.hrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;height:68px}
+.hrow .hbtn{justify-self:end}
+.brand{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-weight:500;font-size:1.55rem;letter-spacing:-.03em}
+.brand svg{width:30px;height:30px}
+.lk{background:var(--acc);color:#fff;font-size:.7rem;font-weight:500;letter-spacing:.08em;padding:2px 7px;border-radius:3px}
+.pillnav{display:flex;gap:34px}
+.pillnav a,.pillnav span{color:#e6e6e6;text-decoration:none;font-size:1rem;font-weight:400;padding:6px 0;border-bottom:1px solid transparent}
+.pillnav a:hover{color:#fff}
+.pillnav .active{border-bottom-color:#fff;color:#fff}
+.hbtn{background:var(--acc);color:#fff;border:0;border-radius:4px;padding:10px 22px;font:inherit;font-weight:400;cursor:pointer}
+.hbtn:hover{background:var(--acchov)}
+@media (max-width:700px){.pillnav{display:none}.hrow{grid-template-columns:1fr auto}.brand{font-size:1.3rem}}
+main.wrap{padding-bottom:20px}
+.hero{position:relative;text-align:center;padding:96px 0 64px;overflow:hidden}
+.hero .ring{position:absolute;left:50%;top:50%;width:min(520px,90vw);height:auto;transform:translate(-50%,-50%);color:#161616;z-index:0;pointer-events:none}
+.hero>*:not(.ring){position:relative;z-index:1}
+.display{font-size:clamp(2.8rem,8vw,5.2rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:0 0 14px}
+.sub{font-size:1.3rem;font-weight:300;color:#f2f2f2}
+.lead{color:var(--mute);font-size:1.05rem;max-width:620px;margin:14px auto 0}
+.who{margin-top:18px;color:var(--mute)}
+.stats{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 22px;border-top:1px solid #222;border-bottom:1px solid #222;padding:22px 0;margin:0 -24px;font-size:1.15rem;font-weight:400}
+.stats em{font-style:normal;color:var(--mute);font-weight:300;margin-right:8px}
+.stats i{font-style:normal;color:#444}
+.sec{font-size:clamp(1.9rem,4vw,2.6rem);font-weight:400;letter-spacing:-.02em;margin:64px 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.cat{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;text-align:left;color:#fff;font:inherit;cursor:pointer;transition:border-color .2s}
+.cat:not(:disabled):hover,.cat:focus-visible{border-color:#fff;outline:none}
+.cat b{display:block;font-size:1.25rem;font-weight:400;margin-bottom:6px}
+.cat span{display:block;color:var(--mute);font-size:.98rem}
+.tag{margin-top:18px;font-size:.78rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line2);border-radius:3px;padding:3px 9px;color:#d0d0d0}
+.cat.done{border-color:var(--acc);cursor:default}
+.cat.done .tag{background:var(--acc);border-color:var(--acc);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:26px}
+.panel{max-width:720px;margin:56px auto 0}
+.lb ol{list-style:none;margin:16px 0 0;padding:0}
+.lb li{display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line);font-size:1.05rem}
+.lb li b{width:2.2rem;color:var(--mute);font-weight:300}
+.lb li span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}
+.lb li em{font-weight:400;font-variant-numeric:tabular-nums}
+.lb li.me span{color:#fff;font-weight:500}
+.lb li{padding-left:12px}
+.lb li.me{box-shadow:inset 3px 0 0 var(--acc)}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--acc);color:#fff;border:1px solid var(--acc);border-radius:4px;padding:12px 24px;font:inherit;font-weight:400;cursor:pointer;margin:22px 10px 0 0}
+.btn:hover{background:var(--acchov)}
+.btn.alt{background:transparent;border-color:var(--line2)}
+.btn.alt:hover{border-color:#fff}
+.btn:focus-visible,.hbtn:focus-visible,.sbtn:focus-visible,.opt:focus-visible,.back:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.back{background:none;border:0;color:var(--mute);font:inherit;font-size:.95rem;cursor:pointer;padding:0;margin-bottom:18px}
+.back:hover{color:#fff}
+.authcard{max-width:440px;margin:8vh auto 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:40px 30px 28px;text-align:center}
+.logo{width:84px;height:84px;margin:0 auto 22px;display:grid;place-items:center;color:#fff}
+.logo svg{width:84px;height:84px}
+.authcard h1{font-size:1.9rem;font-weight:400;letter-spacing:-.02em;margin:0 0 24px}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 18px;margin-top:10px;border-radius:4px;border:1px solid var(--line2);background:transparent;color:#fff;font:inherit;font-weight:400;cursor:pointer}
+.sbtn svg{width:20px;height:20px;flex:none}
+.sbtn:hover{border-color:#fff}
+.sbtn.primary{background:#fff;color:#000;border-color:#fff}
+.legal{font-size:.85rem;color:var(--mute);margin:22px 0 0}
+.nm{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;text-align:left}
+.nm input{flex:1;min-width:160px;padding:12px 16px;border-radius:4px;border:1px solid var(--line2);background:#0a0a0a;color:#fff;font:inherit}
+.nm input:focus{outline:2px solid #fff;outline-offset:1px}
+.nm .btn{margin:0}
+.panel h1,.panel h2{font-size:2rem;font-weight:400;letter-spacing:-.02em;margin:0 0 8px}
+.top{color:var(--mute)}
+.clock{font-size:3.4rem;font-weight:300;line-height:1;margin-top:16px;font-variant-numeric:tabular-nums}
+.clock.low{color:var(--bad)}
+.bar{height:3px;background:#262626;overflow:hidden;margin:16px 0 4px}
+.bar i{display:block;height:100%;width:100%;background:var(--acc);transition:width .1s linear}
+.bar.low i{background:var(--bad)}
+.q{font-size:1.45rem;font-weight:400;line-height:1.35;margin:24px 0 18px}
+.opts{display:grid;gap:10px}
+.opt{background:transparent;border:1px solid var(--line2);border-radius:6px;padding:15px 18px;color:#fff;font:inherit;font-weight:300;text-align:left;cursor:pointer}
+.opt:hover:not(:disabled){border-color:#fff}
+.opt:disabled{cursor:default}
+.opt.sel{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc);background:rgba(0,0,255,.12);font-weight:400}
+.score{font-size:4.2rem;font-weight:300;letter-spacing:-.03em;line-height:1.05;margin:12px 0 8px}
+.label{display:block;color:var(--mute);font-size:.95rem;margin:0 0 10px}
+footer.site{border-top:1px solid #222;margin-top:72px;padding:28px 0 44px;text-align:center;color:var(--mute);font-size:.95rem}
+footer.site a{color:#e6e6e6;text-decoration:none}
+footer.site a:hover{color:#fff}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap hrow">
+    <a class="brand" href="/"><svg viewBox="0 0 789.37 789.37" fill="currentColor" aria-hidden="true"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg><span>midnight</span><span class="lk">LK</span></a>
+    <nav class="pillnav" aria-label="Site"><a href="/">Main site</a><a href="/#updates">Updates</a><span class="active" aria-current="page">Quiz</span></nav>
+    <button class="hbtn hide" id="signout">Sign out</button>
+  </div>
+</header>
+<main class="wrap">
+<section id="auth" class="hide">
+  <div class="authcard">
+    <div class="logo"><svg viewBox="0 0 789.37 789.37" fill="currentColor" role="img" aria-label="Midnight"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg></div>
+    <h1>Sign in to start playing</h1>
+    <button class="sbtn primary" id="b-google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Continue with Google</button>
+    <button class="sbtn" id="b-emailopen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Continue with Email</button>
+    <div class="nm hide" id="emailrow"><input id="email" type="email" placeholder="you@example.com" aria-label="Email address"><button class="btn" id="b-mail">Send link</button></div>
+    <button class="sbtn" id="b-discord"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Continue with Discord</button>
+    <button class="sbtn" id="b-x"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Continue with X</button>
+    <p class="mute" id="amsg" aria-live="polite" style="margin:12px 0 0;min-height:1.4em"></p>
+    <p class="legal">By continuing, you agree to our <a href="/privacy.html">privacy policy</a>. One account gets one attempt per topic.</p>
+  </div>
+</section>
+<section id="namepage" class="hide card panel">
+  <h1>Pick a display name</h1>
+  <p class="mute">This name appears on the leaderboard. Each name is unique and can’t be changed later.</p>
+  <div class="nm"><input id="nick" maxlength="20" placeholder="Your display name" aria-label="Display name"><button class="btn" id="savename">Save name</button></div>
+  <p class="mute" id="nmsg" aria-live="polite" style="margin-top:12px"></p>
+</section>
+<section id="home" class="hide">
+  <div class="hero">
+    <svg viewBox="0 0 789.37 789.37" fill="currentColor" aria-hidden="true" class="ring"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg>
+    <h1 class="display">Midnight quiz</h1>
+    <p class="sub">Test what you know about Midnight, privacy and blockchain.</p>
+    <p class="lead">Each quiz has <span id="n"></span> questions and <span id="sc"></span> seconds per question. Faster answers earn bonus points.</p>
+    <p class="who" id="who"></p>
+  </div>
+  <div class="stats"><span><em>Topics</em>6</span><i>|</i><span><em>Questions per quiz</em>10</span><i>|</i><span><em>Seconds per question</em>15</span><i>|</i><span><em>Max score per topic</em>250</span></div>
+  <h2 class="sec">Topics</h2>
+  <div class="grid" id="grid"></div>
+  <h2 class="sec">Leaderboard</h2>
+  <div class="lb card" id="lb">
+    <p class="mute">Your total is your score in each topic added together.</p>
+    <p class="mute" id="lbmsg" aria-live="polite" style="margin-top:8px"></p>
+    <ol id="lblist"></ol>
+  </div>
+</section>
+<section id="play" class="hide card panel">
+  <button class="back" id="quit">← Back to topics</button>
+  <div class="mono top"><span id="prog"></span></div>
+  <div class="clock" id="clock" aria-hidden="true"></div>
+  <div class="bar" id="bar"><i id="fill"></i></div>
+  <p class="q" id="q"></p>
+  <div class="opts" id="opts"></div>
+  <p class="mute" id="fb" aria-live="polite" style="margin-top:14px;min-height:1.5em"></p>
+  <button class="btn hide" id="next">Next question</button>
+</section>
+<section id="end" class="hide card panel">
+  <span class="label">Results</span>
+  <h2 id="etitle"></h2>
+  <p class="score" id="escore"></p>
+  <p class="mute" id="edetail"></p>
+  <button class="btn alt hide" id="retry">Try again</button>
+  <button class="btn" id="nextq">Go to the next quiz</button>
+  <button class="btn alt" id="toLB">Check leaderboard</button>
+</section>
+</main>
+<footer class="site"><a href="/">Midnight Sri Lanka community</a> · <a href="/privacy.html">Privacy</a></footer>
+<script>
+var LEN = 10, SECS = 15;
+var CATS = [
+{id:"basics",name:"Midnight Basics",desc:"What Midnight is and how it works",tag:"Newcomers"},
+{id:"nightdust",name:"NIGHT and DUST",desc:"The two-part token model",tag:"Holders"},
+{id:"compact",name:"Compact and Building",desc:"Developing private apps",tag:"Developers"},
+{id:"privacy",name:"Privacy and ZK",desc:"Proving without revealing",tag:"Everyone"},
+{id:"crypto",name:"Crypto",desc:"Wallets, keys and habits",tag:"Newcomers"},
+{id:"chain",name:"Blockchain",desc:"How chains and contracts work",tag:"Newcomers"}
+];
+var $ = function(i){return document.getElementById(i)};
+var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:false};
+function show(id){["auth","namepage","home","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth")}
+$("n").textContent = LEN;$("sc").textContent = SECS;
+CATS.forEach(function(c){
+  var b=document.createElement("button");b.className="cat";
+  b.innerHTML="<b></b><span></span><div class='tag'></div>";
+  b.children[0].textContent=c.name;b.children[1].textContent=c.desc;b.children[2].textContent=c.tag;
+  c.btn=b;b.onclick=function(){start(c)};$("grid").appendChild(b)
+});
+var SB_URL="https://pesyetsbbjmprpwpdvze.supabase.co",SB_KEY="sb_publishable_aMZJN7rKW2or4of-FdoV_g_hu8Zi3hK";
+var sb=window.supabase.createClient(SB_URL,SB_KEY);
+var USER=null,NAME="",PLAYED={};
+function say(id,t){$(id).textContent=t}
+function cleanName(v){return (v||"").replace(/\s+/g," ").trim().slice(0,20)}
+function renderCards(){CATS.forEach(function(c){var p=!!PLAYED[c.id];c.btn.disabled=p;c.btn.classList.toggle("done",p);c.btn.children[2].textContent=p?"\u2713 Played":c.tag})}
+async function loadPlayed(){
+  var r=await sb.rpc("my_played");
+  PLAYED={};
+  if(!r.error&&Array.isArray(r.data))r.data.forEach(function(c){PLAYED[c]=true});
+  renderCards()
+}
+async function loadLB(){
+  var r=await sb.from("leaderboard_v2").select("name,total").order("total",{ascending:false}).limit(10);
+  if(r.error){say("lbmsg","The leaderboard can\u2019t be reached right now. Try again in a moment.");return}
+  var ul=$("lblist");ul.innerHTML="";
+  say("lbmsg",r.data.length?"":"No scores yet. Finish a quiz to be first.");
+  r.data.forEach(function(v,i){
+    var li=document.createElement("li"),a=document.createElement("b"),b=document.createElement("span"),c=document.createElement("em");
+    if(v.name===NAME)li.className="me";
+    a.textContent=(i+1)+".";b.textContent=v.name;c.textContent=v.total+" pts";c.style.fontStyle="normal";
+    li.appendChild(a);li.appendChild(b);li.appendChild(c);ul.appendChild(li)
+  })
+}
+function oauth(p){
+  say("amsg","Opening "+p+"\u2026");
+  sb.auth.signInWithOAuth({provider:p,options:{redirectTo:location.origin+"/quiz/"}}).then(function(r){if(r.error)say("amsg","Could not start sign-in: "+r.error.message)})
+}
+$("b-emailopen").onclick=function(){$("emailrow").classList.toggle("hide");$("email").focus()};
+$("b-discord").onclick=function(){oauth("discord")};
+$("b-x").onclick=function(){oauth("x")};
+$("b-google").onclick=function(){oauth("google")};
+$("b-mail").onclick=async function(){
+  var em=$("email").value.trim();
+  if(!/^\S+@\S+\.\S+$/.test(em)){say("amsg","Enter a valid email address.");return}
+  say("amsg","Sending\u2026");
+  var r=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+"/quiz/"}});
+  say("amsg",r.error?"Could not send the link: "+r.error.message:"Check your email for the sign-in link.")
+};
+$("signout").onclick=async function(){await sb.auth.signOut()};
+function afterProfile(n){NAME=n;say("who","Signed in as "+NAME);renderCards();show("home");loadPlayed();loadLB()}
+async function enter(session){
+  if(!session){USER=null;NAME="";PLAYED={};show("auth");return}
+  if(USER&&NAME&&session.user.id===USER.id)return;
+  USER=session.user;
+  var r=await sb.from("profiles").select("display_name").eq("user_id",USER.id).maybeSingle();
+  if(r.error){say("amsg","Could not load your profile. Refresh and try again.");show("auth");return}
+  if(!r.data){show("namepage");return}
+  afterProfile(r.data.display_name)
+}
+$("savename").onclick=async function(){
+  var n=cleanName($("nick").value);
+  if(n.length<2){say("nmsg","Use 2 to 20 characters.");return}
+  var r=await sb.from("profiles").insert({user_id:USER.id,display_name:n});
+  if(r.error){say("nmsg",r.error.code==="23505"?"That name is taken. Try another.":"Could not save your name. Try again.");return}
+  afterProfile(n)
+};
+sb.auth.onAuthStateChange(function(ev,session){
+  if(ev==="INITIAL_SESSION"||ev==="SIGNED_IN"||ev==="SIGNED_OUT")setTimeout(function(){enter(session)},0)
+});
+
+/* ---- quiz: questions, answers and scoring all live on the server ---- */
+async function start(c){
+  if(!USER||PLAYED[c.id]||S.busy)return;
+  S.busy=true;say("lbmsg","");
+  var r=await sb.rpc("start_quiz",{p_category:c.id});
+  S.busy=false;
+  if(r.error){
+    say("lbmsg",r.error.code==="23505"?"You have already played this topic.":"Could not start the quiz. Try again.");
+    loadPlayed();return
+  }
+  S.cat=c;S.attempt=r.data;PLAYED[c.id]=true;renderCards();show("play");nextQ()
+}
+async function nextQ(){
+  S.locked=true;clearInterval(S.timer);
+  say("q","Loading\u2026");$("opts").innerHTML="";say("fb","");$("next").classList.add("hide");
+  $("clock").textContent="";$("fill").style.width="100%";
+  var r=await sb.rpc("get_question",{p_attempt:S.attempt});
+  if(r.error){say("q","Could not load the next question. Go back to the topics and try again.");return}
+  var q=r.data;S.total=q.total;S.i=q.index;S.t=SECS;S.locked=false;
+  say("prog",S.cat.name+" \u00b7 Question "+(q.index+1)+" of "+q.total);
+  say("q",q.q);
+  var o=$("opts");o.innerHTML="";
+  q.options.forEach(function(t,k){var b=document.createElement("button");b.className="opt";b.textContent=t;b.onclick=function(){pick(k)};o.appendChild(b)});
+  tick();
+  S.timer=setInterval(function(){S.t=Math.max(0,S.t-0.1);tick();if(S.t<=0)pick(-1)},100)
+}
+function tick(){
+  $("fill").style.width=(S.t/SECS*100)+"%";
+  $("bar").classList.toggle("low",S.t<=4);
+  $("clock").textContent=Math.ceil(S.t);
+  $("clock").classList.toggle("low",S.t<=4)
+}
+async function pick(k){
+  if(S.locked)return;S.locked=true;clearInterval(S.timer);
+  var kids=$("opts").children;
+  for(var j=0;j<kids.length;j++)kids[j].disabled=true;
+  if(k>=0)kids[k].classList.add("sel");
+  say("fb",k<0?"Time is up.":"Saving your answer\u2026");
+  var r=await sb.rpc("submit_answer",{p_attempt:S.attempt,p_index:S.i,p_choice:k});
+  if(r.error){say("fb","Could not save your answer. Check your connection and refresh.");return}
+  say("fb",k<0?"Time is up.":"Answer locked in.");
+  $("next").textContent=S.i+1>=S.total?"See results":"Next question";
+  $("next").classList.remove("hide");$("next").focus()
+}
+$("next").onclick=function(){if(S.i+1>=S.total)finish();else nextQ()};
+async function finish(){
+  show("end");$("retry").classList.add("hide");
+  say("etitle",S.cat.name+" complete");say("escore","\u2026");say("edetail","");
+  var r=await sb.rpc("finish_quiz",{p_attempt:S.attempt});
+  if(r.error){say("escore","");say("edetail","Could not finalize your score. Your answers are saved. Check your connection and try again.");$("retry").classList.remove("hide");return}
+  say("escore",r.data.score+" pts");
+  say("edetail",r.data["right"]+" of "+S.total+" correct. Each correct answer earns 10 points plus up to "+SECS+" bonus points for speed.");
+  loadPlayed();loadLB();
+  $("nextq").classList.toggle("hide",!CATS.some(function(c){return !PLAYED[c.id]}))
+}
+$("retry").onclick=finish;
+$("nextq").onclick=function(){show("home");window.scrollTo(0,0)};
+$("toLB").onclick=function(){show("home");loadLB();$("lb").scrollIntoView()};
+$("quit").onclick=function(){
+  if(confirm("If you leave now, this topic counts as played and you can\u2019t retry it. Leave anyway?")){clearInterval(S.timer);show("home");loadPlayed()}
+};
+</script>
+</body>
+</html>
