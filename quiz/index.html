@@ -8,6 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Noto+Sans+Sinhala:wght@300;400;500&display=swap" rel="stylesheet">
+<script>/* Quiz preview mode: the quiz stays hidden until it is opened once with the preview link. Set QUIZ_PUBLIC to true to show it to everyone. */
+(function(){var QUIZ_PUBLIC=false,ok=QUIZ_PUBLIC;try{if(/[?&]preview=nightowl\b/.test(location.search))localStorage.setItem("msl_preview","1");if(location.search.indexOf("preview=off")>=0)localStorage.removeItem("msl_preview");ok=ok||localStorage.getItem("msl_preview")==="1"}catch(e){}if(!ok)document.documentElement.classList.add("noquiz")})();</script>
 <link rel="stylesheet" href="/assets/site.css">
 <style>
 .mono{font-size:.85rem;letter-spacing:.02em}
@@ -163,6 +165,7 @@ main{padding-bottom:20px}
   </nav></details>
 </div></header>
 <main>
+<div id="soon" class="wrap"><h1 class="display" style="font-size:clamp(2.4rem,6vw,4rem)">Coming soon</h1><p class="mute">The Midnight Sri Lanka quiz isn’t open yet.</p><p><a class="btn out" href="/" style="margin:18px 0 0">Back to the main site</a></p></div>
 <div id="boot">Loading…</div>
 <section id="auth" class="hide wrap">
   <div class="authcard glowbox">
