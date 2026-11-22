@@ -12,7 +12,7 @@
     var load=function(){
       fetch("https://api.coingecko.com/api/v3/simple/price?ids=midnight-3&vs_currencies=usd,lkr&include_24hr_change=true").then(function(r){return r.json()}).then(function(j){
         var d=j["midnight-3"];if(!d||typeof d.usd!=="number")return;
-        set("usd","$"+(d.usd<1?d.usd.toFixed(5):d.usd.toFixed(2)));
+        set("usd","$"+(d.usd<1?d.usd.toFixed(5):d.usd.toFixed(2)));set("usd3","$"+d.usd.toFixed(3));
         if(typeof d.lkr==="number")set("lkr","Rs. "+d.lkr.toFixed(2));
         if(typeof d.usd_24h_change==="number"){var c=d.usd_24h_change;set("chg",(c>=0?"+":"")+c.toFixed(2)+"%",c>=0?"up":"down")}
       }).catch(function(){});

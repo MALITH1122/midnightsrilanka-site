@@ -147,7 +147,7 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
 
 <div class="topbar"><div class="wrap">
   <span><span class="dot" aria-hidden="true"></span><a class="tblink" href="https://midnight.network/" target="_blank" rel="noopener">Midnight is live ↗</a></span>
-  <span>NIGHT: <span data-p="usd">…</span> (<span data-p="lkr">…</span>/NIGHT)</span>
+  <span>NIGHT: <span data-p="usd3">…</span> (<span data-p="lkr">…</span>/NIGHT) <span class="chg" data-p="chg"></span></span>
 </div></div>
 
 <header class="site"><div class="wrap hrow">
@@ -542,6 +542,7 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
       if(!d||typeof d.usd!=="number")throw new Error("missing");
       P.usd=d.usd;P.lkr=typeof d.lkr==="number"?d.lkr:null;
       setAll("usd",fmtUsd(d.usd));
+      setAll("usd3","$"+d.usd.toFixed(3));
       setAll("lkr",P.lkr!==null?fmtLkr(P.lkr):"—");
       if(typeof d.usd_24h_change==="number"){var c=d.usd_24h_change;setAll("chg",(c>=0?"+":"")+c.toFixed(2)+"%",c>=0?"up":"down")}
       if(typeof d.usd_market_cap==="number"&&d.usd_market_cap>0)setAll("mcap",fmtBig(d.usd_market_cap));
