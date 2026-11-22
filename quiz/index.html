@@ -98,6 +98,72 @@ main.wrap{padding-bottom:20px}
 footer.site{border-top:1px solid #222;margin-top:72px;padding:28px 0 44px;text-align:center;color:var(--mute);font-size:.95rem}
 footer.site a{color:#e6e6e6;text-decoration:none}
 footer.site a:hover{color:#fff}
+
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.sum div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.sum span{display:block;color:var(--mute);font-size:.92rem}
+.sum b{display:block;font-size:2.2rem;font-weight:300;font-variant-numeric:tabular-nums;line-height:1.2}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:stretch}
+.col{margin-top:48px;display:flex;flex-direction:column}
+.sec2{font-size:1.9rem;font-weight:400;letter-spacing:-.02em;margin:0 0 4px}
+.mypts{display:flex;gap:28px;flex-wrap:wrap;margin:14px 0 10px}
+.mypts b{display:block;font-size:2rem;font-weight:300;font-variant-numeric:tabular-nums;line-height:1.1}
+.mypts span{color:var(--mute);font-size:.9rem}
+.prog{height:4px;background:#262626;border-radius:4px;overflow:hidden;margin-bottom:6px}
+.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s}
+.tasks{flex:1;display:flex;flex-direction:column;gap:22px;margin-top:18px}
+.task{flex:1;display:flex;flex-direction:column}
+.ttab{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:var(--acc);color:#fff;font-weight:500;padding:7px 16px;border-radius:14px 14px 0 0}
+.ttab svg{width:17px;height:17px}
+.ttab .c{opacity:.85;margin-left:6px;font-variant-numeric:tabular-nums}
+.tbody{flex:1;display:flex;flex-direction:column;border:1px solid var(--line);border-top:2px solid var(--acc);border-radius:0 18px 18px 18px;background:var(--card);padding:16px}
+.qrow{display:flex;align-items:center;gap:12px;padding:14px 6px;border-top:1px solid var(--line)}
+.qrow:first-child{border-top:0}
+.qt{flex:1;min-width:0}.qt span{display:block;font-weight:400}.qt em{display:block;font-style:normal;color:var(--mute);font-size:.9rem}
+.qs{font-size:.9rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.qb{min-width:96px;padding:9px 14px;border-radius:12px;border:1px solid var(--acc);background:var(--acc);color:#fff;font:inherit;font-weight:500;cursor:pointer}
+.qb:hover:not(:disabled){background:var(--acchov)}
+.qb:disabled{background:rgba(0,0,255,.14);cursor:default}
+.tweet{border:1px solid var(--line2);border-radius:16px;padding:16px;position:relative}
+.tweet .xl{position:absolute;top:16px;right:16px;width:20px;height:20px}
+.who2{display:flex;gap:12px;align-items:center;padding-right:28px}
+.avatar{width:44px;height:44px;border-radius:50%;background:#222;display:grid;place-items:center;flex:none;font-weight:500}
+.who2 b{font-weight:500}.who2 .h{color:var(--mute);margin-left:6px}
+.ttext{margin:12px 0 4px;white-space:pre-line;overflow-wrap:anywhere}
+.tlink{color:var(--mute);font-size:.92rem;text-decoration:none}.tlink:hover{color:#fff}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.ab{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 8px;border-radius:12px;border:1px solid var(--line2);background:#1c1c1c;color:#fff;font:inherit;font-weight:500;cursor:pointer}
+.ab:hover:not(:disabled){border-color:#fff}
+.ab svg{width:18px;height:18px;flex:none}
+.ab .pts{font-size:.8rem;color:var(--mute);font-weight:400}
+.ab .ext{width:15px;height:15px;color:var(--mute)}
+.ab.done,.ab.claimed{border-color:var(--acc);background:rgba(0,0,255,.14)}
+.ab.done .ext,.ab.claimed .ext{display:none}
+.ab:disabled{cursor:default}
+.field{margin-top:18px}
+.field label{display:block;font-weight:500;margin-bottom:8px}
+.inp{display:flex;align-items:center;border:1px solid var(--line2);border-radius:14px;background:#1c1c1c;padding:0 14px}
+.inp input{flex:1;background:transparent;border:0;color:#fff;font:inherit;padding:12px 2px;min-width:0}
+.inp input:focus{outline:none}
+.inp:focus-within{border-color:#fff}
+.inp.err{border-color:var(--bad)}.inp.ok{border-color:#4ade80}
+.msg{font-size:.9rem;margin-top:6px;min-height:1.3em;color:var(--mute)}
+.msg.err{color:var(--bad)}.msg.ok{color:#4ade80}
+.claim{margin-top:auto;width:100%;display:inline-flex;justify-content:center;gap:12px;padding:12px 20px;border-radius:14px;border:1px solid var(--line2);background:transparent;color:var(--mute);font:inherit;font-weight:500;font-size:1.05rem;cursor:not-allowed}
+.claimwrap{margin-top:auto;padding-top:18px}
+.claim.ready{background:var(--acc);border-color:var(--acc);color:#fff;cursor:pointer}
+.claim.ready:hover{background:var(--acchov)}
+.claim:focus-visible,.ab:focus-visible,.qb:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.lbt{width:100%;border-collapse:collapse;margin-top:14px}
+.lbt th{font-weight:400;color:var(--mute);text-align:right;padding:8px 6px;font-size:.88rem}
+.lbt th:nth-child(1),.lbt th:nth-child(2){text-align:left}
+.lbt td{border-top:1px solid var(--line);padding:13px 6px;text-align:right;font-variant-numeric:tabular-nums;color:var(--mute)}
+.lbt td:nth-child(1){width:2.4rem;text-align:left}
+.lbt td:nth-child(2){text-align:left;color:#fff;font-weight:400;max-width:12rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lbt td:last-child{color:#fff;font-weight:500}
+.lbt tr.me td:first-child{box-shadow:inset 3px 0 0 var(--acc);padding-left:10px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+@media (max-width:560px){.qb{min-width:78px;padding:9px 10px}.qrow{gap:8px;padding:12px 2px}.sum{grid-template-columns:1fr 1fr}.sum div:last-child{grid-column:1/-1}.lbt .lo{display:none}}
 .hide{display:none!important}
 </style>
 </head>
@@ -138,13 +204,31 @@ footer.site a:hover{color:#fff}
     <p class="who" id="who"></p>
   </div>
   <div class="stats"><span><em>Topics</em>6</span><i>|</i><span><em>Questions per quiz</em>10</span><i>|</i><span><em>Seconds per question</em>15</span><i>|</i><span><em>Max score per topic</em>250</span></div>
-  <h2 class="sec">Topics</h2>
-  <div class="grid" id="grid"></div>
+  <div class="sum"><div><span>Total points</span><b id="sTot">0</b></div><div><span>Total points left to get</span><b id="sLeft">0</b></div><div><span>Your rank</span><b id="sRank">–</b></div></div>
+  <div class="two">
+    <div class="col">
+      <h2 class="sec2">Quiz tasks</h2>
+      <p class="mute">Answer 10 questions per topic. Faster answers earn more.</p>
+      <div class="mypts"><div><b id="qEarn">0</b><span>Points earned</span></div><div><b id="qLeft">0</b><span>Points left to get</span></div></div>
+      <div class="prog"><i id="qProg"></i></div>
+      <div class="tasks"><div class="task">
+        <div class="ttab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>Quiz topics<span class="c" id="qCount">0/6</span></div>
+        <div class="tbody" id="grid"></div>
+      </div></div>
+    </div>
+    <div class="col">
+      <h2 class="sec2">Community tasks</h2>
+      <p class="mute">Support Midnight Sri Lanka on X. Each task counts once.</p>
+      <div class="mypts"><div><b id="cEarn">0</b><span>Points earned</span></div><div><b id="cLeft">0</b><span>Points left to get</span></div></div>
+      <div class="prog"><i id="cProg"></i></div>
+      <div class="tasks" id="xtasks"><p class="mute">Loading tasks…</p></div>
+    </div>
+  </div>
   <h2 class="sec">Leaderboard</h2>
-  <div class="lb card" id="lb">
-    <p class="mute">Your total is your score in each topic added together.</p>
+  <div class="lb card" id="lb" style="border-radius:18px">
+    <p class="mute">Ranked by total points (quiz + community).</p>
     <p class="mute" id="lbmsg" aria-live="polite" style="margin-top:8px"></p>
-    <ol id="lblist"></ol>
+    <table class="lbt"><thead><tr><th>#</th><th>Name</th><th class="lo">Quiz</th><th class="lo">Community</th><th>Total points</th></tr></thead><tbody id="lblist"></tbody></table>
   </div>
 </section>
 <section id="play" class="hide card panel">
@@ -183,34 +267,57 @@ var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:fal
 function show(id){["auth","namepage","home","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth")}
 $("n").textContent = LEN;$("sc").textContent = SECS;
 CATS.forEach(function(c){
-  var b=document.createElement("button");b.className="cat";
-  b.innerHTML="<b></b><span></span><div class='tag'></div>";
-  b.children[0].textContent=c.name;b.children[1].textContent=c.desc;b.children[2].textContent=c.tag;
-  c.btn=b;b.onclick=function(){start(c)};$("grid").appendChild(b)
+  var r=document.createElement("div");r.className="qrow";
+  r.innerHTML="<div class='qt'><span></span><em></em></div><div class='qs'></div><button class='qb'>Play</button>";
+  r.querySelector("span").textContent=c.name;r.querySelector("em").textContent=c.desc;
+  c.row=r;c.btn=r.querySelector("button");c.btn.setAttribute("aria-label","Play "+c.name);c.btn.onclick=function(){start(c)};$("grid").appendChild(r)
 });
 var SB_URL="https://pesyetsbbjmprpwpdvze.supabase.co",SB_KEY="sb_publishable_aMZJN7rKW2or4of-FdoV_g_hu8Zi3hK";
 var sb=window.supabase.createClient(SB_URL,SB_KEY);
-var USER=null,NAME="",PLAYED={};
+var USER=null,NAME="",PLAYED={},SCORES={},POSTS=[],CLAIMED={},ST={quiz:0,community:0,total:0,rank:null};var MAXQ=250;
 function say(id,t){$(id).textContent=t}
 function cleanName(v){return (v||"").replace(/\s+/g," ").trim().slice(0,20)}
-function renderCards(){CATS.forEach(function(c){var p=!!PLAYED[c.id];c.btn.disabled=p;c.btn.classList.toggle("done",p);c.btn.children[2].textContent=p?"\u2713 Played":c.tag})}
+function renderCards(){
+  var n=0;
+  CATS.forEach(function(c){var p=!!PLAYED[c.id];if(p)n++;c.btn.disabled=p;c.btn.textContent=p?"\u2713 Played":"Play";
+    var q=c.row.querySelector(".qs");if(p&&SCORES[c.id]!=null){q.textContent=SCORES[c.id]+" pts";q.classList.remove("mute")}else{q.textContent=p?"":"up to "+MAXQ;q.classList.toggle("mute",!p)}});
+  $("qCount").textContent=n+"/"+CATS.length;renderStats()
+}
+function renderStats(){
+  var unplayed=CATS.filter(function(c){return !PLAYED[c.id]}).length;
+  var qLeft=unplayed*MAXQ,cLeft=0,cMax=0;
+  POSTS.forEach(function(p){KINDS.forEach(function(k){var v=p["pts_"+k];if(v!=null){cMax+=v;if(!CLAIMED[p.id+":"+k])cLeft+=v}})});
+  $("qEarn").textContent=ST.quiz;$("qLeft").textContent=qLeft;
+  $("qProg").style.width=Math.min(100,ST.quiz/(CATS.length*MAXQ)*100)+"%";
+  $("cEarn").textContent=ST.community;$("cLeft").textContent=cLeft;
+  $("cProg").style.width=(cMax?Math.min(100,(cMax-cLeft)/cMax*100):0)+"%";
+  $("sTot").textContent=ST.quiz+ST.community;$("sLeft").textContent=qLeft+cLeft;
+  $("sRank").textContent=ST.rank?"#"+ST.rank:"\u2013"
+}
 async function loadPlayed(){
   var r=await sb.rpc("my_played");
   PLAYED={};
   if(!r.error&&Array.isArray(r.data))r.data.forEach(function(c){PLAYED[c]=true});
+  var q=await sb.from("quiz_results").select("category,score");
+  SCORES={};if(!q.error&&q.data)q.data.forEach(function(x){SCORES[x.category]=(SCORES[x.category]||0)+x.score});
   renderCards()
 }
 async function loadLB(){
-  var r=await sb.from("leaderboard_v2").select("name,total").order("total",{ascending:false}).limit(10);
+  var r=await sb.from("leaderboard_v3").select("name,quiz,community,total").limit(10);
   if(r.error){say("lbmsg","The leaderboard can\u2019t be reached right now. Try again in a moment.");return}
-  var ul=$("lblist");ul.innerHTML="";
-  say("lbmsg",r.data.length?"":"No scores yet. Finish a quiz to be first.");
+  var tb=$("lblist");tb.innerHTML="";
+  say("lbmsg",r.data.length?"":"No scores yet. Finish a quiz or a task to be first.");
   r.data.forEach(function(v,i){
-    var li=document.createElement("li"),a=document.createElement("b"),b=document.createElement("span"),c=document.createElement("em");
-    if(v.name===NAME)li.className="me";
-    a.textContent=(i+1)+".";b.textContent=v.name;c.textContent=v.total+" pts";c.style.fontStyle="normal";
-    li.appendChild(a);li.appendChild(b);li.appendChild(c);ul.appendChild(li)
+    var tr=document.createElement("tr");if(v.name===NAME)tr.className="me";
+    [i+1,v.name,v.quiz,v.community,v.total].forEach(function(x,j){var td=document.createElement("td");td.textContent=x;if(j===2||j===3)td.className="lo";tr.appendChild(td)});
+    tb.appendChild(tr)
   })
+}
+async function loadStats(){
+  var r=await sb.rpc("my_stats");
+  if(r.error||!r.data)return;
+  ST=r.data;CLAIMED={};(r.data.claims||[]).forEach(function(c){CLAIMED[c.post+":"+c.kind]=true});
+  renderTasks();renderStats()
 }
 function oauth(p){
   say("amsg","Opening "+p+"\u2026");
@@ -228,9 +335,9 @@ $("b-mail").onclick=async function(){
   say("amsg",r.error?"Could not send the link: "+r.error.message:"Check your email for the sign-in link.")
 };
 $("signout").onclick=async function(){await sb.auth.signOut()};
-function afterProfile(n){NAME=n;say("who","Signed in as "+NAME);renderCards();show("home");loadPlayed();loadLB()}
+function afterProfile(n){NAME=n;say("who","Signed in as "+NAME);renderCards();show("home");loadPlayed();loadLB();loadPosts()}
 async function enter(session){
-  if(!session){USER=null;NAME="";PLAYED={};show("auth");return}
+  if(!session){USER=null;NAME="";PLAYED={};SCORES={};CLAIMED={};ST={quiz:0,community:0,total:0,rank:null};show("auth");return}
   if(USER&&NAME&&session.user.id===USER.id)return;
   USER=session.user;
   var r=await sb.from("profiles").select("display_name").eq("user_id",USER.id).maybeSingle();
@@ -248,6 +355,100 @@ $("savename").onclick=async function(){
 sb.auth.onAuthStateChange(function(ev,session){
   if(ev==="INITIAL_SESSION"||ev==="SIGNED_IN"||ev==="SIGNED_OUT")setTimeout(function(){enter(session)},0)
 });
+
+
+/* ---- community tasks on X: points are recorded on the server, once per action ---- */
+var KINDS=["reply","retweet","like","follow"];
+var KLABEL={reply:"Reply",retweet:"Retweet",like:"Like",follow:"Follow"};
+var KICON={
+ reply:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+ retweet:'<path d="m17 2 4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="m7 22-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/>',
+ like:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+ follow:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/>'};
+var EXT='<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
+var XLOGO='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
+var OPENED={};
+function lsGet(){try{return JSON.parse(localStorage.getItem("msl_opened")||"{}")}catch(e){return {}}}
+function lsSet(){try{localStorage.setItem("msl_opened",JSON.stringify(OPENED))}catch(e){}}
+function intent(p,k){
+  if(k==="reply")return "https://x.com/intent/post?in_reply_to="+p.tweet_id;
+  if(k==="retweet")return "https://x.com/intent/retweet?tweet_id="+p.tweet_id;
+  if(k==="like")return "https://x.com/intent/like?tweet_id="+p.tweet_id;
+  return "https://x.com/intent/follow?screen_name="+encodeURIComponent(p.handle)
+}
+var URLRE=/^https:\/\/(www\.)?(x|twitter)\.com\/[A-Za-z0-9_]{1,15}\/status\/\d{5,25}/i;
+async function loadPosts(){
+  OPENED=lsGet();
+  var r=await sb.from("x_posts").select("id,tweet_id,handle,author_name,post_text,pts_reply,pts_retweet,pts_like,pts_follow").order("sort").order("id",{ascending:false});
+  if(r.error){$("xtasks").innerHTML="<p class='mute'>Tasks can’t be loaded right now. Refresh to try again.</p>";return}
+  POSTS=r.data||[];await loadStats();renderTasks()
+}
+function renderTasks(){
+  var box=$("xtasks");box.innerHTML="";
+  if(!POSTS.length){box.innerHTML="<p class='mute'>No tasks right now. Check back soon.</p>";renderStats();return}
+  POSTS.forEach(function(p){
+    var kinds=KINDS.filter(function(k){return p["pts_"+k]!=null});
+    var done=kinds.filter(function(k){return CLAIMED[p.id+":"+k]}).length;
+    var t=document.createElement("div");t.className="task";
+    t.innerHTML="<div class='ttab'>"+XLOGO+"Tweet reactions<span class='c'></span></div><div class='tbody'><div class='tweet'><span class='xl'>"+XLOGO+"</span><div class='who2'><div class='avatar'></div><div><b></b><span class='h'></span></div></div><p class='ttext'></p><a class='tlink' target='_blank' rel='noopener'>View the post on X ↗</a><div class='acts'></div></div></div>";
+    t.querySelector(".c").textContent=done+"/"+kinds.length;
+    t.querySelector(".avatar").textContent=(p.author_name||"?").charAt(0).toUpperCase();
+    t.querySelector(".who2 b").textContent=p.author_name;t.querySelector(".h").textContent="@"+p.handle;
+    var tx=t.querySelector(".ttext");if(p.post_text)tx.textContent=p.post_text;else tx.remove();
+    t.querySelector(".tlink").href="https://x.com/"+encodeURIComponent(p.handle)+"/status/"+p.tweet_id;
+    var acts=t.querySelector(".acts"),body=t.querySelector(".tbody");
+    kinds.forEach(function(k){
+      var key=p.id+":"+k,b=document.createElement("button");b.className="ab";
+      b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+KICON[k]+'</svg><span class="lbl"></span><span class="pts"></span>'+EXT;
+      b.querySelector(".lbl").textContent=(CLAIMED[key]?"✓ ":"")+KLABEL[k];
+      b.querySelector(".pts").textContent=CLAIMED[key]?"":"+"+p["pts_"+k];
+      if(CLAIMED[key]){b.classList.add("claimed");b.disabled=true}
+      else if(OPENED[key])b.classList.add("done");
+      b.onclick=function(){if(CLAIMED[key])return;window.open(intent(p,k),"_blank","noopener");OPENED[key]=true;lsSet();b.classList.add("done");upd()};
+      acts.appendChild(b)
+    });
+    var inp=null,msg=null,ibox=null;
+    if(p.pts_reply!=null&&!CLAIMED[p.id+":reply"]){
+      var f=document.createElement("div");f.className="field";
+      f.innerHTML="<label>Reply URL</label><div class='inp'><input placeholder='https://x.com/yourname/status/1234567890' autocomplete='off' inputmode='url'></div><p class='msg'>Paste the link to your reply, not the original post.</p>";
+      var id="ru"+p.id;f.querySelector("input").id=id;f.querySelector("label").htmlFor=id;
+      body.appendChild(f);inp=f.querySelector("input");msg=f.querySelector(".msg");ibox=f.querySelector(".inp");
+      inp.oninput=function(){
+        var v=inp.value.trim();
+        if(!v){ibox.className="inp";msg.className="msg";msg.textContent="Paste the link to your reply, not the original post."}
+        else if(v.indexOf(p.tweet_id)>=0){ibox.className="inp err";msg.className="msg err";msg.textContent="Link to your reply, not the original post."}
+        else if(!URLRE.test(v)){ibox.className="inp err";msg.className="msg err";msg.textContent="This doesn’t look like an X post link."}
+        else{ibox.className="inp ok";msg.className="msg ok";msg.textContent="Looks good."}
+        upd()
+      }
+    }
+    var cw=document.createElement("div");cw.className="claimwrap";
+    var cb=document.createElement("button");cb.className="claim";cw.appendChild(cb);body.appendChild(cw);
+    var cm=document.createElement("p");cm.className="msg";cm.setAttribute("aria-live","polite");cw.appendChild(cm);
+    function ready(){return kinds.filter(function(k){var key=p.id+":"+k;if(CLAIMED[key]||!OPENED[key])return false;if(k==="reply"){var v=inp?inp.value.trim():"";return URLRE.test(v)&&v.indexOf(p.tweet_id)<0}return true})}
+    function upd(){
+      var r=ready(),pts=r.reduce(function(a,k){return a+p["pts_"+k]},0);
+      if(done===kinds.length){cb.textContent="✓ All done";cb.disabled=true;cb.className="claim";return}
+      cb.textContent=pts?"Claim +"+pts:"Claim  "+done+"/"+kinds.length;
+      cb.classList.toggle("ready",pts>0);cb.disabled=!pts;
+      if(OPENED[p.id+":reply"]&&!CLAIMED[p.id+":reply"]&&inp&&!URLRE.test(inp.value.trim())&&pts){cm.className="msg";cm.textContent="Add your reply link to get the reply points too."}else if(!cm.classList.contains("err"))cm.textContent=""
+    }
+    cb.onclick=async function(){
+      var r=ready();if(!r.length)return;
+      cb.disabled=true;cb.textContent="Claiming…";cm.className="msg";cm.textContent="";
+      var res=await sb.rpc("claim_x",{p_post:p.id,p_kinds:r,p_reply_url:inp?inp.value.trim():null});
+      if(res.error){
+        var m=res.error.message||"";
+        cm.className="msg err";
+        cm.textContent=m.indexOf("reply url used")>=0?"That reply link has already been used.":m.indexOf("bad reply url")>=0?"Check your reply link and try again.":"Could not claim right now. Try again.";
+        upd();return
+      }
+      await loadStats();loadLB()
+    };
+    upd();box.appendChild(t)
+  });
+  renderStats()
+}
 
 /* ---- quiz: questions, answers and scoring all live on the server ---- */
 async function start(c){
@@ -301,7 +502,7 @@ async function finish(){
   if(r.error){say("escore","");say("edetail","Could not finalize your score. Your answers are saved. Check your connection and try again.");$("retry").classList.remove("hide");return}
   say("escore",r.data.score+" pts");
   say("edetail",r.data["right"]+" of "+S.total+" correct. Each correct answer earns 10 points plus up to "+SECS+" bonus points for speed.");
-  loadPlayed();loadLB();
+  loadPlayed();loadLB();loadStats();
   $("nextq").classList.toggle("hide",!CATS.some(function(c){return !PLAYED[c.id]}))
 }
 $("retry").onclick=finish;
