@@ -84,4 +84,4 @@ header.site{position:sticky;z-index:10}
 html.noquiz a[href="/quiz/"],html.noquiz .quizband{display:none!important}
 #soon{display:none;text-align:center;padding:120px 24px}
 html.noquiz #soon{display:block}
-html.noquiz main>:not(#soon){display:none!important}
+html.noquiz main.quizmain>:not(#soon){display:none!important}
