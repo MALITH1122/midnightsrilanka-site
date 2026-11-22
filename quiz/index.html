@@ -7,41 +7,10 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20789.37%20789.37'%3E%3Crect%20width='789.37'%20height='789.37'%20rx='170'%20fill='%2312142b'/%3E%3Cg%20transform='translate(130.7%20130.7)%20scale(.67)'%20fill='%23fff'%3E%3Cpath%20d='m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z'/%3E%3Crect%20x='357.64'%20y='357.64'%20width='74.09'%20height='74.09'/%3E%3Crect%20x='357.64'%20y='240.66'%20width='74.09'%20height='74.09'/%3E%3Crect%20x='357.64'%20y='123.69'%20width='74.09'%20height='74.09'/%3E%3C/g%3E%3C/svg%3E">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Noto+Sans+Sinhala:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
 <style>
-:root{--bg:#000;--sec:#0f0f0f;--card:#141414;--line:#2a2a2a;--line2:#3a3a3a;--ink:#fff;--mute:#9b9b9b;--acc:#0000ff;--acchov:#2a2aff;--bad:#ff5c6c;color-scheme:dark}
-*{box-sizing:border-box}
-html,body{background:#000}
-body{margin:0;min-height:100vh;color:var(--ink);font-family:"Outfit","Noto Sans Sinhala",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:300;line-height:1.55;-webkit-font-smoothing:antialiased}
-p{margin:0}a{color:inherit}
-.mute{color:var(--mute)}
 .mono{font-size:.85rem;letter-spacing:.02em}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-header.site{position:sticky;top:0;z-index:5;background:#0f0f0f;border-bottom:1px solid #222}
-.hrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;height:68px}
-.hrow .hbtn{justify-self:end}
-.brand{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-weight:500;font-size:1.55rem;letter-spacing:-.03em}
-.brand svg{width:30px;height:30px}
-.lk{background:var(--acc);color:#fff;font-size:.7rem;font-weight:500;letter-spacing:.08em;padding:2px 7px;border-radius:3px}
-.pillnav{display:flex;gap:34px}
-.pillnav a,.pillnav span{color:#e6e6e6;text-decoration:none;font-size:1rem;font-weight:400;padding:6px 0;border-bottom:1px solid transparent}
-.pillnav a:hover{color:#fff}
-.pillnav .active{border-bottom-color:#fff;color:#fff}
-.hbtn{background:var(--acc);color:#fff;border:0;border-radius:4px;padding:10px 22px;font:inherit;font-weight:400;cursor:pointer}
-.hbtn:hover{background:var(--acchov)}
-@media (max-width:700px){.pillnav{display:none}.hrow{grid-template-columns:1fr auto}.brand{font-size:1.3rem}}
-main.wrap{padding-bottom:20px}
-.hero{position:relative;text-align:center;padding:96px 0 64px;overflow:hidden}
-.hero .ring{position:absolute;left:50%;top:50%;width:min(520px,90vw);height:auto;transform:translate(-50%,-50%);color:#161616;z-index:0;pointer-events:none}
-.hero>*:not(.ring){position:relative;z-index:1}
-.display{font-size:clamp(2.8rem,8vw,5.2rem);font-weight:400;letter-spacing:-.03em;line-height:1.05;margin:0 0 14px}
-.sub{font-size:1.3rem;font-weight:300;color:#f2f2f2}
-.lead{color:var(--mute);font-size:1.05rem;max-width:620px;margin:14px auto 0}
-.who{margin-top:18px;color:var(--mute)}
-.stats{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 22px;border-top:1px solid #222;border-bottom:1px solid #222;padding:22px 0;margin:0 -24px;font-size:1.15rem;font-weight:400}
-.stats em{font-style:normal;color:var(--mute);font-weight:300;margin-right:8px}
-.stats i{font-style:normal;color:#444}
-.sec{font-size:clamp(1.9rem,4vw,2.6rem);font-weight:400;letter-spacing:-.02em;margin:64px 0 22px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
 .cat{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:24px;text-align:left;color:#fff;font:inherit;cursor:pointer;transition:border-color .2s}
 .cat:not(:disabled):hover,.cat:focus-visible{border-color:#fff;outline:none}
@@ -52,6 +21,7 @@ main.wrap{padding-bottom:20px}
 .cat.done .tag{background:var(--acc);border-color:var(--acc);color:#fff}
 .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:26px}
 .panel{max-width:720px;margin:56px auto 0}
+@media (max-width:768px){.panel{margin-left:16px;margin-right:16px}}
 .lb ol{list-style:none;margin:16px 0 0;padding:0}
 .lb li{display:flex;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line);font-size:1.05rem}
 .lb li b{width:2.2rem;color:var(--mute);font-weight:300}
@@ -60,10 +30,6 @@ main.wrap{padding-bottom:20px}
 .lb li.me span{color:#fff;font-weight:500}
 .lb li{padding-left:12px}
 .lb li.me{box-shadow:inset 3px 0 0 var(--acc)}
-.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--acc);color:#fff;border:1px solid var(--acc);border-radius:4px;padding:12px 24px;font:inherit;font-weight:400;cursor:pointer;margin:22px 10px 0 0}
-.btn:hover{background:var(--acchov)}
-.btn.alt{background:transparent;border-color:var(--line2)}
-.btn.alt:hover{border-color:#fff}
 .btn:focus-visible,.hbtn:focus-visible,.sbtn:focus-visible,.opt:focus-visible,.back:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .back{background:none;border:0;color:var(--mute);font:inherit;font-size:.95rem;cursor:pointer;padding:0;margin-bottom:18px}
 .back:hover{color:#fff}
@@ -95,9 +61,6 @@ main.wrap{padding-bottom:20px}
 .opt.sel{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc);background:rgba(0,0,255,.12);font-weight:400}
 .score{font-size:4.2rem;font-weight:300;letter-spacing:-.03em;line-height:1.05;margin:12px 0 8px}
 .label{display:block;color:var(--mute);font-size:.95rem;margin:0 0 10px}
-footer.site{border-top:1px solid #222;margin-top:72px;padding:28px 0 44px;text-align:center;color:var(--mute);font-size:.95rem}
-footer.site a{color:#e6e6e6;text-decoration:none}
-footer.site a:hover{color:#fff}
 
 .sum{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
 .sum div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
@@ -165,19 +128,44 @@ footer.site a:hover{color:#fff}
 @media (max-width:900px){.two{grid-template-columns:1fr}}
 @media (max-width:560px){.qb{min-width:78px;padding:9px 10px}.qrow{gap:8px;padding:12px 2px}.sum{grid-template-columns:1fr 1fr}.sum div:last-child{grid-column:1/-1}.lbt .lo{display:none}}
 .hide{display:none!important}
+
+:root{--bad:#ff5c6c}
+.sec{font-size:clamp(1.9rem,4.2vw,2.8rem);margin:72px 0 22px}
+.hero .who{margin:18px 0 0;color:var(--mute)}
+main .btn:not(.out){background:var(--acc);color:#fff;border-color:var(--acc);padding:12px 24px;margin:22px 10px 0 0}
+main .btn:hover{background:var(--acchov)}
+main .btn.alt{background:transparent;border-color:var(--line2)}
+main .btn.alt:hover{border-color:#fff}
+.nav a.on{color:#fff;border-bottom-color:#fff}
+.hdr-right{display:flex;align-items:center;gap:10px}
+@media (max-width:1060px){#signout{display:none}}
+.msout{background:none;border:0;border-top:1px solid var(--line);color:#fff;font:inherit;text-align:left;padding:12px;margin-top:6px;cursor:pointer}
+.msout:hover{background:#1a1a1a}
+#boot{text-align:center;padding:120px 0;color:var(--mute)}
+main{padding-bottom:20px}
 </style>
 </head>
 <body>
-<header class="site">
-  <div class="wrap hrow">
-    <a class="brand" href="/"><svg viewBox="0 0 789.37 789.37" fill="currentColor" aria-hidden="true"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg><span>midnight</span><span class="lk">LK</span></a>
-    <nav class="pillnav" aria-label="Site"><a href="/">Main site</a><a href="/#updates">Updates</a><span class="active" aria-current="page">Quiz</span></nav>
-    <button class="hbtn hide" id="signout">Sign out</button>
-  </div>
-</header>
-<main class="wrap">
-<section id="auth" class="hide">
-  <div class="authcard">
+<canvas id="zk-canvas" aria-hidden="true"></canvas>
+<div class="topbar"><div class="wrap">
+  <span><span class="dot" aria-hidden="true"></span>MIDNIGHT MAINNET // PERMISSIONLESS LIVE</span>
+  <span>NIGHT: <span data-p="usd">…</span> • <span data-p="lkr">…</span> <span class="chg" data-p="chg"></span></span>
+</div></div>
+
+<header class="site"><div class="wrap hrow">
+  <a class="brand" href="/" aria-label="midnight LK home"><svg viewBox="0 0 789.37 789.37" fill="currentColor" aria-hidden="true"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg><span>midnight</span><span class="lk">LK</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="/#about">Midnight</a><a href="/#token">NIGHT &amp; DUST</a><a href="/#goals">අරමුණු</a><a href="/#nightforce">Nightforce</a><a href="/#roles">Roles</a><a href="/#updates">Updates</a><a href="/#links">Links</a><a href="/#faq">FAQ</a><a href="/quiz/" class="on" aria-current="page">Quiz</a>
+  </nav>
+  <div class="hdr-right"><a class="btn blue tg" href="https://t.me/MidnightSriLanka" target="_blank" rel="noopener">Join SL Telegram ↗</a><button class="btn out hide" id="signout">Sign out</button></div>
+  <details class="mnav"><summary>Menu</summary><nav aria-label="Mobile">
+    <a href="/#about">Midnight &amp; Rational Privacy</a><a href="/#token">NIGHT Live Price &amp; DUST</a><a href="/#goals">අපගේ අරමුණු</a><a href="/#nightforce">Nightforce Program</a><a href="/#roles">Discord Roles (0-4)</a><a href="/#updates">Ecosystem Updates</a><a href="/#links">Official Links</a><a href="/#faq">SL Telegram &amp; FAQ</a><a href="/quiz/" aria-current="page">Community Quiz</a><a href="https://t.me/MidnightSriLanka" target="_blank" rel="noopener">Join SL Telegram ↗</a><button class="msout hide" id="signout2">Sign out</button>
+  </nav></details>
+</div></header>
+<main>
+<div id="boot">Loading…</div>
+<section id="auth" class="hide wrap">
+  <div class="authcard glowbox">
     <div class="logo"><svg viewBox="0 0 789.37 789.37" fill="currentColor" role="img" aria-label="Midnight"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg></div>
     <h1>Sign in to start playing</h1>
     <button class="sbtn primary" id="b-google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Continue with Google</button>
@@ -197,14 +185,17 @@ footer.site a:hover{color:#fff}
 </section>
 <section id="home" class="hide">
   <div class="hero">
-    <svg viewBox="0 0 789.37 789.37" fill="currentColor" aria-hidden="true" class="ring"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg>
-    <h1 class="display">Midnight quiz</h1>
-    <p class="sub">Test what you know about Midnight, privacy and blockchain.</p>
-    <p class="lead">Each quiz has <span id="n"></span> questions and <span id="sc"></span> seconds per question. Faster answers earn bonus points.</p>
-    <p class="who" id="who"></p>
+    <svg class="ring" viewBox="0 0 789.37 789.37" fill="currentColor" aria-hidden="true"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg>
+    <div class="wrap">
+      <span class="kicker">Midnight Sri Lanka community</span>
+      <h1 class="display">Midnight quiz</h1>
+      <p class="lead">Test what you know about Midnight, privacy and blockchain. Each quiz has <span id="n"></span> questions and <span id="sc"></span> seconds per question. Faster answers earn bonus points.</p>
+      <p class="who" id="who"></p>
+    </div>
   </div>
-  <div class="stats"><span><em>Topics</em>6</span><i>|</i><span><em>Questions per quiz</em>10</span><i>|</i><span><em>Seconds per question</em>15</span><i>|</i><span><em>Max score per topic</em>250</span></div>
-  <div class="sum"><div><span>Total points</span><b id="sTot">0</b></div><div><span>Total points left to get</span><b id="sLeft">0</b></div><div><span>Your rank</span><b id="sRank">–</b></div></div>
+  <div class="stats"><div class="wrap"><span><em>Topics</em>6</span><i>|</i><span><em>Questions per quiz</em>10</span><i>|</i><span><em>Seconds per question</em>15</span><i>|</i><span><em>Max score per topic</em>250</span></div></div>
+  <div class="wrap">
+  <div class="sum"><div class="glowbox"><span>Total points</span><b id="sTot">0</b></div><div class="glowbox"><span>Total points left to get</span><b id="sLeft">0</b></div><div class="glowbox"><span>Your rank</span><b id="sRank">–</b></div></div>
   <div class="two">
     <div class="col">
       <h2 class="sec2">Quiz tasks</h2>
@@ -213,7 +204,7 @@ footer.site a:hover{color:#fff}
       <div class="prog"><i id="qProg"></i></div>
       <div class="tasks"><div class="task">
         <div class="ttab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>Quiz topics<span class="c" id="qCount">0/6</span></div>
-        <div class="tbody" id="grid"></div>
+        <div class="tbody glowbox" id="grid"></div>
       </div></div>
     </div>
     <div class="col">
@@ -224,11 +215,12 @@ footer.site a:hover{color:#fff}
       <div class="tasks" id="xtasks"><p class="mute">Loading tasks…</p></div>
     </div>
   </div>
-  <h2 class="sec">Leaderboard</h2>
+  <h2 class="sec h2">Leaderboard</h2>
   <div class="lb card" id="lb" style="border-radius:18px">
     <p class="mute">Ranked by total points (quiz + community).</p>
     <p class="mute" id="lbmsg" aria-live="polite" style="margin-top:8px"></p>
     <table class="lbt"><thead><tr><th>#</th><th>Name</th><th class="lo">Quiz</th><th class="lo">Community</th><th>Total points</th></tr></thead><tbody id="lblist"></tbody></table>
+  </div>
   </div>
 </section>
 <section id="play" class="hide card panel">
@@ -251,7 +243,10 @@ footer.site a:hover{color:#fff}
   <button class="btn alt" id="toLB">Check leaderboard</button>
 </section>
 </main>
-<footer class="site"><a href="/">Midnight Sri Lanka community</a> · <a href="/privacy.html">Privacy</a></footer>
+<footer class="site"><div class="wrap">
+  <div><div class="brand" style="font-size:1.3rem">midnight sri lanka</div><p class="mute" style="margin:6px 0 0">One Team, One Dream</p></div>
+  <div class="fl"><a href="/#about">Midnight</a><a href="/#token">NIGHT</a><a href="/#updates">Updates</a><a href="/#roles">Roles</a><a href="/quiz/">Quiz</a><a href="/privacy.html">Privacy</a><a href="https://t.me/MidnightSriLanka" target="_blank" rel="noopener">Telegram ↗</a></div>
+</div></footer>
 <script>
 var LEN = 10, SECS = 15;
 var CATS = [
@@ -264,7 +259,7 @@ var CATS = [
 ];
 var $ = function(i){return document.getElementById(i)};
 var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:false};
-function show(id){["auth","namepage","home","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth")}
+function show(id){$("boot").classList.add("hide");["auth","namepage","home","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
 $("n").textContent = LEN;$("sc").textContent = SECS;
 CATS.forEach(function(c){
   var r=document.createElement("div");r.className="qrow";
@@ -334,7 +329,7 @@ $("b-mail").onclick=async function(){
   var r=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+"/quiz/"}});
   say("amsg",r.error?"Could not send the link: "+r.error.message:"Check your email for the sign-in link.")
 };
-$("signout").onclick=async function(){await sb.auth.signOut()};
+$("signout").onclick=$("signout2").onclick=async function(){await sb.auth.signOut()};
 function afterProfile(n){NAME=n;say("who","Signed in as "+NAME);renderCards();show("home");loadPlayed();loadLB();loadPosts()}
 async function enter(session){
   if(!session){USER=null;NAME="";PLAYED={};SCORES={};CLAIMED={};ST={quiz:0,community:0,total:0,rank:null};show("auth");return}
@@ -390,7 +385,7 @@ function renderTasks(){
     var kinds=KINDS.filter(function(k){return p["pts_"+k]!=null});
     var done=kinds.filter(function(k){return CLAIMED[p.id+":"+k]}).length;
     var t=document.createElement("div");t.className="task";
-    t.innerHTML="<div class='ttab'>"+XLOGO+"Tweet reactions<span class='c'></span></div><div class='tbody'><div class='tweet'><span class='xl'>"+XLOGO+"</span><div class='who2'><div class='avatar'></div><div><b></b><span class='h'></span></div></div><p class='ttext'></p><a class='tlink' target='_blank' rel='noopener'>View the post on X ↗</a><div class='acts'></div></div></div>";
+    t.innerHTML="<div class='ttab'>"+XLOGO+"Tweet reactions<span class='c'></span></div><div class='tbody glowbox'><div class='tweet'><span class='xl'>"+XLOGO+"</span><div class='who2'><div class='avatar'></div><div><b></b><span class='h'></span></div></div><p class='ttext'></p><a class='tlink' target='_blank' rel='noopener'>View the post on X ↗</a><div class='acts'></div></div></div>";
     t.querySelector(".c").textContent=done+"/"+kinds.length;
     t.querySelector(".avatar").textContent=(p.author_name||"?").charAt(0).toUpperCase();
     t.querySelector(".who2 b").textContent=p.author_name;t.querySelector(".h").textContent="@"+p.handle;
@@ -512,5 +507,6 @@ $("quit").onclick=function(){
   if(confirm("If you leave now, this topic counts as played and you can\u2019t retry it. Leave anyway?")){clearInterval(S.timer);show("home");loadPlayed()}
 };
 </script>
+<script src="/assets/site.js"></script>
 </body>
 </html>
