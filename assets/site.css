@@ -96,5 +96,5 @@ html.noquiz main.quizmain>:not(#soon){display:none!important}
 
 /* Join SL Telegram: blue button with a Sri Lanka flag-colour border */
 .hrow .tg{position:relative;isolation:isolate;border-color:transparent;background:var(--acc);transition:box-shadow .25s,background .25s}
-.hrow .tg::before{content:"";position:absolute;inset:-1px;border-radius:5px;padding:1.5px;background:linear-gradient(90deg,#00534e,#eb7400,#8d153a,#ffbe29);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none}
+.hrow .tg::before{content:"";position:absolute;inset:-1px;border-radius:5px;padding:2px;background:linear-gradient(90deg,#00534e,#eb7400,#8d153a,#ffbe29);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none}
 .hrow .tg:hover{background:var(--acchov);box-shadow:0 0 16px rgba(255,190,41,.35)}
