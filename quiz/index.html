@@ -236,6 +236,12 @@ main{padding-bottom:20px}
   <p class="mute" id="fb" aria-live="polite" style="margin-top:14px;min-height:1.5em"></p>
   <button class="btn hide" id="next">Next question</button>
 </section>
+<section id="missed" class="hide card panel">
+  <span class="label">Time is up</span>
+  <h2>Quiz missed</h2>
+  <p class="mute" id="mdetail">You didn’t answer the first question in 15 seconds, so this topic is not counted. You can play it again from the quiz dashboard.</p>
+  <button class="btn" id="tohome">Go to quiz dashboard</button>
+</section>
 <section id="end" class="hide card panel">
   <span class="label">Results</span>
   <h2 id="etitle"></h2>
@@ -278,7 +284,7 @@ var CATS = [
 var $ = function(i){return document.getElementById(i)};
 var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:false};
 var curView="";
-function show(id){$("boot").classList.add("hide");if(id!==curView){curView=id;try{window.scrollTo({top:0,behavior:"instant"})}catch(e){window.scrollTo(0,0)}}["auth","namepage","home","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
+function show(id){$("boot").classList.add("hide");if(id!==curView){curView=id;try{window.scrollTo({top:0,behavior:"instant"})}catch(e){window.scrollTo(0,0)}}["auth","namepage","home","play","missed","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
 $("n").textContent = LEN;$("sc").textContent = SECS;
 CATS.forEach(function(c){
   var r=document.createElement("div");r.className="qrow";
@@ -474,7 +480,7 @@ async function start(c){
     say("lbmsg",r.error.code==="23505"?"You have already played this topic.":"Could not start the quiz. Try again.");
     loadPlayed();return
   }
-  S.cat=c;S.attempt=r.data;PLAYED[c.id]=true;renderCards();show("play");nextQ()
+  S.cat=c;S.attempt=r.data;S.answered=false;show("play");nextQ()
 }
 async function nextQ(){
   S.locked=true;clearInterval(S.timer);
@@ -488,7 +494,7 @@ async function nextQ(){
   var o=$("opts");o.innerHTML="";
   q.options.forEach(function(t,k){var b=document.createElement("button");b.className="opt";b.textContent=t;b.onclick=function(){pick(k)};o.appendChild(b)});
   tick();
-  S.timer=setInterval(function(){S.t=Math.max(0,S.t-0.1);tick();if(S.t<=0)pick(-1)},100)
+  S.timer=setInterval(function(){S.t=Math.max(0,S.t-0.1);tick();if(S.t<=0){if(S.i===0&&!S.answered)missed();else pick(-1)}},100)
 }
 function tick(){
   $("fill").style.width=(S.t/SECS*100)+"%";
@@ -504,6 +510,7 @@ async function pick(k){
   say("fb",k<0?"Time is up.":"Saving your answer\u2026");
   var r=await sb.rpc("submit_answer",{p_attempt:S.attempt,p_index:S.i,p_choice:k});
   if(r.error){say("fb","Could not save your answer. Check your connection and refresh.");return}
+  if(!S.answered){S.answered=true;PLAYED[S.cat.id]=true;renderCards()}
   say("fb",k<0?"Time is up.":"Answer locked in.");
   $("next").textContent=S.i+1>=S.total?"See results":"Next question";
   $("next").classList.remove("hide");$("next").focus()
@@ -522,7 +529,12 @@ async function finish(){
 $("retry").onclick=finish;
 $("nextq").onclick=function(){show("home");window.scrollTo(0,0)};
 $("toLB").onclick=function(){show("home");loadLB();$("lb").scrollIntoView()};
+function missed(){
+  S.locked=true;clearInterval(S.timer);show("missed");$("tohome").focus()
+}
+$("tohome").onclick=function(){show("home");loadPlayed()};
 $("quit").onclick=function(){
+  if(!S.answered){S.locked=true;clearInterval(S.timer);show("home");loadPlayed();return}
   if(confirm("If you leave now, this topic counts as played and you can\u2019t retry it. Leave anyway?")){clearInterval(S.timer);show("home");loadPlayed()}
 };
 </script>
