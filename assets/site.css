@@ -1,8 +1,11 @@
 /* Midnight Sri Lanka shared styles: used by every page so fonts, sizes and motion match */
+@font-face{font-family:"Sinhala Fit";src:url(/assets/fonts/sinhala-300.woff2) format("woff2");font-weight:300;font-display:swap;size-adjust:84%;unicode-range:U+0D80-0DFF,U+200C-200D,U+25CC}
+@font-face{font-family:"Sinhala Fit";src:url(/assets/fonts/sinhala-400.woff2) format("woff2");font-weight:400;font-display:swap;size-adjust:84%;unicode-range:U+0D80-0DFF,U+200C-200D,U+25CC}
+@font-face{font-family:"Sinhala Fit";src:url(/assets/fonts/sinhala-500.woff2) format("woff2");font-weight:500;font-display:swap;size-adjust:84%;unicode-range:U+0D80-0DFF,U+200C-200D,U+25CC}
 :root{--card:#141414;--line:#2a2a2a;--line2:#3a3a3a;--mute:#9b9b9b;--acc:#0000fe;--acchov:#2a2aff;--up:#4ade80;--down:#ff6b7a;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px;background:#000}
-body{margin:0;background:#000;color:#fff;font-family:"Outfit","Noto Sans Sinhala",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#000;color:#fff;font-family:"Outfit","Sinhala Fit",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-weight:400;letter-spacing:-.02em;line-height:1.25;margin:0}
 p{margin:0 0 14px}a{color:inherit}
 img{max-width:100%;height:auto;display:block}
