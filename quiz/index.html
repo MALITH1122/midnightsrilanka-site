@@ -277,7 +277,8 @@ var CATS = [
 ];
 var $ = function(i){return document.getElementById(i)};
 var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:false};
-function show(id){$("boot").classList.add("hide");["auth","namepage","home","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
+var curView="";
+function show(id){$("boot").classList.add("hide");if(id!==curView){curView=id;try{window.scrollTo({top:0,behavior:"instant"})}catch(e){window.scrollTo(0,0)}}["auth","namepage","home","play","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
 $("n").textContent = LEN;$("sc").textContent = SECS;
 CATS.forEach(function(c){
   var r=document.createElement("div");r.className="qrow";
