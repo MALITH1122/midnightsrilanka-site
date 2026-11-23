@@ -102,14 +102,23 @@ ul.check li::before{content:"✓";position:absolute;left:0;color:#7d7dff}
 .copy:hover{border-color:#fff}
 .notice{margin-top:20px;border:1px solid #2b2bff;background:rgba(0,0,255,.08);border-radius:8px;padding:24px}
 .notice h3{font-size:1.2rem;margin-bottom:10px}
+.faqlist{margin-top:34px}
 details.faq{border-top:1px solid var(--line)}
-details.faq:last-of-type{border-bottom:1px solid var(--line)}
-details.faq summary{cursor:pointer;list-style:none;padding:18px 40px 18px 0;position:relative;font-weight:400;font-size:1.05rem}
+.faqlist details.faq:last-child{border-bottom:1px solid var(--line)}
+details.faq summary{cursor:pointer;list-style:none;display:flex;gap:16px;align-items:flex-start;padding:20px 4px;font-weight:400;font-size:1.08rem}
 details.faq summary::-webkit-details-marker{display:none}
+details.faq .fn{color:#6f6fff;font-size:.85rem;letter-spacing:.08em;padding-top:4px;min-width:24px}
+details.faq .fq{flex:1}
+details.faq summary i{width:26px;height:26px;flex:none;border:1px solid var(--line2);border-radius:50%;position:relative;transition:transform .25s,background .25s,border-color .25s}
+details.faq summary i::before,details.faq summary i::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.5px;background:#fff;transform:translate(-50%,-50%)}
+details.faq summary i::after{transform:translate(-50%,-50%) rotate(90deg)}
+details.faq[open] summary i{transform:rotate(45deg);background:var(--acc);border-color:var(--acc)}
+details.faq .fa{padding:0 46px 22px 44px}
+details.faq p{color:#d6d6d6;margin:0 0 10px}
 details.faq p a{color:#fff;text-decoration:underline;text-underline-offset:3px}
-details.faq summary::after{content:"+";position:absolute;right:6px;top:16px;font-size:1.4rem;color:var(--mute)}
-details.faq[open] summary::after{content:"−"}
-details.faq p{color:#d6d6d6;padding:0 0 18px}
+.tgstrip{margin-top:40px;display:flex;gap:28px;align-items:center;justify-content:space-between;padding:28px;border-radius:14px;border:1px solid rgba(0,0,254,.5);background:linear-gradient(120deg,rgba(0,0,254,.22),rgba(0,0,254,.04) 60%)}
+.tgstrip h3{margin:0 0 8px}.tgstrip p{margin:0;color:#cfcfcf;max-width:640px}.tgstrip .row-btns{flex:none;margin:0}
+@media (max-width:860px){.tgstrip{flex-direction:column;align-items:flex-start}details.faq .fa{padding:0 6px 20px 44px}}
 .quizband{margin-top:96px;border-top:1px solid #222;border-bottom:1px solid #222;background:#0a0a0a}
 .quizband .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-top:44px;padding-bottom:44px}
 .quizband h2{font-size:clamp(1.6rem,3.4vw,2.3rem)}
@@ -426,21 +435,16 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
   <span class="label">07 • Sri Lanka community &amp; FAQ</span>
   <h2 class="h2">ශ්‍රී ලංකා Official Community FAQ</h2>
   <p class="intro">ශ්‍රී ලංකාවේ සාමාජිකයන් වෙනුවෙන් දැනට ක්‍රියාත්මක වන නිල එකම සමාජ මාධ්‍ය ජාලය අපගේ Telegram සමූහයයි. Midnight හා Nightforce සම්බන්ධව ඔබට ප්‍රායෝගිකව මතුවන ගැටලුවලට පිළිතුරු මෙහි දක්වා ඇත.</p>
-  <div class="two">
-    <div class="card">
-      <span class="small">Telegram • Only official SL channel</span>
-      <h3>Midnight Sri Lanka Official Telegram</h3>
-      <p>අපට දැනට වෙනම නිල X (Twitter) හෝ Sri Lanka Discord Server එකක් නොමැත. සිංහලෙන් තොරතුරු දැනගැනීමට, Midnight City Waitlist අවස්ථා, Zealy ගැටලු නිරාකරණය කරගැනීමට සහ ශ්‍රී ලංකා ප්‍රජාව සමඟ සම්බන්ධ වීමට අපගේ නිල Telegram සමූහයට එකතු වන්න.</p>
-      <div class="row-btns"><a class="btn blue" href="https://t.me/MidnightSriLanka" target="_blank" rel="noopener">Join SL Telegram ↗</a><button class="copy" data-url="https://t.me/MidnightSriLanka">Copy Telegram Link</button></div>
-    </div>
-    <div>
-      <h3 style="font-size:1.35rem;margin-bottom:12px">සාමාජිකයන්ට ප්‍රායෝගිකව මතුවන ගැටලු (FAQ)</h3>
-      <details class="faq"><summary>1. Zealy එකේ 500 XP සම්පූර්ණ කළ සැණින් Alpha Role එක ස්වයංක්‍රීයව (Auto) ලැබෙනවාද?</summary><p>ඔබේ Discord ගිණුම Zealy හා නිවැරදිව Link කර ඇත්නම් සහ Discord තුළ Human Verification සම්පූර්ණ කර ඇත්නම් බොහෝ විට ස්වයංක්‍රීයව Alpha Role එක ලැබේ. නමුත් සමහර අවස්ථාවලදී System Sync වීමට පැය කිහිපයක් ගතවිය හැක. පැය 24ක් ඉක්මවා ඇත්නම් නිල Discord හි Support channel එක හරහා හෝ SL Telegram සමූහයෙන් විමසා උදව් ලබාගත හැක.</p></details>
-      <details class="faq"><summary>2. Bravo Role එකට අවශ්‍ය Community Call එකේදී Self Introduction එක දෙන්නේ කොහොමද? English චතුරව කතා කරන්න ඕනෙද?</summary><p>විශාල ඉංග්‍රීසි දැනුමක් අවශ්‍ය නැත. <a href="https://discord.com/events/1165826384975908924/1507388773003034684" target="_blank" rel="noopener">Tuesday</a>, <a href="https://discord.com/events/1165826384975908924/1511512348316143868" target="_blank" rel="noopener">Thursday</a> හෝ <a href="https://discord.com/events/1165826384975908924/1509566379106373762" target="_blank" rel="noopener">Friday</a> පැවැත්වෙන Discord Calls වලින් එකකට සම්බන්ධ වී Hand Raise (Mic Request) කර, තත්පර 30–60ක් තුළ ඉතා සරල ඉංග්‍රීසියෙන් ඔබගේ නම, ඔබ ශ්‍රී ලංකාවෙන් බව (From Sri Lanka Community), සහ ඔබ Midnight ප්‍රජාවට දායක වීමට බලාපොරොත්තු වන ආකාරය කෙටියෙන් පැවසීම ප්‍රමාණවත් වේ.</p></details>
-      <details class="faq"><summary>3. NDA සහ Code of Conduct පෝරමය පුරවන විට සැලකිලිමත් විය යුතු ප්‍රධාන දේවල් මොනවාද?</summary><p><a href="https://mpc.midnight.network/midnight-nightforce-coc-and-nda" target="_blank" rel="noopener">NDA</a> එක පුරවන විට ඔබ Midnight Discord Server එකට සහ Zealy එකට භාවිතා කරන Exact Discord Username එක සහ Email ලිපිනයම ලබාදීමට වගබලා ගන්න. තොරතුරු පරස්පර වුවහොත් ඔබේ Bravo Role එක Verify වීම ප්‍රමාද විය හැක.</p></details>
-      <details class="faq"><summary>4. NIGHT Token තියාගෙන ඉන්නකොට DUST හැදෙනවනම්, ගනුදෙනු කරද්දී අපේ NIGHT Tokens අඩුවෙනවාද?</summary><p>නැත. Midnight හි විශේෂත්වය වන්නේ ඔබ සතුව NIGHT Tokens තබාගෙන සිටින විට (Hold කරන විට) DUST නැමැති Transaction Resource එක ස්වයංක්‍රීයව ජනනය (Generate) වීමයි. ගනුදෙනු සඳහා වැය වන්නේ DUST පමණක් වන අතර, නව DUST Sponsorship පහසුකම හරහා dApps වලට පරිශීලකයන් වෙනුවෙන් DUST Fees ගෙවීමටද හැකියාව ඇත.</p><p>Designate cNIGHT held in your Cardano account to a Midnight address to generate DUST: <a href="https://x.com/malith1992/status/2122624291850326156" target="_blank" rel="noopener">Steps ↗</a></p></details>
-      <details class="faq"><summary>5. Zealy Tasks Submit කළ පසු ඒවා Reject වීමට හෝ XP කැපීමට බලපාන ප්‍රධාන හේතු මොනවාද?</summary><p>AI මගින් පමණක් ලියන ලද අර්ථයක් නැති පෝස්ට් දැමීම, වෙනත් අයෙකුගේ Screenshot හෝ Link එකක් Copy කර Submit කිරීම, අදාළ Hashtags/Mentions නිවැරදිව නොයෙදීම සහ Post එක Public නොතිබීම නිසා Reviewers විසින් ඔබේ Task එක Reject කළ හැක. සෑමවිටම ඔබේම නිර්මාණශීලී අදහස් ඉදිරිපත් කරන්න.</p></details>
-    </div>
+  <div class="faqlist">
+    <details class="faq"><summary><span class="fn">01</span><span class="fq">Zealy එකේ 500 XP සම්පූර්ණ කළ සැණින් Alpha Role එක ස්වයංක්‍රීයව (Auto) ලැබෙනවාද?</span><i aria-hidden="true"></i></summary><div class="fa"><p>ඔබේ Discord ගිණුම Zealy හා නිවැරදිව Link කර ඇත්නම් සහ Discord තුළ Human Verification සම්පූර්ණ කර ඇත්නම් බොහෝ විට ස්වයංක්‍රීයව Alpha Role එක ලැබේ. නමුත් සමහර අවස්ථාවලදී System Sync වීමට පැය කිහිපයක් ගතවිය හැක. පැය 24ක් ඉක්මවා ඇත්නම් නිල Discord හි Support channel එක හරහා හෝ SL Telegram සමූහයෙන් විමසා උදව් ලබාගත හැක.</p></div></details>
+    <details class="faq"><summary><span class="fn">02</span><span class="fq">Bravo Role එකට අවශ්‍ය Community Call එකේදී Self Introduction එක දෙන්නේ කොහොමද? English චතුරව කතා කරන්න ඕනෙද?</span><i aria-hidden="true"></i></summary><div class="fa"><p>විශාල ඉංග්‍රීසි දැනුමක් අවශ්‍ය නැත. <a href="https://discord.com/events/1165826384975908924/1507388773003034684" target="_blank" rel="noopener">Tuesday</a>, <a href="https://discord.com/events/1165826384975908924/1511512348316143868" target="_blank" rel="noopener">Thursday</a> හෝ <a href="https://discord.com/events/1165826384975908924/1509566379106373762" target="_blank" rel="noopener">Friday</a> පැවැත්වෙන Discord Calls වලින් එකකට සම්බන්ධ වී Hand Raise (Mic Request) කර, තත්පර 30–60ක් තුළ ඉතා සරල ඉංග්‍රීසියෙන් ඔබගේ නම, ඔබ ශ්‍රී ලංකාවෙන් බව (From Sri Lanka Community), සහ ඔබ Midnight ප්‍රජාවට දායක වීමට බලාපොරොත්තු වන ආකාරය කෙටියෙන් පැවසීම ප්‍රමාණවත් වේ.</p></div></details>
+    <details class="faq"><summary><span class="fn">03</span><span class="fq">NDA සහ Code of Conduct පෝරමය පුරවන විට සැලකිලිමත් විය යුතු ප්‍රධාන දේවල් මොනවාද?</span><i aria-hidden="true"></i></summary><div class="fa"><p><a href="https://mpc.midnight.network/midnight-nightforce-coc-and-nda" target="_blank" rel="noopener">NDA</a> එක පුරවන විට ඔබ Midnight Discord Server එකට සහ Zealy එකට භාවිතා කරන Exact Discord Username එක සහ Email ලිපිනයම ලබාදීමට වගබලා ගන්න. තොරතුරු පරස්පර වුවහොත් ඔබේ Bravo Role එක Verify වීම ප්‍රමාද විය හැක.</p></div></details>
+    <details class="faq"><summary><span class="fn">04</span><span class="fq">NIGHT Token තියාගෙන ඉන්නකොට DUST හැදෙනවනම්, ගනුදෙනු කරද්දී අපේ NIGHT Tokens අඩුවෙනවාද?</span><i aria-hidden="true"></i></summary><div class="fa"><p>නැත. Midnight හි විශේෂත්වය වන්නේ ඔබ සතුව NIGHT Tokens තබාගෙන සිටින විට (Hold කරන විට) DUST නැමැති Transaction Resource එක ස්වයංක්‍රීයව ජනනය (Generate) වීමයි. ගනුදෙනු සඳහා වැය වන්නේ DUST පමණක් වන අතර, නව DUST Sponsorship පහසුකම හරහා dApps වලට පරිශීලකයන් වෙනුවෙන් DUST Fees ගෙවීමටද හැකියාව ඇත.</p><p>Designate cNIGHT held in your Cardano account to a Midnight address to generate DUST: <a href="https://x.com/malith1992/status/2122624291850326156" target="_blank" rel="noopener">Steps ↗</a></p></div></details>
+    <details class="faq"><summary><span class="fn">05</span><span class="fq">Zealy Tasks Submit කළ පසු ඒවා Reject වීමට හෝ XP කැපීමට බලපාන ප්‍රධාන හේතු මොනවාද?</span><i aria-hidden="true"></i></summary><div class="fa"><p>AI මගින් පමණක් ලියන ලද අර්ථයක් නැති පෝස්ට් දැමීම, වෙනත් අයෙකුගේ Screenshot හෝ Link එකක් Copy කර Submit කිරීම, අදාළ Hashtags/Mentions නිවැරදිව නොයෙදීම සහ Post එක Public නොතිබීම නිසා Reviewers විසින් ඔබේ Task එක Reject කළ හැක. සෑමවිටම ඔබේම නිර්මාණශීලී අදහස් ඉදිරිපත් කරන්න.</p></div></details>
+  </div>
+  <div class="tgstrip">
+    <div><span class="small">Telegram • Only official SL channel</span><h3>Still have a question? Ask in our Telegram</h3><p>අපට දැනට වෙනම නිල X (Twitter) හෝ Sri Lanka Discord Server එකක් නොමැත. සිංහලෙන් තොරතුරු දැනගැනීමට, Midnight City Waitlist අවස්ථා, Zealy ගැටලු නිරාකරණය කරගැනීමට සහ ශ්‍රී ලංකා ප්‍රජාව සමඟ සම්බන්ධ වීමට අපගේ නිල Telegram සමූහයට එකතු වන්න.</p></div>
+    <div class="row-btns"><a class="btn blue" href="https://t.me/MidnightSriLanka" target="_blank" rel="noopener">Join SL Telegram ↗</a><button class="copy" data-url="https://t.me/MidnightSriLanka">Copy Telegram Link</button></div>
   </div>
 </div></section>
 
