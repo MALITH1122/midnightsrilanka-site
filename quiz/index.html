@@ -43,6 +43,7 @@
 .sbtn svg{width:20px;height:20px;flex:none}
 .sbtn:hover{border-color:#fff}
 .sbtn.primary{background:#fff;color:#000;border-color:#fff}
+.gsi{margin-top:10px;display:flex;justify-content:center;min-height:44px}.gsi>div{width:100%}
 .legal{font-size:.85rem;color:var(--mute);margin:22px 0 0}
 .nm{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;text-align:left}
 .nm input{flex:1;min-width:160px;padding:12px 16px;border-radius:4px;border:1px solid var(--line2);background:#0a0a0a;color:#fff;font:inherit}
@@ -183,6 +184,7 @@ main{padding-bottom:20px}
   <div class="authcard glowbox">
     <div class="logo"><svg viewBox="0 0 789.37 789.37" fill="currentColor" role="img" aria-label="Midnight"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg></div>
     <h1>Sign in to start playing</h1>
+    <div class="gsi hide" id="gsi"></div>
     <button class="sbtn primary" id="b-google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Continue with Google</button>
     <button class="sbtn" id="b-emailopen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Continue with Email</button>
     <div class="nm hide" id="emailrow"><input id="email" type="email" placeholder="you@example.com" aria-label="Email address"><button class="btn" id="b-mail">Send link</button></div>
@@ -303,7 +305,7 @@ var CATS = [
 var $ = function(i){return document.getElementById(i)};
 var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:false};
 var curView="";
-function show(id){$("boot").classList.add("hide");if(id!==curView){curView=id;try{window.scrollTo({top:0,behavior:"instant"})}catch(e){window.scrollTo(0,0)}}["auth","namepage","home","play","missed","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
+function show(id){setTimeout(function(){if(id==="auth")initGsi()},0);$("boot").classList.add("hide");if(id!==curView){curView=id;try{window.scrollTo({top:0,behavior:"instant"})}catch(e){window.scrollTo(0,0)}}["auth","namepage","home","play","missed","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
 $("n").textContent = LEN;$("sc").textContent = SECS;
 CATS.forEach(function(c){
   var r=document.createElement("div");r.className="qrow";
@@ -366,6 +368,26 @@ $("b-emailopen").onclick=function(){$("emailrow").classList.toggle("hide");$("em
 $("b-discord").onclick=function(){oauth("discord")};
 $("b-x").onclick=function(){oauth("x")};
 $("b-google").onclick=function(){oauth("google")};
+/* Google's own sign-in button: the Google window then says "Sign in to midnightsrilanka.xyz" */
+var GCID="61307890090-o9i329hvgds7n9ncek9kk00vvjd3a47r.apps.googleusercontent.com",GSI_DONE=false;
+async function sha256hex(t){var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+async function initGsi(){
+  if(!/[?&]gsi=1\b/.test(location.search))return; /* test mode only, for now */
+  if(GSI_DONE||!(window.google&&google.accounts&&google.accounts.id)||$("auth").classList.contains("hide"))return;
+  GSI_DONE=true;
+  try{
+    var raw=Array.from(crypto.getRandomValues(new Uint8Array(16))).map(function(x){return x.toString(16).padStart(2,"0")}).join("");
+    var hashed=await sha256hex(raw);
+    google.accounts.id.initialize({client_id:GCID,nonce:hashed,ux_mode:"popup",use_fedcm_for_button:true,callback:async function(resp){
+      say("amsg","Signing in\u2026");
+      var r=await sb.auth.signInWithIdToken({provider:"google",token:resp.credential,nonce:raw});
+      if(r.error)say("amsg","Could not sign in with Google: "+r.error.message);
+    }});
+    var w=Math.round(Math.min(400,Math.max(240,$("b-google").getBoundingClientRect().width||320)));
+    google.accounts.id.renderButton($("gsi"),{type:"standard",theme:"outline",size:"large",text:"continue_with",shape:"rectangular",logo_alignment:"center",width:w});
+    $("gsi").classList.remove("hide");$("b-google").classList.add("hide");
+  }catch(e){GSI_DONE=false}
+}
 $("b-mail").onclick=async function(){
   var em=$("email").value.trim();
   if(!/^\S+@\S+\.\S+$/.test(em)){say("amsg","Enter a valid email address.");return}
@@ -565,6 +587,7 @@ $("quit").onclick=function(){
   $("leave").classList.add("on");$("stay").focus()
 };
 </script>
+<script src="https://accounts.google.com/gsi/client" async onload="initGsi()"></script>
 <script src="/assets/site.js"></script>
 </body>
 </html>
