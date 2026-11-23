@@ -16,7 +16,7 @@ strong,b{font-weight:500}
 .tblink:hover{text-decoration:underline}
 .chg.up{color:var(--up)}.chg.down{color:var(--down)}
 header.site{position:sticky;top:0;z-index:10;background:#111;border-bottom:1px solid #262626}
-.hrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;height:64px}
+.hrow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;height:64px}
 .hrow>:last-child{justify-self:end}
 .hrow .btn{padding:6px 16px;line-height:1.5;font-size:.95rem}
 .brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:500;font-size:1.5rem;letter-spacing:-.03em;flex:none;justify-self:start}
@@ -40,6 +40,8 @@ header.site{position:sticky;top:0;z-index:10;background:#111;border-bottom:1px s
 .mnav nav{position:absolute;right:0;top:46px;background:#0f0f0f;border:1px solid var(--line);border-radius:8px;padding:10px;min-width:240px;display:grid}
 .mnav nav a{padding:10px 12px;text-decoration:none;border-radius:4px}
 .mnav nav a:hover{background:#1a1a1a}
+header.site .wrap{max-width:1300px}
+@media (max-width:1360px){.nav{gap:20px}.hrow{gap:16px}}
 @media (max-width:1180px){.nav{display:none}.mnav{display:block}.hrow .tg{display:none}.hrow{grid-template-columns:1fr auto}}
 .hero{position:relative;text-align:center;padding:110px 0 80px;overflow:hidden}
 .hero .ring{position:absolute;left:50%;top:50%;width:min(600px,92vw);height:auto;transform:translate(-50%,-50%);color:#151515;pointer-events:none}
@@ -99,3 +101,4 @@ html.noquiz main.quizmain>:not(#soon){display:none!important}
 .hrow .tg::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url(/assets/lk-flag.svg) right center/auto 160% no-repeat;opacity:.38;-webkit-mask:linear-gradient(90deg,transparent 25%,#000 85%);mask:linear-gradient(90deg,transparent 25%,#000 85%);transition:opacity .25s}
 .hrow .tg:hover{background:var(--acchov)}
 .hrow .tg:hover::before{opacity:.5}
+.hrow .tg{white-space:nowrap}
