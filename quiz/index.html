@@ -61,6 +61,13 @@
 #play.loading .qbody{opacity:0;transform:translateY(6px)}
 #play.loading .bar i{transition:none}
 .inv{visibility:hidden}
+.mdl{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .2s}
+.mdl.on{opacity:1;pointer-events:auto}
+.mdl .box{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:26px;box-shadow:0 0 40px rgba(0,0,254,.25);transform:translateY(8px);transition:transform .2s}
+.mdl.on .box{transform:none}
+.mdl h3{margin:0 0 8px;font-size:1.3rem;font-weight:500}.mdl p{margin:0 0 22px;color:#cfcfcf}
+.mdl .acts{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+main .mdl .btn{margin:0}
 @media (prefers-reduced-motion:reduce){.qbody{transition:none}}
 .opt{background:transparent;border:1px solid var(--line2);border-radius:6px;padding:15px 18px;color:#fff;font:inherit;font-weight:400;text-align:left;cursor:pointer}
 .opt:hover:not(:disabled){border-color:#fff}
@@ -243,6 +250,11 @@ main{padding-bottom:20px}
   <button class="btn inv" id="next">Next question</button>
   </div>
 </section>
+<div class="mdl" id="leave" role="dialog" aria-modal="true" aria-labelledby="leaveT"><div class="box">
+  <h3 id="leaveT">Leave this quiz?</h3>
+  <p>If you leave now, this topic counts as played and you can’t play it again.</p>
+  <div class="acts"><button class="btn alt" id="stay">Keep playing</button><button class="btn" id="goleave">Leave quiz</button></div>
+</div></div>
 <section id="missed" class="hide card panel">
   <span class="label">Time is up</span>
   <h2>Quiz missed</h2>
@@ -542,10 +554,15 @@ $("toLB").onclick=function(){show("home");loadLB();$("lb").scrollIntoView()};
 function missed(){
   S.locked=true;clearInterval(S.timer);show("missed");$("tohome").focus()
 }
+function closeLeave(){$("leave").classList.remove("on")}
+$("stay").onclick=closeLeave;
+$("leave").onclick=function(e){if(e.target===this)closeLeave()};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeLeave()});
+$("goleave").onclick=function(){closeLeave();S.locked=true;clearInterval(S.timer);show("home");loadPlayed()};
 $("tohome").onclick=function(){show("home");loadPlayed()};
 $("quit").onclick=function(){
   if(!S.answered){S.locked=true;clearInterval(S.timer);show("home");loadPlayed();return}
-  if(confirm("If you leave now, this topic counts as played and you can\u2019t retry it. Leave anyway?")){clearInterval(S.timer);show("home");loadPlayed()}
+  $("leave").classList.add("on");$("stay").focus()
 };
 </script>
 <script src="/assets/site.js"></script>
