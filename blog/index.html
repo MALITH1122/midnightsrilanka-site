@@ -163,11 +163,22 @@
       frag.appendChild(doc.createTextNode(v.slice(last)));t.replaceWith(frag);
     });
     // short bold lines on their own read as section headings
+    // a bold heading that also wraps a picture: keep the words as the heading, the picture after it
+    root.querySelectorAll("b,strong").forEach(function(b){
+      var blk=b.querySelector("div,figure,img");if(!blk)return;
+      var lead="";for(var c=b.firstChild;c&&!(c.nodeType===1&&c.matches("div,figure,img"));c=c.nextSibling)lead+=c.textContent||"";
+      lead=lead.trim();if(!lead||lead.length>90)return;
+      var h=doc.createElement("h2");h.className="ph";h.textContent=lead;
+      var frag=doc.createDocumentFragment();frag.appendChild(h);
+      while(b.firstChild){var n=b.firstChild;if(n.nodeType===1&&n.matches("div,figure,img"))break;b.removeChild(n)}
+      while(b.firstChild)frag.appendChild(b.firstChild);
+      b.replaceWith(frag);
+    });
     root.querySelectorAll("b,strong").forEach(function(b){
       if(b.querySelector("img,div,figure,ul"))return;
       var txt=b.textContent.trim();if(!txt||txt.length>90)return;
       var prev=b.previousSibling,next=b.nextSibling;
-      var startOk=!prev||prev.nodeName==="BR"||(prev.nodeType===3&&!prev.textContent.trim());
+      var startOk=!prev||/^(BR|UL|OL|DIV|P|FIGURE|H2)$/.test(prev.nodeName)||(prev.nodeType===3&&!prev.textContent.trim());
       var endOk=(b.lastChild&&b.lastChild.nodeName==="BR")||!next||next.nodeName==="BR";
       if(startOk&&endOk){var h=doc.createElement("h2");h.className="ph";h.textContent=txt;b.replaceWith(h)}
     });
