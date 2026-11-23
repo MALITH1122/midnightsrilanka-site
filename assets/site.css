@@ -101,4 +101,5 @@ html.noquiz main.quizmain>:not(#soon){display:none!important}
 .hrow .tg::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url(/assets/lk-flag.svg) right center/auto 160% no-repeat;opacity:.38;-webkit-mask:linear-gradient(90deg,transparent 25%,#000 85%);mask:linear-gradient(90deg,transparent 25%,#000 85%);transition:opacity .25s}
 .hrow .tg:hover{background:var(--acchov)}
 .hrow .tg:hover::before{opacity:.5}
+.hrow .tg::after{content:"";position:absolute;z-index:-1;pointer-events:none;left:-8px;top:50%;width:44px;height:44px;transform:translateY(-50%);background:url(/assets/midnight-symbol-white.svg) center/contain no-repeat;opacity:.18}
 .hrow .tg{white-space:nowrap}
