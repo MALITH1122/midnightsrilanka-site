@@ -57,6 +57,11 @@
 .bar.low i{background:var(--bad)}
 .q{font-size:1.45rem;font-weight:400;line-height:1.35;margin:24px 0 18px}
 .opts{display:grid;gap:10px}
+.qbody{transition:opacity .2s ease,transform .2s ease}
+#play.loading .qbody{opacity:0;transform:translateY(6px)}
+#play.loading .bar i{transition:none}
+.inv{visibility:hidden}
+@media (prefers-reduced-motion:reduce){.qbody{transition:none}}
 .opt{background:transparent;border:1px solid var(--line2);border-radius:6px;padding:15px 18px;color:#fff;font:inherit;font-weight:400;text-align:left;cursor:pointer}
 .opt:hover:not(:disabled){border-color:#fff}
 .opt:disabled{cursor:default}
@@ -231,10 +236,12 @@ main{padding-bottom:20px}
   <div class="mono top"><span id="prog"></span></div>
   <div class="clock" id="clock" aria-hidden="true"></div>
   <div class="bar" id="bar"><i id="fill"></i></div>
+  <div class="qbody">
   <p class="q" id="q"></p>
   <div class="opts" id="opts"></div>
   <p class="mute" id="fb" aria-live="polite" style="margin-top:14px;min-height:1.5em"></p>
-  <button class="btn hide" id="next">Next question</button>
+  <button class="btn inv" id="next">Next question</button>
+  </div>
 </section>
 <section id="missed" class="hide card panel">
   <span class="label">Time is up</span>
@@ -480,21 +487,24 @@ async function start(c){
     say("lbmsg",r.error.code==="23505"?"You have already played this topic.":"Could not start the quiz. Try again.");
     loadPlayed();return
   }
-  S.cat=c;S.attempt=r.data;S.answered=false;show("play");nextQ()
+  S.cat=c;S.attempt=r.data;S.answered=false;$("play").classList.add("loading");say("q","");$("opts").innerHTML="";say("fb","");say("prog","");$("clock").textContent="";show("play");nextQ()
 }
 async function nextQ(){
   S.locked=true;clearInterval(S.timer);
-  say("q","Loading\u2026");$("opts").innerHTML="";say("fb","");$("next").classList.add("hide");
-  $("clock").textContent="";$("fill").style.width="100%";
+  var pl=$("play");
+  pl.classList.add("loading");$("next").classList.add("inv");
+  var t0=Date.now();
   var r=await sb.rpc("get_question",{p_attempt:S.attempt});
-  if(r.error){say("q","Could not load the next question. Go back to the topics and try again.");return}
-  var q=r.data;S.total=q.total;S.i=q.index;S.t=SECS;S.locked=false;
+  var wait=220-(Date.now()-t0);if(wait>0)await new Promise(function(res){setTimeout(res,wait)});
+  if(r.error){say("q","Could not load the next question. Go back to the topics and try again.");$("opts").innerHTML="";pl.classList.remove("loading");return}
+  var q=r.data;S.total=q.total;S.i=q.index;S.t=SECS;
   say("prog",S.cat.name+" \u00b7 Question "+(q.index+1)+" of "+q.total);
-  say("q",q.q);
+  say("q",q.q);say("fb","");
   var o=$("opts");o.innerHTML="";
   q.options.forEach(function(t,k){var b=document.createElement("button");b.className="opt";b.textContent=t;b.onclick=function(){pick(k)};o.appendChild(b)});
   tick();
-  S.timer=setInterval(function(){S.t=Math.max(0,S.t-0.1);tick();if(S.t<=0){if(S.i===0&&!S.answered)missed();else pick(-1)}},100)
+  requestAnimationFrame(function(){pl.classList.remove("loading");S.locked=false;
+    S.timer=setInterval(function(){S.t=Math.max(0,S.t-0.1);tick();if(S.t<=0){if(S.i===0&&!S.answered)missed();else pick(-1)}},100)})
 }
 function tick(){
   $("fill").style.width=(S.t/SECS*100)+"%";
@@ -513,7 +523,7 @@ async function pick(k){
   if(!S.answered){S.answered=true;PLAYED[S.cat.id]=true;renderCards()}
   say("fb",k<0?"Time is up.":"Answer locked in.");
   $("next").textContent=S.i+1>=S.total?"See results":"Next question";
-  $("next").classList.remove("hide");$("next").focus()
+  $("next").classList.remove("inv");$("next").focus({preventScroll:true})
 }
 $("next").onclick=function(){if(S.i+1>=S.total)finish();else nextQ()};
 async function finish(){
