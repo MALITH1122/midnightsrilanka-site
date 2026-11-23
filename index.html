@@ -13,6 +13,13 @@
 (function(){var QUIZ_PUBLIC=false,ok=QUIZ_PUBLIC;try{if(/[?&]preview=nightowl\b/.test(location.search))localStorage.setItem("msl_preview","1");if(location.search.indexOf("preview=off")>=0)localStorage.removeItem("msl_preview");ok=ok||localStorage.getItem("msl_preview")==="1"}catch(e){}if(!ok)document.documentElement.classList.add("noquiz")})();</script>
 <link rel="stylesheet" href="/assets/site.css">
 <style>
+.sticker{overflow:hidden}
+.strack{display:flex;width:max-content;animation:marqueeLoop 45s linear infinite}
+.sticker:hover .strack{animation-play-state:paused}
+.sgroup{display:flex;align-items:center;gap:24px;padding:22px 12px;font-size:1.1rem;font-weight:400;white-space:nowrap}
+.sgroup>span{display:inline-flex;align-items:baseline}
+@media (prefers-reduced-motion:reduce){.strack{animation:none;width:auto;justify-content:center}.sgroup{flex-wrap:wrap;justify-content:center;white-space:normal}.sgroup[aria-hidden]{display:none}}
+
 .ladder{list-style:none;margin:30px 0 0;padding:0;position:relative}
 .ladder::before{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:linear-gradient(#0000fe,#4b4bff 60%,#262626)}
 .lrow{display:grid;grid-template-columns:40px minmax(0,1fr);gap:20px;margin-bottom:16px;align-items:start}
@@ -207,12 +214,21 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
 
 <div class="marquee" aria-hidden="true"><div class="mtrack"><span class="mitem"><i></i>Rational privacy</span><span class="mitem"><i></i>Permissionless smart contracts</span><span class="mitem"><i></i>Zero-knowledge proofs (ZK)</span><span class="mitem"><i></i>Selective disclosure</span><span class="mitem"><i></i>NIGHT &amp; DUST dual tokenomics</span><span class="mitem"><i></i>Midnight City simulation</span><span class="mitem"><i></i>Midnight Sri Lanka community</span><span class="mitem"><i></i>Rational privacy</span><span class="mitem"><i></i>Permissionless smart contracts</span><span class="mitem"><i></i>Zero-knowledge proofs (ZK)</span><span class="mitem"><i></i>Selective disclosure</span><span class="mitem"><i></i>NIGHT &amp; DUST dual tokenomics</span><span class="mitem"><i></i>Midnight City simulation</span><span class="mitem"><i></i>Midnight Sri Lanka community</span></div></div>
 
-<div class="stats" aria-label="NIGHT market data"><div class="wrap">
-  <span><em>NIGHT price</em><span data-p="usd">…</span></span><i>|</i>
+<div class="stats sticker" aria-label="NIGHT market data"><div class="strack">
+  <div class="sgroup"><span><em>NIGHT price</em><span data-p="usd">…</span></span><i>|</i>
   <span><em>LKR</em><span data-p="lkr">…</span></span><i>|</i>
   <span><em>24h</em><span class="chg" data-p="chg">…</span></span><i>|</i>
   <span><em>Market cap</em><span data-p="mcap">…</span></span><i>|</i>
-  <span><em>Max supply</em>24,000,000,000</span>
+  <span><em>Circulating supply</em><span data-p="circn">…</span></span><i>|</i>
+  <span><em>Total supply</em>24,000,000,000</span><i>|</i>
+  <span><em>Average block time</em>6 s</span><i>|</i></div>
+  <div class="sgroup" aria-hidden="true"><span><em>NIGHT price</em><span data-p="usd">…</span></span><i>|</i>
+  <span><em>LKR</em><span data-p="lkr">…</span></span><i>|</i>
+  <span><em>24h</em><span class="chg" data-p="chg">…</span></span><i>|</i>
+  <span><em>Market cap</em><span data-p="mcap">…</span></span><i>|</i>
+  <span><em>Circulating supply</em><span data-p="circn">…</span></span><i>|</i>
+  <span><em>Total supply</em>24,000,000,000</span><i>|</i>
+  <span><em>Average block time</em>6 s</span><i>|</i></div>
 </div></div>
 
 <section class="block" id="about"><div class="wrap">
@@ -555,6 +571,7 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
       if(typeof d.usd_market_cap==="number"&&d.usd_market_cap>0)setAll("mcap",fmtBig(d.usd_market_cap));
       document.getElementById("pstatus").textContent="Last updated: "+new Date().toLocaleTimeString()+" (live feed)";
       if(typeof d.usd_market_cap==="number"&&d.usd>0)setAll("circ","Circulating: ~"+(d.usd_market_cap/d.usd/1e9).toFixed(2)+"B NIGHT");
+      if(typeof d.usd_market_cap==="number"&&d.usd>0)setAll("circn","~"+Math.round(d.usd_market_cap/d.usd).toLocaleString("en-US"));
       calc();
     }catch(e){
       if(P.usd===null){setAll("usd","—");setAll("lkr","—");setAll("mcap","—");setAll("chg","")}
