@@ -121,3 +121,6 @@ footer.fx .wrap{display:block}
 .fjoin p{color:#cfcfcf;max-width:440px;margin:0 0 20px}
 .fbottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:48px;padding-top:22px;border-top:1px solid #262626;color:var(--mute);font-size:.9rem}
 @media (max-width:860px){.fcols{grid-template-columns:1fr 1fr}.frow{grid-template-columns:1fr}}
+
+.fbottom a{color:#e6e6e6;text-decoration:underline;text-underline-offset:3px}
+.fbottom a:hover{color:#fff}
