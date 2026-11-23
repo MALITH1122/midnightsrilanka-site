@@ -123,7 +123,7 @@
   function pid(e){var m=(e.id&&e.id.$t||"").match(/post-(\d+)/);return m&&m[1]}
   function fmtDate(t){return t?new Date(t).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}
   function plain(html){return new DOMParser().parseFromString(html||"","text/html").body.textContent.replace(/\s+/g," ").trim()}
-  function bigImg(u){return u.replace(/\/s72(-[^/]*)?-c\//,"/w800-h450-c/").replace(/=s72(-[^=]*)?-c$/,"=w800-h450-c")}
+  function bigImg(u){return u.replace(/\/s72(-[^/]*)?-c\//,"/w1200-h675-c/").replace(/=s72(-[^=]*)?-c$/,"=w1200-h675-c")}
   function card(e){
     var a=document.createElement("a");a.className="upd";a.href="/blog/?p="+pid(e);
     var t=e["media$thumbnail"]&&e["media$thumbnail"].url;

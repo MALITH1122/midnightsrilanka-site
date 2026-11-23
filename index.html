@@ -529,7 +529,7 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
       var thumb=e["media$thumbnail"]&&e["media$thumbnail"].url;
       if(thumb){
         var img=document.createElement("img");img.className="thumb";img.loading="lazy";img.alt="";
-        img.src=thumb.replace(/\/s72-c\//,"/w640-h360-c/").replace(/=s72-c$/,"=w640-h360-c");
+        img.src=thumb.replace(/\/s72(-[^/]*)?-c\//,"/w1200-h675-c/").replace(/=s72(-[^=]*)?-c$/,"=w1200-h675-c");
         a.appendChild(img);
       }
       var body=document.createElement("div");body.className="body";
