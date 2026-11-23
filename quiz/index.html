@@ -372,7 +372,6 @@ $("b-google").onclick=function(){oauth("google")};
 var GCID="61307890090-o9i329hvgds7n9ncek9kk00vvjd3a47r.apps.googleusercontent.com",GSI_DONE=false;
 async function sha256hex(t){var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
 async function initGsi(){
-  if(!/[?&]gsi=1\b/.test(location.search))return; /* test mode only, for now */
   if(GSI_DONE||!(window.google&&google.accounts&&google.accounts.id)||$("auth").classList.contains("hide"))return;
   GSI_DONE=true;
   try{
