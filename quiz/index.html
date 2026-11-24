@@ -62,6 +62,7 @@
 #play.loading .qbody{opacity:0;transform:translateY(6px)}
 #play.loading .bar i{transition:none}
 .inv{visibility:hidden}
+.qclosed{margin:10px 0 0;padding:10px 14px;border:1px solid #5a4a1a;border-radius:10px;background:#1f1a0b;color:#ffd27a;font-size:.92rem}
 .mdl{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .2s}
 .mdl.on{opacity:1;pointer-events:auto}
 .mdl .box{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:26px;box-shadow:0 0 40px rgba(0,0,254,.25);transform:translateY(8px);transition:transform .2s}
@@ -237,6 +238,7 @@ main{padding-bottom:20px}
     <div class="col">
       <h2 class="sec2">Quiz tasks</h2>
       <p class="mute">Answer 10 questions per topic. Faster answers earn more.</p>
+  <p class="qclosed hide" id="qclosed">🔒 The quiz is closed right now. Check back soon!</p>
       <div class="mypts"><div><b id="qEarn">0</b><span>Points earned</span></div><div><b id="qLeft">0</b><span>Points left to get</span></div></div>
       <div class="prog"><i id="qProg"></i></div>
       <div class="tasks"><div class="task">
@@ -353,7 +355,8 @@ function say(id,t){$(id).textContent=t}
 function cleanName(v){return (v||"").replace(/\s+/g," ").trim().slice(0,20)}
 function renderCards(){
   var n=0;
-  CATS.forEach(function(c){var p=!!PLAYED[c.id],g=!p&&PROG[c.id];if(p)n++;c.btn.disabled=p;c.btn.textContent=p?"\u2713 Played":g?"Continue":"Play";c.btn.setAttribute("aria-label",(g?"Continue ":"Play ")+c.name);
+  var qc=$("qclosed");if(qc)qc.classList.toggle("hide",QUIZ_OPEN);
+  CATS.forEach(function(c){var p=!!PLAYED[c.id],g=!p&&PROG[c.id];if(p)n++;c.btn.disabled=p||!QUIZ_OPEN;c.btn.textContent=p?"\u2713 Played":!QUIZ_OPEN?"Closed":g?"Continue":"Play";c.btn.setAttribute("aria-label",(g?"Continue ":"Play ")+c.name);
     var q=c.row.querySelector(".qs");if(p&&SCORES[c.id]!=null){q.textContent=SCORES[c.id]+" pts";q.classList.remove("mute")}else if(g){q.textContent="from Q"+g.next+" of "+g.total;q.classList.add("mute")}else{q.textContent=p?"":"up to "+MAXQ;q.classList.toggle("mute",!p)}});
   $("qCount").textContent=n+"/"+CATS.length;renderStats()
 }
@@ -368,8 +371,9 @@ function renderStats(){
   $("sTot").textContent=ST.quiz+ST.community;$("sLeft").textContent=qLeft+cLeft;
   $("sRank").textContent=ST.rank?"#"+ST.rank:"\u2013"
 }
-var PROG={};
+var PROG={},QUIZ_OPEN=true;
 async function loadPlayed(){
+  try{var st=await sb.from("app_settings").select("value").eq("key","quiz_open").maybeSingle();QUIZ_OPEN=!(st.data&&st.data.value===false)}catch(e){}
   var r=await sb.rpc("my_played");
   PLAYED={};
   if(!r.error&&Array.isArray(r.data))r.data.forEach(function(c){PLAYED[c]=true});
@@ -646,7 +650,7 @@ async function start(c){
   var r=await sb.rpc("start_quiz",{p_category:c.id});
   S.busy=false;
   if(r.error){
-    say("lbmsg",r.error.code==="23505"?"You have already played this topic.":"Could not start the quiz. Try again.");
+    var em=r.error.message||"";say("lbmsg",r.error.code==="23505"?"You have already played this topic.":/quiz closed/.test(em)?"The quiz is closed right now. Check back soon!":/banned/.test(em)?"Your account can\u2019t play the quiz.":"Could not start the quiz. Try again.");if(/quiz closed/.test(em)){QUIZ_OPEN=false;renderCards()}
     loadPlayed();return
   }
   S.cat=c;S.attempt=r.data;S.answered=!!PROG[c.id];$("play").classList.add("loading");say("q","");$("opts").innerHTML="";say("fb","");say("prog","");$("clock").textContent="";show("play");nextQ()

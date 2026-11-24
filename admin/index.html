@@ -11,7 +11,7 @@
 <script src="/assets/supabase.js"></script>
 <style>
 body{background:#000;color:#fff}
-.ad{max-width:1180px;margin:0 auto;padding:30px 16px 60px}
+.ad{max-width:1500px;margin:0 auto;padding:30px 16px 60px}
 .ad h1{font-size:2rem;font-weight:500;margin:0}.sub{color:var(--mute);margin:4px 0 22px}
 .tag{display:inline-block;margin-left:10px;font-size:.72rem;letter-spacing:.1em;padding:3px 8px;border-radius:4px;background:#2a0b0b;color:#ff8a8a;border:1px solid #5a1a1a;vertical-align:middle}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
@@ -23,14 +23,30 @@ body{background:#000;color:#fff}
 .tw{border:1px solid var(--line);border-radius:14px;overflow:auto;background:#0b0b0b}
 table{width:100%;border-collapse:collapse;font-size:.93rem;min-width:900px}
 th{text-align:left;color:var(--mute);font-weight:400;font-size:.82rem;padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:12px 14px;border-bottom:1px solid #1c1c1c;white-space:nowrap}tr:last-child td{border-bottom:0}
+td{padding:12px 12px;border-bottom:1px solid #1c1c1c;white-space:nowrap}tr:last-child td{border-bottom:0}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}td.tot{font-weight:500}
 td a{color:#fff;text-decoration:none;border-bottom:1px dotted #555}.no{color:#555}
 .cp{font:inherit;font-size:.75rem;color:var(--mute);margin-left:6px;cursor:pointer;background:none;border:0;padding:0}.cp:hover{color:#fff}
 .who{display:flex;align-items:center;gap:10px}.av{width:26px;height:26px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font-size:.8rem;flex:none}
 .rk{color:#6f6fff}.msg{color:#cfcfcf;padding:30px 0}.msg a{color:#fff}
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:8px 16px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none}#toast.on{opacity:1}
-@media (max-width:700px){.cards{grid-template-columns:1fr 1fr}}
+.topact{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:6px 0 12px}
+.topact h2{font-size:1.15rem;font-weight:500;margin:0}
+.b.danger{background:transparent;border-color:#7a2a2a;color:#ff8a8a}.b.danger:hover{border-color:#ff8a8a}.b.red{background:#b42323;border-color:#b42323}.b:disabled{opacity:.5;cursor:default}
+.ra{display:flex;gap:6px}.sm{font:inherit;font-size:.8rem;color:#cfcfcf;background:transparent;border:1px solid #333;border-radius:4px;padding:5px 10px;cursor:pointer;white-space:nowrap}.sm:hover{border-color:#fff}.sm.red{color:#ff8a8a;border-color:#5a1a1a}.sm.red:hover{border-color:#ff8a8a}
+.pill{display:inline-block;font-size:.7rem;letter-spacing:.06em;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}.pill.ban{background:#2a0b0b;color:#ff8a8a;border:1px solid #5a1a1a}.pill.adm{background:#0b0b2a;color:#9b9bff;border:1px solid #1a1a5a}
+tr.isban td{opacity:.55}tr.isban td:last-child{opacity:1}
+.sec{margin-top:30px;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:18px 20px}
+.sec h2{font-size:1.15rem;font-weight:500;margin:0 0 4px}.sec p.d{color:var(--mute);margin:0 0 10px;font-size:.92rem}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-top:1px solid #1c1c1c;flex-wrap:wrap}.trow small{color:var(--mute)}.trow a{color:#fff}
+.form{display:grid;grid-template-columns:2fr repeat(4,92px) auto;gap:8px;margin-top:12px}.form input,.mbox input{background:#0b0b0b;border:1px solid var(--line2);border-radius:6px;color:#fff;font:inherit;padding:9px 10px;min-width:0}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:.75rem;color:var(--mute)}
+.fmsg{min-height:1.3em;margin:8px 0 0;font-size:.88rem;color:#ff8a8a}
+.mdl{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);display:grid;place-items:center;z-index:99;padding:16px}.mdl[hidden]{display:none}
+.mbox{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:24px}.mbox.warn{border-color:#5a1a1a;box-shadow:0 0 40px rgba(255,60,60,.15)}
+.mbox h3{margin:0 0 8px;font-weight:500;font-size:1.25rem}.mbox p{color:#cfcfcf;margin:0 0 14px}.mbox input{width:100%;margin-bottom:12px}
+.mbox .acts{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}.mbox .err{color:#ff8a8a;font-size:.88rem;min-height:1.2em;margin:0 0 10px}
+@media (max-width:700px){.cards{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -41,10 +57,36 @@ td a{color:#fff;text-decoration:none;border-bottom:1px dotted #555}.no{color:#55
   <div id="app" hidden>
     <div class="cards"><div><span>Players</span><b id="cP">0</b></div><div><span>Played at least 1 topic</span><b id="cA">0</b></div><div><span>Added Telegram</span><b id="cT">0</b></div><div><span>Total points given</span><b id="cS">0</b></div></div>
     <div class="bar"><input id="q" type="search" placeholder="Search name, X, Telegram or Discord…" aria-label="Search players"><label><input type="checkbox" id="onlyPts" checked> Only players with points</label><button class="b alt" id="copyTg">Copy Telegram list</button><button class="b" id="csv">Download CSV</button></div>
-    <div class="tw"><table><thead><tr><th>#</th><th>Name</th><th class="n">Quiz</th><th class="n">Community</th><th class="n">Total</th><th class="n">Topics</th><th>X</th><th>Telegram</th><th>Discord</th><th>Joined</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="topact"><h2>Players</h2><button class="b danger" id="resetAll">Reset ALL points</button></div>
+    <div class="tw"><table><thead><tr><th>#</th><th>Name</th><th class="n">Quiz</th><th class="n">Community</th><th class="n">Bonus</th><th class="n">Total</th><th class="n">Topics</th><th>X</th><th>Telegram</th><th>Discord</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="sec">
+      <h2>Community tasks (X posts)</h2>
+      <p class="d">Tweets players can reply to, retweet, like and follow for points.</p>
+      <div id="posts"></div>
+      <div class="form">
+        <label>Tweet link<input id="pUrl" placeholder="https://x.com/user/status/123…"></label>
+        <label>Reply<input id="pRe" type="number" min="0" value="15"></label>
+        <label>Retweet<input id="pRt" type="number" min="0" value="10"></label>
+        <label>Like<input id="pLi" type="number" min="0" value="5"></label>
+        <label>Follow<input id="pFo" type="number" min="0" value="20"></label>
+        <label>&nbsp;<button class="b" id="pAdd">Add task</button></label>
+      </div>
+      <p class="fmsg" id="pMsg"></p>
+    </div>
+    <div class="sec">
+      <h2>Quiz</h2>
+      <p class="d">Open or close the quiz for everyone, e.g. between seasons. Players can still see their points.</p>
+      <div class="trow"><span>Quiz status: <b id="qState" style="font-weight:500">…</b></span><button class="sm" id="qToggle">…</button></div>
+    </div>
   </div>
 </div>
 <div id="toast"></div>
+<div class="mdl" id="mdl" hidden><div class="mbox" id="mbox" role="dialog" aria-modal="true" aria-labelledby="mT">
+  <h3 id="mT"></h3><p id="mP"></p>
+  <div id="mF"></div>
+  <p class="err" id="mE"></p>
+  <div class="acts"><button class="b alt" id="mCancel">Cancel</button><button class="b" id="mOk"></button></div>
+</div></div>
 <script>
 var SB_URL="https://pesyetsbbjmprpwpdvze.supabase.co",SB_KEY="sb_publishable_aMZJN7rKW2or4of-FdoV_g_hu8Zi3hK";
 var sb=window.supabase.createClient(SB_URL,SB_KEY),ALL=[];
@@ -61,39 +103,80 @@ function render(){
     var hay=[r.name,r.x,r.telegram,r.discord].join(" ").toLowerCase();if(q&&hay.indexOf(q)<0)return;
     rank++;var tr=document.createElement("tr");
     cell(tr,String(rank),"rk");
-    var w=document.createElement("div");w.className="who";var av=document.createElement("span");av.className="av";av.textContent=(r.name||"?").charAt(0).toUpperCase();var nm=document.createElement("span");nm.textContent=r.name;w.append(av,nm);cell(tr,w);
-    cell(tr,fmt(r.quiz),"n");cell(tr,fmt(r.community),"n");cell(tr,fmt(r.total),"n tot");cell(tr,String(r.topics||0),"n");
+    var w=document.createElement("div");w.className="who";var av=document.createElement("span");av.className="av";av.textContent=(r.name||"?").charAt(0).toUpperCase();var nm=document.createElement("span");nm.textContent=r.name;w.append(av,nm);if(r.banned){var bp=document.createElement("span");bp.className="pill ban";bp.textContent="BANNED";w.appendChild(bp);tr.className="isban"}if(r.is_admin){var ap=document.createElement("span");ap.className="pill adm";ap.textContent="ADMIN";w.appendChild(ap)}cell(tr,w);
+    cell(tr,fmt(r.quiz),"n");cell(tr,fmt(r.community),"n");cell(tr,r.bonus?(r.bonus>0?"+":"")+fmt(r.bonus):"\u2013","n");cell(tr,fmt(r.total),"n tot");cell(tr,String(r.topics||0),"n");
     cell(tr,handle(r.x,"https://x.com/"));
     var tg=cell(tr,handle(r.telegram,"https://t.me/"));
     if(r.telegram&&r.telegram_verified){var tk=document.createElement("span");tk.textContent=" \u2713";tk.title="Connected (verified by Telegram)";tk.style.color="#4ade80";tg.appendChild(tk)}
     if(r.telegram){var b=document.createElement("button");b.className="cp";b.textContent="copy";b.onclick=function(){navigator.clipboard.writeText("@"+r.telegram).then(function(){toast("Copied @"+r.telegram)})};tg.appendChild(b)}
     var dc=cell(tr,handle(r.discord,null));if(r.discord&&r.discord_verified){var ok=document.createElement("span");ok.textContent=" \u2713";ok.title="Connected (verified by Discord)";ok.style.color="#4ade80";dc.appendChild(ok)}
     cell(tr,new Date(r.joined).toLocaleDateString("en-US",{month:"short",day:"numeric"}));
+    var ac=document.createElement("div");ac.className="ra";
+    if(!r.is_admin){
+      ac.append(btn("Bonus","",function(){askBonus(r)}),btn("Reset","",function(){askReset(r)}),btn(r.banned?"Unban":"Ban","",function(){askBan(r)}),btn("Remove","red",function(){askRemove(r)}));
+    }
+    cell(tr,ac);
     tb.appendChild(tr)
   });
-  if(!rank){var tr=document.createElement("tr");var td=cell(tr,"No players match.");td.colSpan=10;td.className="no";tb.appendChild(tr)}
+  if(!rank){var tr=document.createElement("tr");var td=cell(tr,"No players match.");td.colSpan=12;td.className="no";tb.appendChild(tr)}
 }
 function visible(){var q=$("q").value.trim().toLowerCase(),only=$("onlyPts").checked;return ALL.filter(function(r){return !(only&&!r.total)&&(!q||[r.name,r.x,r.telegram,r.discord].join(" ").toLowerCase().indexOf(q)>=0)})}
 $("q").oninput=render;$("onlyPts").onchange=render;
 $("copyTg").onclick=function(){var l=visible().filter(function(r){return r.telegram}).map(function(r){return "@"+r.telegram});if(!l.length){toast("No Telegram usernames");return}navigator.clipboard.writeText(l.join("\n")).then(function(){toast("Copied "+l.length+" usernames")})};
 $("csv").onclick=function(){
   function esc(v){v=v==null?"":String(v);if(/^[=+\-@]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}
-  var rows=[["Rank","Name","Quiz","Community","Total","Topics","X","Telegram","Discord","Joined"]];
-  visible().forEach(function(r,i){rows.push([i+1,r.name,r.quiz,r.community,r.total,r.topics,r.x?"@"+r.x:"",r.telegram?"@"+r.telegram:"",r.discord||"",String(r.joined).slice(0,10)])});
+  var rows=[["Rank","Name","Quiz","Community","Bonus","Total","Topics","X","Telegram","Discord","Joined"]];
+  visible().forEach(function(r,i){rows.push([i+1,r.name,r.quiz,r.community,r.bonus||0,r.total,r.topics,r.x?"@"+r.x:"",r.telegram?"@"+r.telegram:"",r.discord||"",String(r.joined).slice(0,10)])});
   var blob=new Blob([rows.map(function(x){return x.map(esc).join(",")}).join("\n")],{type:"text/csv"});
   var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="midnight-quiz-players-"+new Date().toISOString().slice(0,10)+".csv";a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)
 };
+function btn(t,c,f){var b=document.createElement("button");b.className="sm"+(c?" "+c:"");b.textContent=t;b.onclick=f;return b}
+var M={};
+function modal(o){M=o;$("mT").textContent=o.title;$("mP").textContent=o.text;$("mE").textContent="";var f=$("mF");f.textContent="";
+  (o.fields||[]).forEach(function(x){var i=document.createElement("input");i.id=x.id;i.placeholder=x.ph||"";if(x.type)i.type=x.type;if(x.value!=null)i.value=x.value;f.appendChild(i)});
+  $("mOk").textContent=o.ok;$("mOk").className="b"+(o.danger?" red":"");$("mOk").disabled=false;$("mbox").classList.toggle("warn",!!o.danger);$("mdl").hidden=false;
+  var first=f.querySelector("input");(first||$("mOk")).focus()}
+function closeModal(){$("mdl").hidden=true;M={}}
+$("mCancel").onclick=closeModal;$("mdl").onclick=function(e){if(e.target===this)closeModal()};
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("mdl").hidden)closeModal()});
+$("mOk").onclick=async function(){if(!M.run)return;this.disabled=true;$("mE").textContent="";
+  try{var err=await M.run();if(err){$("mE").textContent=err;this.disabled=false;return}closeModal();if(M.done)toast(M.done);await reload()}catch(e){$("mE").textContent="Something went wrong. Try again.";this.disabled=false}};
+async function call(fn,args){var r=await sb.rpc(fn,args||{});return r.error?(r.error.code==="42501"?"Not allowed.":(r.error.message||"Failed.")):null}
+function askReset(r){modal({title:"Reset "+r.name+"\u2019s points?",text:"Their quiz, community and bonus points go to 0 and they can play every topic again. Their account and usernames stay.",ok:"Reset points",danger:true,done:"Points reset",run:function(){return call("admin_reset_user",{p_user:r.id})}})}
+function askRemove(r){modal({title:"Remove "+r.name+"?",text:"This deletes their account, points and connected usernames. They can sign up again as a new player.",ok:"Remove player",danger:true,done:"Player removed",run:function(){return call("admin_remove_user",{p_user:r.id})}})}
+function askBan(r){if(r.banned)modal({title:"Unban "+r.name+"?",text:"They can sign in and play again.",ok:"Unban",done:"Player unbanned",run:function(){return call("admin_ban_user",{p_user:r.id,p_ban:false})}});
+  else modal({title:"Ban "+r.name+"?",text:"They are signed out, can\u2019t sign in again with this account, and are hidden from the leaderboard. Their points are kept in case you unban them.",ok:"Ban player",danger:true,done:"Player banned",run:function(){return call("admin_ban_user",{p_user:r.id,p_ban:true})}})}
+function askBonus(r){modal({title:"Bonus points for "+r.name,text:"Use a positive number to add points, or a negative number (like -50) to take points away. It shows in their community points.",fields:[{id:"bP",ph:"Points, e.g. 100 or -50",type:"number"},{id:"bN",ph:"Note (optional), e.g. Event winner"}],ok:"Save bonus",done:"Bonus saved",
+  run:function(){var n=parseInt($("bP").value,10);if(!n)return Promise.resolve("Enter a number that isn\u2019t 0.");return call("admin_bonus",{p_user:r.id,p_points:n,p_note:$("bN").value})}})}
+$("resetAll").onclick=function(){modal({title:"Reset ALL points?",text:"Every player\u2019s quiz, community and bonus points go back to 0, and all topics can be played again. A backup of the current leaderboard is saved first. Accounts and usernames stay.",fields:[{id:"rC",ph:"Type RESET to confirm"}],ok:"Reset all",danger:true,done:"All points reset (backup saved)",
+  run:function(){if($("rC").value.trim()!=="RESET")return Promise.resolve("Type RESET in capitals to confirm.");return call("admin_reset_all",{p_confirm:"RESET"})}})};
+async function loadPosts(){var r=await sb.rpc("admin_posts");var box=$("posts");box.textContent="";if(r.error)return;
+  if(!r.data.length){var e=document.createElement("p");e.className="d";e.style.color="var(--mute)";e.textContent="No tasks yet.";box.appendChild(e)}
+  r.data.forEach(function(p){var row=document.createElement("div");row.className="trow";var l=document.createElement("span");
+    var a=document.createElement("a");a.href="https://x.com/"+encodeURIComponent(p.handle)+"/status/"+encodeURIComponent(p.tweet_id);a.target="_blank";a.rel="noopener";a.textContent="x.com/"+p.handle+"/status/"+p.tweet_id;
+    var sm=document.createElement("small");sm.textContent="Reply "+p.pts_reply+" \u00b7 Retweet "+p.pts_retweet+" \u00b7 Like "+p.pts_like+" \u00b7 Follow "+p.pts_follow+" \u00b7 "+p.players+" player"+(p.players===1?"":"s")+" claimed"+(p.active?"":" \u00b7 HIDDEN");
+    l.append(a,document.createElement("br"),sm);var ac=document.createElement("div");ac.className="ra";
+    ac.append(btn(p.active?"Hide":"Show","",async function(){var e=await call("admin_post_active",{p_id:p.id,p_active:!p.active});if(e)toast(e);else{toast(p.active?"Task hidden":"Task shown");loadPosts()}}),
+      btn("Delete","red",function(){modal({title:"Delete this task?",text:"The task is removed and the points players earned from it are taken away. To keep their points, use Hide instead.",ok:"Delete task",danger:true,done:"Task deleted",run:function(){return call("admin_delete_post",{p_id:p.id})}})}));
+    row.append(l,ac);box.appendChild(row)})}
+$("pAdd").onclick=async function(){var u=$("pUrl").value.trim();$("pMsg").textContent="";
+  if(!/^https?:\/\/(www\.)?(x|twitter)\.com\/[A-Za-z0-9_]{1,15}\/status\/[0-9]{5,25}/.test(u)){$("pMsg").textContent="Paste a full tweet link, like https://x.com/name/status/123\u2026";return}
+  var v=function(id){var n=parseInt($(id).value,10);return isNaN(n)?0:n};this.disabled=true;
+  var e=await call("admin_add_post",{p_url:u,p_reply:v("pRe"),p_retweet:v("pRt"),p_like:v("pLi"),p_follow:v("pFo")});this.disabled=false;
+  if(e){$("pMsg").textContent="Could not add: check the link and points (0\u20131000).";return}$("pUrl").value="";toast("Task added");loadPosts()};
+var QOPEN=true;
+async function loadQuiz(){var r=await sb.from("app_settings").select("value").eq("key","quiz_open").maybeSingle();QOPEN=!(r.data&&r.data.value===false);
+  $("qState").textContent=QOPEN?"Open":"Closed";$("qState").style.color=QOPEN?"#4ade80":"#ff8a8a";$("qToggle").textContent=QOPEN?"Close quiz":"Open quiz"}
+$("qToggle").onclick=function(){var open=!QOPEN;modal({title:open?"Open the quiz?":"Close the quiz?",text:open?"Everyone can play again.":"Nobody can start or continue a topic until you open it again. Points and the leaderboard stay.",ok:open?"Open quiz":"Close quiz",danger:!open,done:open?"Quiz opened":"Quiz closed",run:async function(){var e=await call("admin_set_quiz_open",{p_open:open});if(!e)await loadQuiz();return e}})};
+async function reload(){var r=await sb.rpc("admin_players");if(!r.error){ALL=r.data||[];stats();render()}}
+function stats(){$("cP").textContent=fmt(ALL.length);$("cA").textContent=fmt(ALL.filter(function(x){return x.topics>0}).length);$("cT").textContent=fmt(ALL.filter(function(x){return x.telegram}).length);$("cS").textContent=fmt(ALL.reduce(function(a,x){return a+x.total},0))}
 (async function(){
   var s=await sb.auth.getSession();
   if(!s.data.session){$("msg").innerHTML='Sign in first on the <a href="/quiz/">quiz page</a>, then come back here.';return}
   var r=await sb.rpc("admin_players");
   if(r.error){$("msg").textContent=r.error.code==="42501"?"This page is only for the site admin.":"Could not load players. Refresh to try again.";return}
-  ALL=r.data||[];
-  $("cP").textContent=fmt(ALL.length);
-  $("cA").textContent=fmt(ALL.filter(function(x){return x.topics>0}).length);
-  $("cT").textContent=fmt(ALL.filter(function(x){return x.telegram}).length);
-  $("cS").textContent=fmt(ALL.reduce(function(a,x){return a+x.total},0));
-  $("msg").hidden=true;$("app").hidden=false;render()
+  ALL=r.data||[];stats();
+  $("msg").hidden=true;$("app").hidden=false;render();loadPosts();loadQuiz()
 })();
 </script>
 </body>
