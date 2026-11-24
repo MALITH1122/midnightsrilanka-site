@@ -76,6 +76,7 @@
 .fi{display:flex;align-items:center;border:1px solid var(--line2);border-radius:8px;background:#0b0b0b;margin-bottom:16px}
 .fi:focus-within{border-color:#fff}.fi i{font-style:normal;color:var(--mute);padding:0 2px 0 10px}.fi input{flex:1;min-width:0;background:none;border:0;color:#fff;font:inherit;padding:11px 12px 11px 2px;outline:none}
 .conn{font:inherit;font-size:.85rem;color:#fff;background:#5865F2;border:0;border-radius:6px;padding:7px 12px;margin-right:6px;cursor:pointer;flex:none}.conn:hover{background:#4752c4}.conn:disabled{opacity:.6}
+.fi.nc i{display:none}.fi.nc input::placeholder{color:#777}.fi.nc input{padding-left:12px}
 .fi .ok{color:#4ade80;font-size:.85rem;margin-right:12px;flex:none}.fi input[readonly],.fi input:disabled{color:#e8e8e8;-webkit-text-fill-color:#e8e8e8;opacity:1;cursor:default;caret-color:transparent;pointer-events:none}.fi.lock,.fi.lock:focus-within{border-color:var(--line2);background:#101010}
 .tgw{display:flex;align-items:center;margin-right:6px;flex:none;min-height:28px}.tgw iframe{display:block}
 .fi .ic{width:18px;height:18px;margin-left:12px;opacity:.7;flex:none}
@@ -455,7 +456,8 @@ async function openProfile(){
   var f=["pmDc","pmTg","pmX"].map($).filter(function(e){return !e.disabled})[0];if(f&&window.matchMedia("(pointer:fine)").matches)f.focus();
 }
 function hasDiscord(){return !!(USER&&USER.identities&&USER.identities.some(function(i){return i.provider==="discord"}))}
-function setDiscord(v,ok){var i=$("pmDc");i.value=v||"";i.readOnly=!!ok;i.disabled=!!ok;i.tabIndex=ok?-1:0;i.parentNode.classList.toggle("lock",!!ok);$("pmDcOk").classList.toggle("hide",!ok);$("pmDcConn").classList.toggle("hide",!!ok);$("pmDcConn").disabled=false}
+function connectOnly(i,v,ok){i.value=ok?(v||""):"";i.placeholder=ok?"":"Not connected";i.readOnly=true;i.disabled=true;i.tabIndex=-1;i.parentNode.classList.toggle("lock",!!ok);i.parentNode.classList.toggle("nc",!ok)}
+function setDiscord(v,ok){connectOnly($("pmDc"),v,ok);$("pmDcOk").classList.toggle("hide",!ok);$("pmDcConn").classList.toggle("hide",!!ok);$("pmDcConn").disabled=false}
 $("pmDcConn").onclick=async function(){
   this.disabled=true;say("pmMsg","Opening Discord\u2026");
   try{sessionStorage.setItem("msl_link","discord")}catch(e){}
@@ -473,8 +475,11 @@ async function afterLink(){
   else if(hasDiscord())say("pmMsg","Discord connected \u2713");
 }
 var TG_BOT="MidnightSLAuthBot";
-function setTelegram(v,ok){var i=$("pmTg");i.value=v||"";i.readOnly=!!ok;i.disabled=!!ok;i.tabIndex=ok?-1:0;i.parentNode.classList.toggle("lock",!!ok);$("pmTgOk").classList.toggle("hide",!ok);$("pmTgW").classList.toggle("hide",!!ok);if(!ok)loadTgWidget()}
-function loadTgWidget(){var w=$("pmTgW");if(w.childNodes.length)return;if(!/[?&]tg=1\b/.test(location.search))return; /* test mode for now */var sc=document.createElement("script");sc.async=true;sc.src="https://telegram.org/js/telegram-widget.js?22";
+var TG_ON=/[?&]tg=1\b/.test(location.search); /* test mode for now */
+function setTelegram(v,ok){var i=$("pmTg");
+  if(TG_ON||ok){connectOnly(i,v,ok)}else{i.value=v||"";i.placeholder="yourname";i.readOnly=false;i.disabled=false;i.tabIndex=0;i.parentNode.classList.remove("lock","nc")}
+  $("pmTgOk").classList.toggle("hide",!ok);$("pmTgW").classList.toggle("hide",!!ok);if(!ok)loadTgWidget()}
+function loadTgWidget(){var w=$("pmTgW");if(w.childNodes.length)return;if(!TG_ON)return;var sc=document.createElement("script");sc.async=true;sc.src="https://telegram.org/js/telegram-widget.js?22";
   sc.setAttribute("data-telegram-login",TG_BOT);sc.setAttribute("data-size","small");sc.setAttribute("data-radius","6");sc.setAttribute("data-userpic","false");sc.setAttribute("data-onauth","onTelegramAuth(user)");w.appendChild(sc)}
 window.onTelegramAuth=async function(user){
   say("pmMsg","Connecting Telegram\u2026");
