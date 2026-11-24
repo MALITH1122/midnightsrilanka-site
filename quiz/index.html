@@ -295,7 +295,7 @@ main{padding-bottom:20px}
 <section id="missed" class="hide card panel">
   <span class="label">Time is up</span>
   <h2>Quiz missed</h2>
-  <p class="mute" id="mdetail">You didn’t answer the first question in 15 seconds, so this topic is not counted. You can play it again from the quiz dashboard.</p>
+  <p class="mute" id="mdetail">You didn’t answer the first question in <span class="secs">15</span> seconds, so this topic is not counted. You can play it again from the quiz dashboard.</p>
   <button class="btn" id="tohome">Go to quiz dashboard</button>
 </section>
 <section id="end" class="hide card panel">
@@ -351,7 +351,9 @@ var $ = function(i){return document.getElementById(i)};
 var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:false};
 var curView="";
 function show(id){setTimeout(function(){if(id==="auth")initGsi()},0);$("boot").classList.add("hide");if(id!==curView){curView=id;try{window.scrollTo({top:0,behavior:"instant"})}catch(e){window.scrollTo(0,0)}}["auth","namepage","home","play","missed","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
-$("n").textContent = LEN;$("sc").textContent = SECS;
+$("n").textContent = LEN;
+function setSecs(v){v=parseInt(v,10);if(!(v>=5&&v<=60))return;SECS=v;$("sc").textContent=SECS;document.querySelectorAll(".secs").forEach(function(e){e.textContent=SECS})}
+setSecs(SECS);
 function buildRows(){$("grid").textContent="";CATS.forEach(function(c){
   var r=document.createElement("div");r.className="qrow";
   r.innerHTML="<div class='qt'><span></span><em></em></div><div class='qs'></div><button class='qb'>Play</button>";
@@ -363,7 +365,7 @@ function applySet(name){if(!SETS[name])name="crypto";var changed=name!==QSET||!$
 buildRows();
 var SB_URL="https://pesyetsbbjmprpwpdvze.supabase.co",SB_KEY="sb_publishable_aMZJN7rKW2or4of-FdoV_g_hu8Zi3hK";
 var sb=window.supabase.createClient(SB_URL,SB_KEY);
-sb.from("app_settings").select("value").eq("key","quiz_set").maybeSingle().then(function(r){if(r.data)applySet(r.data.value)},function(){});
+sb.from("app_settings").select("key,value").in("key",["quiz_set","quiz_seconds"]).then(function(r){(r.data||[]).forEach(function(x){if(x.key==="quiz_set")applySet(x.value);if(x.key==="quiz_seconds")setSecs(x.value)})},function(){});
 var USER=null,NAME="",PLAYED={},SCORES={},POSTS=[],CLAIMED={},ST={quiz:0,community:0,total:0,rank:null};var MAXQ=250;
 function say(id,t){$(id).textContent=t}
 function cleanName(v){return (v||"").replace(/\s+/g," ").trim().slice(0,20)}
@@ -387,7 +389,7 @@ function renderStats(){
 }
 var PROG={},QUIZ_OPEN=true;
 async function loadPlayed(){
-  try{var st=await sb.from("app_settings").select("key,value").in("key",["quiz_open","quiz_set"]);(st.data||[]).forEach(function(x){if(x.key==="quiz_open")QUIZ_OPEN=x.value!==false;if(x.key==="quiz_set")applySet(x.value)})}catch(e){}
+  try{var st=await sb.from("app_settings").select("key,value").in("key",["quiz_open","quiz_set","quiz_seconds"]);(st.data||[]).forEach(function(x){if(x.key==="quiz_open")QUIZ_OPEN=x.value!==false;if(x.key==="quiz_set")applySet(x.value);if(x.key==="quiz_seconds")setSecs(x.value)})}catch(e){}
   var r=await sb.rpc("my_played");
   PLAYED={};
   if(!r.error&&Array.isArray(r.data))r.data.forEach(function(c){PLAYED[c]=true});
@@ -713,7 +715,7 @@ async function finish(){
   var r=await sb.rpc("finish_quiz",{p_attempt:S.attempt});
   if(r.error){say("escore","");say("edetail","Could not finalize your score. Your answers are saved. Check your connection and try again.");$("retry").classList.remove("hide");return}
   say("escore",r.data.score+" pts");
-  say("edetail",r.data["right"]+" of "+S.total+" correct. Each correct answer earns 10 points plus up to "+SECS+" bonus points for speed.");
+  say("edetail",r.data["right"]+" of "+S.total+" correct. Each correct answer earns 10 points plus up to 15 bonus points for speed.");
   loadPlayed();loadLB();loadStats();
   $("nextq").classList.toggle("hide",!CATS.some(function(c){return !PLAYED[c.id]}))
 }
