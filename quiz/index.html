@@ -254,7 +254,7 @@ main{padding-bottom:20px}
 </section>
 <div class="mdl" id="leave" role="dialog" aria-modal="true" aria-labelledby="leaveT"><div class="box">
   <h3 id="leaveT">Leave this quiz?</h3>
-  <p>If you leave now, this topic counts as played and you can’t play it again.</p>
+  <p>You can continue this topic later. The question on screen now will count as missed, and you keep the points you’ve earned so far.</p>
   <div class="acts"><button class="btn alt" id="stay">Keep playing</button><button class="btn" id="goleave">Leave quiz</button></div>
 </div></div>
 <section id="missed" class="hide card panel">
@@ -320,8 +320,8 @@ function say(id,t){$(id).textContent=t}
 function cleanName(v){return (v||"").replace(/\s+/g," ").trim().slice(0,20)}
 function renderCards(){
   var n=0;
-  CATS.forEach(function(c){var p=!!PLAYED[c.id];if(p)n++;c.btn.disabled=p;c.btn.textContent=p?"\u2713 Played":"Play";
-    var q=c.row.querySelector(".qs");if(p&&SCORES[c.id]!=null){q.textContent=SCORES[c.id]+" pts";q.classList.remove("mute")}else{q.textContent=p?"":"up to "+MAXQ;q.classList.toggle("mute",!p)}});
+  CATS.forEach(function(c){var p=!!PLAYED[c.id],g=!p&&PROG[c.id];if(p)n++;c.btn.disabled=p;c.btn.textContent=p?"\u2713 Played":g?"Continue":"Play";c.btn.setAttribute("aria-label",(g?"Continue ":"Play ")+c.name);
+    var q=c.row.querySelector(".qs");if(p&&SCORES[c.id]!=null){q.textContent=SCORES[c.id]+" pts";q.classList.remove("mute")}else if(g){q.textContent="from Q"+g.next+" of "+g.total;q.classList.add("mute")}else{q.textContent=p?"":"up to "+MAXQ;q.classList.toggle("mute",!p)}});
   $("qCount").textContent=n+"/"+CATS.length;renderStats()
 }
 function renderStats(){
@@ -335,10 +335,13 @@ function renderStats(){
   $("sTot").textContent=ST.quiz+ST.community;$("sLeft").textContent=qLeft+cLeft;
   $("sRank").textContent=ST.rank?"#"+ST.rank:"\u2013"
 }
+var PROG={};
 async function loadPlayed(){
   var r=await sb.rpc("my_played");
   PLAYED={};
   if(!r.error&&Array.isArray(r.data))r.data.forEach(function(c){PLAYED[c]=true});
+  var g=await sb.rpc("my_progress");
+  PROG={};if(!g.error&&Array.isArray(g.data))g.data.forEach(function(x){PROG[x.category]=x});
   var q=await sb.from("quiz_results").select("category,score");
   SCORES={};if(!q.error&&q.data)q.data.forEach(function(x){SCORES[x.category]=(SCORES[x.category]||0)+x.score});
   renderCards()
@@ -520,7 +523,7 @@ async function start(c){
     say("lbmsg",r.error.code==="23505"?"You have already played this topic.":"Could not start the quiz. Try again.");
     loadPlayed();return
   }
-  S.cat=c;S.attempt=r.data;S.answered=false;$("play").classList.add("loading");say("q","");$("opts").innerHTML="";say("fb","");say("prog","");$("clock").textContent="";show("play");nextQ()
+  S.cat=c;S.attempt=r.data;S.answered=!!PROG[c.id];$("play").classList.add("loading");say("q","");$("opts").innerHTML="";say("fb","");say("prog","");$("clock").textContent="";show("play");nextQ()
 }
 async function nextQ(){
   S.locked=true;clearInterval(S.timer);
@@ -529,6 +532,7 @@ async function nextQ(){
   var t0=Date.now();
   var r=await sb.rpc("get_question",{p_attempt:S.attempt});
   var wait=220-(Date.now()-t0);if(wait>0)await new Promise(function(res){setTimeout(res,wait)});
+  if(r.error&&/no more questions/.test(r.error.message||"")){pl.classList.remove("loading");finish();return}
   if(r.error){say("q","Could not load the next question. Go back to the topics and try again.");$("opts").innerHTML="";pl.classList.remove("loading");return}
   var q=r.data;S.total=q.total;S.i=q.index;S.t=SECS;
   say("prog",S.cat.name+" \u00b7 Question "+(q.index+1)+" of "+q.total);
@@ -553,7 +557,7 @@ async function pick(k){
   say("fb",k<0?"Time is up.":"Saving your answer\u2026");
   var r=await sb.rpc("submit_answer",{p_attempt:S.attempt,p_index:S.i,p_choice:k});
   if(r.error){say("fb","Could not save your answer. Check your connection and refresh.");return}
-  if(!S.answered){S.answered=true;PLAYED[S.cat.id]=true;renderCards()}
+  if(!S.answered){S.answered=true}
   say("fb",k<0?"Time is up.":"Answer locked in.");
   $("next").textContent=S.i+1>=S.total?"See results":"Next question";
   $("next").classList.remove("inv");$("next").focus({preventScroll:true})
