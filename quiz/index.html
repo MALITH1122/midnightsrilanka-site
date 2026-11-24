@@ -441,17 +441,25 @@ function renderWho(){var w=$("who");w.textContent="";w.title="Signed in as "+NAM
   var t=document.createElement("span");t.textContent=NAME;var d=document.createElement("span");d.className="dot";d.setAttribute("aria-hidden","true");
   w.append(a,t,d)}
 function maskMail(e){if(!e)return "";var p=e.split("@");return p[0].slice(0,2)+"\u2026@"+(p[1]||"")}
+var CONTACTS=null;
+function applyContacts(d){$("pmX").value=(d&&d.x_handle)||"";setTelegram(d&&d.telegram,!!(d&&d.telegram_verified));setDiscord(d&&d.discord,!!(d&&d.discord_verified))}
+function loadingContacts(){["pmDc","pmTg"].forEach(function(id){var i=$(id);i.value="";i.placeholder="Loading\u2026";i.disabled=true;i.parentNode.classList.add("nc");i.parentNode.classList.remove("lock")});
+  ["pmDcConn","pmTgConn","pmDcOk","pmTgOk"].forEach(function(id){$(id).classList.add("hide")});$("pmX").value=""}
+async function fetchContacts(){
+  var r=await sb.from("user_contacts").select("x_handle,telegram,discord,discord_verified,telegram_verified").eq("user_id",USER.id).maybeSingle();
+  var d=(!r.error&&r.data)||{};
+  if(hasDiscord()&&!d.discord_verified){var sy=await sb.rpc("sync_discord");if(!sy.error&&sy.data&&sy.data.verified){d.discord=sy.data.discord;d.discord_verified=true}}
+  CONTACTS=d;return d}
 async function openProfile(){
   if(!USER)return;
   var av=$("pmAv"),n=avatarEl("pav");n.id="pmAv";av.replaceWith(n);
   say("pmT",NAME);say("pmName",NAME);
   var prov=(USER.app_metadata&&USER.app_metadata.provider)||"";say("pmMail",prov?"Signed in with "+prov.charAt(0).toUpperCase()+prov.slice(1):"Signed in");say("pmEmail",USER.email||"\u2014");
-  say("pmMsg","");$("pmX").value="";$("pmDc").value="";setTelegram("",false);
+  say("pmMsg","");
+  if(CONTACTS)applyContacts(CONTACTS);else loadingContacts();
   $("pm").classList.add("on");
-  setDiscord(null,false);
-  if(hasDiscord()){var sy=await sb.rpc("sync_discord");if(!sy.error&&sy.data&&sy.data.verified)setDiscord(sy.data.discord,true)}
-  var r=await sb.from("user_contacts").select("x_handle,telegram,discord,discord_verified,telegram_verified").eq("user_id",USER.id).maybeSingle();
-  if(!r.error&&r.data){$("pmX").value=r.data.x_handle||"";setTelegram(r.data.telegram,!!r.data.telegram_verified);setDiscord(r.data.discord,!!r.data.discord_verified)}else setTelegram("",false)
+  var d=await fetchContacts();
+  if($("pm").classList.contains("on")&&!$("pmX").matches(":focus"))applyContacts(d);
   var f=["pmDc","pmTg","pmX"].map($).filter(function(e){return !e.disabled})[0];if(f&&window.matchMedia("(pointer:fine)").matches)f.focus();
 }
 function hasDiscord(){return !!(USER&&USER.identities&&USER.identities.some(function(i){return i.provider==="discord"}))}
@@ -491,7 +499,7 @@ window.onTelegramAuth=async function(user){
   try{
     var res=await fetch(SB_URL+"/functions/v1/telegram-link",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+tok,"apikey":SB_KEY},body:JSON.stringify(user)});
     var d=await res.json().catch(function(){return {}});
-    if(res.ok&&d.verified){setTelegram(d.telegram,true);say("pmMsg","Telegram connected \u2713");return}
+    if(res.ok&&d.verified){setTelegram(d.telegram,true);if(CONTACTS){CONTACTS.telegram=d.telegram;CONTACTS.telegram_verified=true}say("pmMsg","Telegram connected \u2713");return}
     var m={no_username:"Your Telegram has no username. Set one in Telegram \u2192 Settings, then try again.",already_used:"That Telegram account is already used by another player.",expired:"That login expired. Try again.",not_configured:"Telegram connect isn\u2019t set up yet. Type your username for now."};
     say("pmMsg",m[d.error]||"Could not connect Telegram. Try again.");
   }catch(e){say("pmMsg","Could not connect Telegram. Check your connection.")}
@@ -511,9 +519,10 @@ $("pmSave").onclick=async function(){
   var r=await sb.rpc("save_contacts",{p_x:x,p_telegram:t,p_discord:d});
   $("pmSave").disabled=false;
   if(r.error){say("pmMsg","Could not save. Check the usernames and try again.");return}
+  if(CONTACTS)CONTACTS.x_handle=x||null;
   say("pmMsg","Saved \u2713");setTimeout(closeProfile,700)
 };
-function afterProfile(n){NAME=n;renderWho();setTimeout(afterLink,0);renderCards();show("home");loadPlayed();loadLB();loadPosts()}
+function afterProfile(n){NAME=n;renderWho();CONTACTS=null;fetchContacts().catch(function(){});setTimeout(afterLink,0);renderCards();show("home");loadPlayed();loadLB();loadPosts()}
 async function enter(session){
   if(!session){USER=null;NAME="";PLAYED={};SCORES={};CLAIMED={};ST={quiz:0,community:0,total:0,rank:null};show("auth");return}
   if(USER&&NAME&&session.user.id===USER.id)return;
