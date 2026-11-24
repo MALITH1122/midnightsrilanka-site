@@ -41,6 +41,7 @@ tr.isban td{opacity:.55}tr.isban td:last-child{opacity:1}
 .trow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-top:1px solid #1c1c1c;flex-wrap:wrap}.trow small{color:var(--mute)}.trow a{color:#fff}
 .form{display:grid;grid-template-columns:2fr repeat(4,92px) auto;gap:8px;margin-top:12px}.form input,.mbox input{background:#0b0b0b;border:1px solid var(--line2);border-radius:6px;color:#fff;font:inherit;padding:9px 10px;min-width:0}
 .form label{display:flex;flex-direction:column;gap:4px;font-size:.75rem;color:var(--mute)}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden}.seg button{font:inherit;font-size:.85rem;color:#cfcfcf;background:transparent;border:0;padding:8px 14px;cursor:pointer}.seg button+button{border-left:1px solid var(--line2)}.seg button.on{background:var(--acc);color:#fff}.seg button:not(.on):hover{background:#1a1a1a}
 .fmsg{min-height:1.3em;margin:8px 0 0;font-size:.88rem;color:#ff8a8a}
 .mdl{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);display:grid;place-items:center;z-index:99;padding:16px}.mdl[hidden]{display:none}
 .mbox{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:24px}.mbox.warn{border-color:#5a1a1a;box-shadow:0 0 40px rgba(255,60,60,.15)}
@@ -75,7 +76,8 @@ tr.isban td{opacity:.55}tr.isban td:last-child{opacity:1}
     </div>
     <div class="sec">
       <h2>Quiz</h2>
-      <p class="d">Open or close the quiz for everyone, e.g. between seasons. Players can still see their points.</p>
+      <p class="d">Choose which quiz is live, and open or close it for everyone (e.g. between seasons). Players can always see their points.</p>
+      <div class="trow"><span>Active quiz: <b id="qSetName" style="font-weight:500">…</b><br><small>Players see only the active quiz’s topics. Points from both quizzes stay on the leaderboard.</small></span><div class="seg" id="qSet"><button data-set="crypto">Crypto quiz</button><button data-set="midnight">Midnight quiz</button></div></div>
       <div class="trow"><span>Quiz status: <b id="qState" style="font-weight:500">…</b></span><button class="sm" id="qToggle">…</button></div>
     </div>
   </div>
@@ -165,8 +167,13 @@ $("pAdd").onclick=async function(){var u=$("pUrl").value.trim();$("pMsg").textCo
   var e=await call("admin_add_post",{p_url:u,p_reply:v("pRe"),p_retweet:v("pRt"),p_like:v("pLi"),p_follow:v("pFo")});this.disabled=false;
   if(e){$("pMsg").textContent="Could not add: check the link and points (0\u20131000).";return}$("pUrl").value="";toast("Task added");loadPosts()};
 var QOPEN=true;
-async function loadQuiz(){var r=await sb.from("app_settings").select("value").eq("key","quiz_open").maybeSingle();QOPEN=!(r.data&&r.data.value===false);
+var QSET="crypto",SETNAME={crypto:"Crypto quiz",midnight:"Midnight quiz"};
+async function loadQuiz(){var r=await sb.from("app_settings").select("key,value").in("key",["quiz_open","quiz_set"]);(r.data||[]).forEach(function(x){if(x.key==="quiz_open")QOPEN=x.value!==false;if(x.key==="quiz_set")QSET=x.value==="midnight"?"midnight":"crypto"});
+  $("qSetName").textContent=SETNAME[QSET];document.querySelectorAll("#qSet button").forEach(function(b){b.classList.toggle("on",b.dataset.set===QSET)});
   $("qState").textContent=QOPEN?"Open":"Closed";$("qState").style.color=QOPEN?"#4ade80":"#ff8a8a";$("qToggle").textContent=QOPEN?"Close quiz":"Open quiz"}
+document.querySelectorAll("#qSet button").forEach(function(b){b.onclick=function(){var to=b.dataset.set;if(to===QSET)return;
+  modal({title:"Switch to the "+SETNAME[to]+"?",text:"Players will see the "+SETNAME[to]+" topics right away. Points and progress from the "+SETNAME[QSET]+" are kept, and switching back shows them again.",ok:"Switch quiz",done:"Switched to the "+SETNAME[to],
+    run:async function(){var e=await call("admin_set_quiz_set",{p_set:to});if(!e)await loadQuiz();return e}})}});
 $("qToggle").onclick=function(){var open=!QOPEN;modal({title:open?"Open the quiz?":"Close the quiz?",text:open?"Everyone can play again.":"Nobody can start or continue a topic until you open it again. Points and the leaderboard stay.",ok:open?"Open quiz":"Close quiz",danger:!open,done:open?"Quiz opened":"Quiz closed",run:async function(){var e=await call("admin_set_quiz_open",{p_open:open});if(!e)await loadQuiz();return e}})};
 async function reload(){var r=await sb.rpc("admin_players");if(!r.error){ALL=r.data||[];stats();render()}}
 function stats(){$("cP").textContent=fmt(ALL.length);$("cA").textContent=fmt(ALL.filter(function(x){return x.topics>0}).length);$("cT").textContent=fmt(ALL.filter(function(x){return x.telegram}).length);$("cS").textContent=fmt(ALL.reduce(function(a,x){return a+x.total},0))}

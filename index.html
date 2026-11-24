@@ -427,7 +427,7 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
 </div></section>
 
 <div class="quizband"><div class="wrap">
-  <div><span class="label" style="margin-bottom:6px">Community quiz</span><h2>Test your crypto knowledge</h2></div>
+  <div><span class="label" style="margin-bottom:6px">Community quiz</span><h2 id="qbTitle">Test your crypto knowledge</h2></div>
   <a class="btn blue" href="/quiz/">Play the quiz →</a>
 </div></div>
 
@@ -573,5 +573,11 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
 })();
 </script>
 <script src="/assets/site.js"></script>
+<script>
+/* quiz banner follows the quiz chosen in the admin page */
+(function(){var h=document.getElementById("qbTitle");if(!h||!window.fetch)return;
+fetch("https://pesyetsbbjmprpwpdvze.supabase.co/rest/v1/app_settings?key=eq.quiz_set&select=value",{headers:{apikey:"sb_publishable_aMZJN7rKW2or4of-FdoV_g_hu8Zi3hK"}})
+.then(function(r){return r.json()}).then(function(d){if(d&&d[0]&&d[0].value==="midnight")h.textContent="Test what you know about Midnight"}).catch(function(){})})();
+</script>
 </body>
 </html>

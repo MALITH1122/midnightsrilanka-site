@@ -228,8 +228,8 @@ main{padding-bottom:20px}
   <div class="wrap">
   <div class="wbar glowbox">
     <div class="wtxt">
-      <h1>Crypto quiz</h1>
-      <p class="wlead">Test your crypto knowledge: Bitcoin, wallets, blockchain and staying safe. Each quiz has <span id="n"></span> questions and <span id="sc"></span> seconds per question. Faster answers earn bonus points.</p>
+      <h1 id="qTitle">Crypto quiz</h1>
+      <p class="wlead"><span id="qLead">Test your crypto knowledge: Bitcoin, wallets, blockchain and staying safe.</span> Each quiz has <span id="n"></span> questions and <span id="sc"></span> seconds per question. Faster answers earn bonus points.</p>
       <button type="button" class="wwho" id="who"></button>
     </div>
     <div class="chips"><div class="chip"><span>Total points</span><b id="sTot">0</b></div><div class="chip"><span>Points left</span><b id="sLeft">0</b></div><div class="chip"><span>Your rank</span><b id="sRank">–</b></div></div>
@@ -329,27 +329,41 @@ main{padding-bottom:20px}
 </div></footer>
 <script>
 var LEN = 10, SECS = 15;
-var CATS = [
+var SETS={
+crypto:{title:"Crypto quiz",lead:"Test your crypto knowledge: Bitcoin, wallets, blockchain and staying safe.",cats:[
 {id:"g_basics",name:"Crypto Basics",desc:"Simple ideas every beginner should know",tag:"Newcomers"},
 {id:"g_bitcoin",name:"Bitcoin",desc:"The first and biggest cryptocurrency",tag:"Everyone"},
 {id:"g_wallets",name:"Wallets and Keys",desc:"Keeping your crypto under your control",tag:"Newcomers"},
 {id:"g_chain",name:"Blockchain Basics",desc:"How blockchains and smart contracts work",tag:"Everyone"},
 {id:"g_safety",name:"Staying Safe",desc:"Spot scams and protect your crypto",tag:"Everyone"},
 {id:"g_defi",name:"Tokens and DeFi",desc:"NFTs, staking and decentralized apps",tag:"Holders"}
-];
+]},
+midnight:{title:"Midnight quiz",lead:"Test what you know about Midnight, privacy and blockchain.",cats:[
+{id:"basics",name:"Midnight Basics",desc:"What Midnight is and how it works",tag:"Newcomers"},
+{id:"nightdust",name:"NIGHT and DUST",desc:"The two-part token model",tag:"Holders"},
+{id:"compact",name:"Compact and Building",desc:"Developing private apps",tag:"Developers"},
+{id:"privacy",name:"Privacy and ZK",desc:"Proving without revealing",tag:"Everyone"},
+{id:"crypto",name:"Crypto",desc:"Wallets, keys and habits",tag:"Newcomers"},
+{id:"chain",name:"Blockchain",desc:"How chains and contracts work",tag:"Newcomers"}
+]}};
+var QSET="crypto",CATS=SETS.crypto.cats;
 var $ = function(i){return document.getElementById(i)};
 var S = {cat:null,attempt:null,total:LEN,i:0,t:0,timer:null,locked:true,busy:false};
 var curView="";
 function show(id){setTimeout(function(){if(id==="auth")initGsi()},0);$("boot").classList.add("hide");if(id!==curView){curView=id;try{window.scrollTo({top:0,behavior:"instant"})}catch(e){window.scrollTo(0,0)}}["auth","namepage","home","play","missed","end"].forEach(function(x){$(x).classList.toggle("hide",x!==id)});$("signout").classList.toggle("hide",id==="auth");$("signout2").classList.toggle("hide",id==="auth");var tg=document.querySelector(".hrow .tg");if(tg)tg.classList.toggle("hide",id!=="auth")}
 $("n").textContent = LEN;$("sc").textContent = SECS;
-CATS.forEach(function(c){
+function buildRows(){$("grid").textContent="";CATS.forEach(function(c){
   var r=document.createElement("div");r.className="qrow";
   r.innerHTML="<div class='qt'><span></span><em></em></div><div class='qs'></div><button class='qb'>Play</button>";
   r.querySelector("span").textContent=c.name;r.querySelector("em").textContent=c.desc;
   c.row=r;c.btn=r.querySelector("button");c.btn.setAttribute("aria-label","Play "+c.name);c.btn.onclick=function(){start(c)};$("grid").appendChild(r)
-});
+})}
+function applySet(name){if(!SETS[name])name="crypto";var changed=name!==QSET||!$("grid").children.length;QSET=name;CATS=SETS[name].cats;
+  $("qTitle").textContent=SETS[name].title;$("qLead").textContent=SETS[name].lead;if(changed){buildRows();if(typeof renderCards==="function"&&USER)renderCards()}}
+buildRows();
 var SB_URL="https://pesyetsbbjmprpwpdvze.supabase.co",SB_KEY="sb_publishable_aMZJN7rKW2or4of-FdoV_g_hu8Zi3hK";
 var sb=window.supabase.createClient(SB_URL,SB_KEY);
+sb.from("app_settings").select("value").eq("key","quiz_set").maybeSingle().then(function(r){if(r.data)applySet(r.data.value)},function(){});
 var USER=null,NAME="",PLAYED={},SCORES={},POSTS=[],CLAIMED={},ST={quiz:0,community:0,total:0,rank:null};var MAXQ=250;
 function say(id,t){$(id).textContent=t}
 function cleanName(v){return (v||"").replace(/\s+/g," ").trim().slice(0,20)}
@@ -373,7 +387,7 @@ function renderStats(){
 }
 var PROG={},QUIZ_OPEN=true;
 async function loadPlayed(){
-  try{var st=await sb.from("app_settings").select("value").eq("key","quiz_open").maybeSingle();QUIZ_OPEN=!(st.data&&st.data.value===false)}catch(e){}
+  try{var st=await sb.from("app_settings").select("key,value").in("key",["quiz_open","quiz_set"]);(st.data||[]).forEach(function(x){if(x.key==="quiz_open")QUIZ_OPEN=x.value!==false;if(x.key==="quiz_set")applySet(x.value)})}catch(e){}
   var r=await sb.rpc("my_played");
   PLAYED={};
   if(!r.error&&Array.isArray(r.data))r.data.forEach(function(c){PLAYED[c]=true});
@@ -650,7 +664,7 @@ async function start(c){
   var r=await sb.rpc("start_quiz",{p_category:c.id});
   S.busy=false;
   if(r.error){
-    var em=r.error.message||"";say("lbmsg",r.error.code==="23505"?"You have already played this topic.":/quiz closed/.test(em)?"The quiz is closed right now. Check back soon!":/banned/.test(em)?"Your account can\u2019t play the quiz.":"Could not start the quiz. Try again.");if(/quiz closed/.test(em)){QUIZ_OPEN=false;renderCards()}
+    var em=r.error.message||"";say("lbmsg",r.error.code==="23505"?"You have already played this topic.":/quiz closed/.test(em)?"The quiz is closed right now. Check back soon!":/not active/.test(em)?"This quiz changed. Refresh the page to see the new topics.":/banned/.test(em)?"Your account can\u2019t play the quiz.":"Could not start the quiz. Try again.");if(/quiz closed/.test(em)){QUIZ_OPEN=false;renderCards()}
     loadPlayed();return
   }
   S.cat=c;S.attempt=r.data;S.answered=!!PROG[c.id];$("play").classList.add("loading");say("q","");$("opts").innerHTML="";say("fb","");say("prog","");$("clock").textContent="";show("play");nextQ()
