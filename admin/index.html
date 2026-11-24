@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin · Players</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20789.37%20789.37'%3E%3Crect%20width='789.37'%20height='789.37'%20rx='170'%20fill='%2312142b'/%3E%3Cg%20transform='translate(130.7%20130.7)%20scale(.67)'%20fill='%23fff'%3E%3Cpath%20d='m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z'/%3E%3Crect%20x='357.64'%20y='357.64'%20width='74.09'%20height='74.09'/%3E%3Crect%20x='357.64'%20y='240.66'%20width='74.09'%20height='74.09'/%3E%3Crect%20x='357.64'%20y='123.69'%20width='74.09'%20height='74.09'/%3E%3C/g%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/supabase.js"></script>
+<style>
+body{background:#000;color:#fff}
+.ad{max-width:1180px;margin:0 auto;padding:30px 16px 60px}
+.ad h1{font-size:2rem;font-weight:500;margin:0}.sub{color:var(--mute);margin:4px 0 22px}
+.tag{display:inline-block;margin-left:10px;font-size:.72rem;letter-spacing:.1em;padding:3px 8px;border-radius:4px;background:#2a0b0b;color:#ff8a8a;border:1px solid #5a1a1a;vertical-align:middle}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.cards div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}.cards span{display:block;color:var(--mute);font-size:.85rem}.cards b{font-size:1.7rem;font-weight:300;font-variant-numeric:tabular-nums}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+#q{flex:1;min-width:220px;background:#0b0b0b;border:1px solid var(--line2);border-radius:8px;color:#fff;font:inherit;padding:10px 12px}
+.bar label{display:flex;gap:8px;align-items:center;color:#cfcfcf;font-size:.9rem;cursor:pointer}
+.b{font:inherit;color:#fff;background:var(--acc);border:1px solid var(--acc);border-radius:4px;padding:10px 16px;cursor:pointer}.b.alt{background:transparent;border-color:var(--line2)}.b.alt:hover{border-color:#fff}
+.tw{border:1px solid var(--line);border-radius:14px;overflow:auto;background:#0b0b0b}
+table{width:100%;border-collapse:collapse;font-size:.93rem;min-width:900px}
+th{text-align:left;color:var(--mute);font-weight:400;font-size:.82rem;padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid #1c1c1c;white-space:nowrap}tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}td.tot{font-weight:500}
+td a{color:#fff;text-decoration:none;border-bottom:1px dotted #555}.no{color:#555}
+.cp{font:inherit;font-size:.75rem;color:var(--mute);margin-left:6px;cursor:pointer;background:none;border:0;padding:0}.cp:hover{color:#fff}
+.who{display:flex;align-items:center;gap:10px}.av{width:26px;height:26px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font-size:.8rem;flex:none}
+.rk{color:#6f6fff}.msg{color:#cfcfcf;padding:30px 0}.msg a{color:#fff}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:8px 16px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none}#toast.on{opacity:1}
+@media (max-width:700px){.cards{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="ad">
+  <h1>Players <span class="tag">ADMIN ONLY</span></h1>
+  <p class="sub">Everyone who signed up for the quiz, with their points and contact usernames.</p>
+  <div id="msg" class="msg">Loading…</div>
+  <div id="app" hidden>
+    <div class="cards"><div><span>Players</span><b id="cP">0</b></div><div><span>Played at least 1 topic</span><b id="cA">0</b></div><div><span>Added Telegram</span><b id="cT">0</b></div><div><span>Total points given</span><b id="cS">0</b></div></div>
+    <div class="bar"><input id="q" type="search" placeholder="Search name, X, Telegram or Discord…" aria-label="Search players"><label><input type="checkbox" id="onlyPts" checked> Only players with points</label><button class="b alt" id="copyTg">Copy Telegram list</button><button class="b" id="csv">Download CSV</button></div>
+    <div class="tw"><table><thead><tr><th>#</th><th>Name</th><th class="n">Quiz</th><th class="n">Community</th><th class="n">Total</th><th class="n">Topics</th><th>X</th><th>Telegram</th><th>Discord</th><th>Joined</th></tr></thead><tbody id="rows"></tbody></table></div>
+  </div>
+</div>
+<div id="toast"></div>
+<script>
+var SB_URL="https://pesyetsbbjmprpwpdvze.supabase.co",SB_KEY="sb_publishable_aMZJN7rKW2or4of-FdoV_g_hu8Zi3hK";
+var sb=window.supabase.createClient(SB_URL,SB_KEY),ALL=[];
+function $(i){return document.getElementById(i)}
+function fmt(n){return Number(n||0).toLocaleString("en-US")}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},1400)}
+function cell(tr,txt,cls){var td=document.createElement("td");if(cls)td.className=cls;if(txt instanceof Node)td.appendChild(txt);else td.textContent=txt;tr.appendChild(td);return td}
+function handle(v,url){if(!v){var s=document.createElement("span");s.className="no";s.textContent="—";return s}
+  if(!url){return document.createTextNode(v)}var a=document.createElement("a");a.href=url+encodeURIComponent(v);a.target="_blank";a.rel="noopener";a.textContent="@"+v;return a}
+function render(){
+  var q=$("q").value.trim().toLowerCase(),only=$("onlyPts").checked,tb=$("rows");tb.textContent="";var rank=0;
+  ALL.forEach(function(r){
+    if(only&&!r.total)return;
+    var hay=[r.name,r.x,r.telegram,r.discord].join(" ").toLowerCase();if(q&&hay.indexOf(q)<0)return;
+    rank++;var tr=document.createElement("tr");
+    cell(tr,String(rank),"rk");
+    var w=document.createElement("div");w.className="who";var av=document.createElement("span");av.className="av";av.textContent=(r.name||"?").charAt(0).toUpperCase();var nm=document.createElement("span");nm.textContent=r.name;w.append(av,nm);cell(tr,w);
+    cell(tr,fmt(r.quiz),"n");cell(tr,fmt(r.community),"n");cell(tr,fmt(r.total),"n tot");cell(tr,String(r.topics||0),"n");
+    cell(tr,handle(r.x,"https://x.com/"));
+    var tg=cell(tr,handle(r.telegram,"https://t.me/"));
+    if(r.telegram){var b=document.createElement("button");b.className="cp";b.textContent="copy";b.onclick=function(){navigator.clipboard.writeText("@"+r.telegram).then(function(){toast("Copied @"+r.telegram)})};tg.appendChild(b)}
+    cell(tr,handle(r.discord,null));
+    cell(tr,new Date(r.joined).toLocaleDateString("en-US",{month:"short",day:"numeric"}));
+    tb.appendChild(tr)
+  });
+  if(!rank){var tr=document.createElement("tr");var td=cell(tr,"No players match.");td.colSpan=10;td.className="no";tb.appendChild(tr)}
+}
+function visible(){var q=$("q").value.trim().toLowerCase(),only=$("onlyPts").checked;return ALL.filter(function(r){return !(only&&!r.total)&&(!q||[r.name,r.x,r.telegram,r.discord].join(" ").toLowerCase().indexOf(q)>=0)})}
+$("q").oninput=render;$("onlyPts").onchange=render;
+$("copyTg").onclick=function(){var l=visible().filter(function(r){return r.telegram}).map(function(r){return "@"+r.telegram});if(!l.length){toast("No Telegram usernames");return}navigator.clipboard.writeText(l.join("\n")).then(function(){toast("Copied "+l.length+" usernames")})};
+$("csv").onclick=function(){
+  function esc(v){v=v==null?"":String(v);if(/^[=+\-@]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}
+  var rows=[["Rank","Name","Quiz","Community","Total","Topics","X","Telegram","Discord","Joined"]];
+  visible().forEach(function(r,i){rows.push([i+1,r.name,r.quiz,r.community,r.total,r.topics,r.x?"@"+r.x:"",r.telegram?"@"+r.telegram:"",r.discord||"",String(r.joined).slice(0,10)])});
+  var blob=new Blob([rows.map(function(x){return x.map(esc).join(",")}).join("\n")],{type:"text/csv"});
+  var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="midnight-quiz-players-"+new Date().toISOString().slice(0,10)+".csv";a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)
+};
+(async function(){
+  var s=await sb.auth.getSession();
+  if(!s.data.session){$("msg").innerHTML='Sign in first on the <a href="/quiz/">quiz page</a>, then come back here.';return}
+  var r=await sb.rpc("admin_players");
+  if(r.error){$("msg").textContent=r.error.code==="42501"?"This page is only for the site admin.":"Could not load players. Refresh to try again.";return}
+  ALL=r.data||[];
+  $("cP").textContent=fmt(ALL.length);
+  $("cA").textContent=fmt(ALL.filter(function(x){return x.topics>0}).length);
+  $("cT").textContent=fmt(ALL.filter(function(x){return x.telegram}).length);
+  $("cS").textContent=fmt(ALL.reduce(function(a,x){return a+x.total},0));
+  $("msg").hidden=true;$("app").hidden=false;render()
+})();
+</script>
+</body>
+</html>
