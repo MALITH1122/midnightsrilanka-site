@@ -475,7 +475,7 @@ async function afterLink(){
   else if(hasDiscord())say("pmMsg","Discord connected \u2713");
 }
 var TG_BOT="MidnightSLAuthBot";
-var TG_ON=/[?&]tg=1\b/.test(location.search); /* test mode for now */
+var TG_ON=true;
 function setTelegram(v,ok){var i=$("pmTg");
   if(TG_ON||ok){connectOnly(i,v,ok)}else{i.value=v||"";i.placeholder="yourname";i.readOnly=false;i.disabled=false;i.tabIndex=0;i.parentNode.classList.remove("lock","nc")}
   $("pmTgOk").classList.toggle("hide",!ok);$("pmTgW").classList.toggle("hide",!!ok);if(!ok)loadTgWidget()}
