@@ -67,6 +67,17 @@
 .mdl .box{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:26px;box-shadow:0 0 40px rgba(0,0,254,.25);transform:translateY(8px);transition:transform .2s}
 .mdl.on .box{transform:none}
 .mdl h3{margin:0 0 8px;font-size:1.3rem;font-weight:500}.mdl p{margin:0 0 22px;color:#cfcfcf}
+.pbox{max-width:440px!important;padding:0!important;overflow-y:auto;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px)}
+#pm{z-index:10000}
+.phead{display:flex;align-items:center;gap:14px;padding:22px 24px;border-bottom:1px solid var(--line)}
+.pav{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0000fe,#6a6aff);display:grid;place-items:center;font-size:1.5rem;font-weight:500;color:#fff;flex:none;object-fit:cover}
+.phead h3{margin:0!important;font-size:1.25rem!important}.phead small{color:var(--mute);font-size:.85rem;display:block;word-break:break-all}
+.pbody{padding:20px 24px 24px}.fl{display:block;font-size:.85rem;color:var(--mute);margin:0 0 6px}
+.fi{display:flex;align-items:center;border:1px solid var(--line2);border-radius:8px;background:#0b0b0b;margin-bottom:16px}
+.fi:focus-within{border-color:#fff}.fi i{font-style:normal;color:var(--mute);padding:0 2px 0 10px}.fi input{flex:1;min-width:0;background:none;border:0;color:#fff;font:inherit;padding:11px 12px 11px 2px;outline:none}
+.fi .ic{width:18px;height:18px;margin-left:12px;opacity:.7;flex:none}
+.fixed{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 12px;border:1px dashed var(--line2);border-radius:8px;margin-bottom:16px;color:#e8e8e8}.fixed span{color:var(--mute);font-size:.8rem;white-space:nowrap}
+.pnote{font-size:.82rem;color:var(--mute);margin:2px 0 6px!important}.pmsg{font-size:.85rem;min-height:1.3em;margin:0 0 12px!important;color:#9b9bff}
 .mdl .acts{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
 main .mdl .btn{margin:0}
 @media (prefers-reduced-motion:reduce){.qbody{transition:none}}
@@ -79,8 +90,8 @@ main .mdl .btn{margin:0}
 
 .wbar{display:flex;align-items:center;gap:24px;margin-top:28px;padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
 .wtxt{flex:1;min-width:0}.wbar h1{font-size:1.7rem;font-weight:500;margin:0 0 6px;line-height:1.2}
-.wlead{margin:0;color:#cfcfcf;font-size:.98rem;max-width:640px}.wwho{display:inline-flex;align-items:center;gap:9px;margin:12px 0 0;padding:5px 14px 5px 5px;border:1px solid var(--line2);border-radius:999px;color:#e8e8e8;font-size:.92rem}
-.wwho:empty{display:none}.wwho .av{width:26px;height:26px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font-weight:500;font-size:.85rem;color:#fff}
+.wlead{margin:0;color:#cfcfcf;font-size:.98rem;max-width:640px}.wwho{font:inherit;background:none;cursor:pointer;transition:border-color .2s;display:inline-flex;align-items:center;gap:9px;margin:12px 0 0;padding:5px 14px 5px 5px;border:1px solid var(--line2);border-radius:999px;color:#e8e8e8;font-size:.92rem}
+.wwho:empty{display:none}.wwho:hover{border-color:#fff}.wwho img.av{object-fit:cover}.wwho .ed{color:var(--mute);font-size:.8rem;margin-left:2px}.wwho .av{width:26px;height:26px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font-weight:500;font-size:.85rem;color:#fff}
 .wwho .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80}
 .chips{display:flex;gap:10px;flex:none}.chip{padding:10px 16px;border:1px solid var(--line2);border-radius:12px;text-align:center;min-width:118px}
 .chip span{display:block;font-size:.8rem;color:var(--mute)}.chip b{display:block;font-size:1.5rem;font-weight:400;font-variant-numeric:tabular-nums}
@@ -159,6 +170,7 @@ main .btn:not(.out){background:var(--acc);color:#fff;border-color:var(--acc);pad
 main .btn:hover{background:var(--acchov)}
 main .btn.alt{background:transparent;border-color:var(--line2)}
 main .btn.alt:hover{border-color:#fff}
+.mdl .btn{background:var(--acc);color:#fff;border-color:var(--acc);padding:12px 24px;margin:0}.mdl .btn:hover{background:var(--acchov)}.mdl .btn.alt{background:transparent;border-color:var(--line2)}.mdl .btn.alt:hover{border-color:#fff;background:transparent}.mdl .btn:disabled{opacity:.6}
 .nav a.on{color:#fff;border-bottom-color:#fff}
 .hdr-right{display:flex;align-items:center;gap:10px}
 @media (max-width:1270px){#signout{display:none}}
@@ -214,7 +226,7 @@ main{padding-bottom:20px}
     <div class="wtxt">
       <h1>Crypto quiz</h1>
       <p class="wlead">Test your crypto knowledge: Bitcoin, wallets, blockchain and staying safe. Each quiz has <span id="n"></span> questions and <span id="sc"></span> seconds per question. Faster answers earn bonus points.</p>
-      <p class="wwho" id="who"></p>
+      <button type="button" class="wwho" id="who"></button>
     </div>
     <div class="chips"><div class="chip"><span>Total points</span><b id="sTot">0</b></div><div class="chip"><span>Points left</span><b id="sLeft">0</b></div><div class="chip"><span>Your rank</span><b id="sRank">–</b></div></div>
   </div>
@@ -257,6 +269,18 @@ main{padding-bottom:20px}
   <button class="btn inv" id="next">Next question</button>
   </div>
 </section>
+<div class="mdl" id="pm" role="dialog" aria-modal="true" aria-labelledby="pmT"><div class="box pbox">
+  <div class="phead"><span class="pav" id="pmAv"></span><div><h3 id="pmT"></h3><small id="pmMail"></small></div></div>
+  <div class="pbody">
+    <label class="fl">Display name</label><div class="fixed"><span id="pmName" style="color:#e8e8e8;font-size:1rem"></span><span>can’t be changed</span></div>
+    <label class="fl" for="pmX">X (Twitter) username</label><div class="fi"><svg class="ic" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><i>@</i><input id="pmX" maxlength="16" placeholder="yourname" autocomplete="off"></div>
+    <label class="fl" for="pmTg">Telegram username</label><div class="fi"><svg class="ic" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg><i>@</i><input id="pmTg" maxlength="33" placeholder="yourname" autocomplete="off"></div>
+    <label class="fl" for="pmDc">Discord username</label><div class="fi"><svg class="ic" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.44.87-.61 1.25a18.3 18.3 0 0 0-5.49 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04 19.7 19.7 0 0 0-4.88 1.52.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-1.99a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.89a.08.08 0 0 0-.04.11c.36.7.78 1.36 1.23 1.99a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.09-2.15-2.42s.95-2.42 2.15-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"/></svg><i>@</i><input id="pmDc" maxlength="33" placeholder="yourname" autocomplete="off"></div>
+    <p class="pnote">Used only to send rewards and check community tasks. Only Midnight Sri Lanka admins can see these.</p>
+    <p class="pmsg" id="pmMsg" aria-live="polite"></p>
+    <div class="acts"><button class="btn alt" id="pmClose">Close</button><button class="btn" id="pmSave">Save</button></div>
+  </div>
+</div></div>
 <div class="mdl" id="leave" role="dialog" aria-modal="true" aria-labelledby="leaveT"><div class="box">
   <h3 id="leaveT">Leave this quiz?</h3>
   <p>You can continue this topic later. The question on screen now will count as missed, and you keep the points you’ve earned so far.</p>
@@ -403,10 +427,43 @@ $("b-mail").onclick=async function(){
   say("amsg",r.error?"Could not send the link: "+r.error.message:"Check your email for the sign-in link.")
 };
 $("signout").onclick=$("signout2").onclick=async function(){await sb.auth.signOut()};
-function renderWho(){var w=$("who");w.textContent="";w.title="Signed in as "+NAME;w.setAttribute("aria-label","Signed in as "+NAME);
-  var a=document.createElement("span");a.className="av";a.setAttribute("aria-hidden","true");a.textContent=(NAME||"?").charAt(0).toUpperCase();
+function avatarUrl(){var m=(USER&&USER.user_metadata)||{};var u=m.avatar_url||m.picture||"";return /^https:\/\//.test(u)?u:""}
+function avatarEl(cls){var u=avatarUrl(),a;
+  if(u){a=document.createElement("img");a.src=u;a.alt="";a.referrerPolicy="no-referrer";a.onerror=function(){var s=document.createElement("span");s.className=cls;s.textContent=(NAME||"?").charAt(0).toUpperCase();a.replaceWith(s)}}
+  else{a=document.createElement("span");a.textContent=(NAME||"?").charAt(0).toUpperCase()}
+  a.className=cls;a.setAttribute("aria-hidden","true");return a}
+function renderWho(){var w=$("who");w.textContent="";w.title="Signed in as "+NAME+" \u00b7 edit profile";w.setAttribute("aria-label","Signed in as "+NAME+". Open my profile");
+  var a=avatarEl("av");
   var t=document.createElement("span");t.textContent=NAME;var d=document.createElement("span");d.className="dot";d.setAttribute("aria-hidden","true");
   w.append(a,t,d)}
+function maskMail(e){if(!e)return "";var p=e.split("@");return p[0].slice(0,2)+"\u2026@"+(p[1]||"")}
+async function openProfile(){
+  if(!USER)return;
+  var av=$("pmAv"),n=avatarEl("pav");n.id="pmAv";av.replaceWith(n);
+  say("pmT",NAME);say("pmName",NAME);
+  var prov=(USER.app_metadata&&USER.app_metadata.provider)||"";say("pmMail",maskMail(USER.email)+(prov?" \u00b7 "+prov.charAt(0).toUpperCase()+prov.slice(1):""));
+  say("pmMsg","");$("pmX").value="";$("pmTg").value="";$("pmDc").value="";
+  $("pm").classList.add("on");$("pmX").focus();
+  var r=await sb.from("user_contacts").select("x_handle,telegram,discord").eq("user_id",USER.id).maybeSingle();
+  if(!r.error&&r.data){$("pmX").value=r.data.x_handle||"";$("pmTg").value=r.data.telegram||"";$("pmDc").value=r.data.discord||""}
+}
+function closeProfile(){$("pm").classList.remove("on")}
+["pm","leave"].forEach(function(id){document.body.appendChild($(id))});
+["pmX","pmTg","pmDc"].forEach(function(id){$(id).addEventListener("input",function(){if(this.value.charAt(0)==="@")this.value=this.value.replace(/^@+/,"")})});
+$("who").onclick=openProfile;$("pmClose").onclick=closeProfile;
+$("pm").onclick=function(e){if(e.target===this)closeProfile()};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeProfile()});
+$("pmSave").onclick=async function(){
+  var x=$("pmX").value.trim().replace(/^@/,""),t=$("pmTg").value.trim().replace(/^@/,""),d=$("pmDc").value.trim().replace(/^@/,"").toLowerCase();
+  if(x&&!/^[A-Za-z0-9_]{1,15}$/.test(x)){say("pmMsg","X username: letters, numbers and _ only, up to 15.");return}
+  if(t&&!/^[A-Za-z0-9_]{5,32}$/.test(t)){say("pmMsg","Telegram username: 5 to 32 letters, numbers or _.");return}
+  if(d&&!/^[a-z0-9_.]{2,32}$/.test(d)){say("pmMsg","Discord username: 2 to 32 lowercase letters, numbers, _ or .");return}
+  $("pmSave").disabled=true;say("pmMsg","Saving\u2026");
+  var r=await sb.rpc("save_contacts",{p_x:x,p_telegram:t,p_discord:d});
+  $("pmSave").disabled=false;
+  if(r.error){say("pmMsg","Could not save. Check the usernames and try again.");return}
+  say("pmMsg","Saved \u2713");setTimeout(closeProfile,700)
+};
 function afterProfile(n){NAME=n;renderWho();renderCards();show("home");loadPlayed();loadLB();loadPosts()}
 async function enter(session){
   if(!session){USER=null;NAME="";PLAYED={};SCORES={};CLAIMED={};ST={quiz:0,community:0,total:0,rank:null};show("auth");return}
