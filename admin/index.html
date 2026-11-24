@@ -65,6 +65,7 @@ function render(){
     cell(tr,fmt(r.quiz),"n");cell(tr,fmt(r.community),"n");cell(tr,fmt(r.total),"n tot");cell(tr,String(r.topics||0),"n");
     cell(tr,handle(r.x,"https://x.com/"));
     var tg=cell(tr,handle(r.telegram,"https://t.me/"));
+    if(r.telegram&&r.telegram_verified){var tk=document.createElement("span");tk.textContent=" \u2713";tk.title="Connected (verified by Telegram)";tk.style.color="#4ade80";tg.appendChild(tk)}
     if(r.telegram){var b=document.createElement("button");b.className="cp";b.textContent="copy";b.onclick=function(){navigator.clipboard.writeText("@"+r.telegram).then(function(){toast("Copied @"+r.telegram)})};tg.appendChild(b)}
     var dc=cell(tr,handle(r.discord,null));if(r.discord&&r.discord_verified){var ok=document.createElement("span");ok.textContent=" \u2713";ok.title="Connected (verified by Discord)";ok.style.color="#4ade80";dc.appendChild(ok)}
     cell(tr,new Date(r.joined).toLocaleDateString("en-US",{month:"short",day:"numeric"}));
