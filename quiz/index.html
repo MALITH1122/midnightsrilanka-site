@@ -75,7 +75,7 @@
 .pbody{padding:20px 24px 24px}.fl{display:block;font-size:.85rem;color:var(--mute);margin:0 0 6px}
 .fi{display:flex;align-items:center;border:1px solid var(--line2);border-radius:8px;background:#0b0b0b;margin-bottom:16px}
 .fi:focus-within{border-color:#fff}.fi i{font-style:normal;color:var(--mute);padding:0 2px 0 10px}.fi input{flex:1;min-width:0;background:none;border:0;color:#fff;font:inherit;padding:11px 12px 11px 2px;outline:none}
-.conn{font:inherit;font-size:.85rem;color:#fff;background:#5865F2;border:0;border-radius:6px;padding:7px 0;width:148px;text-align:center;margin-right:6px;cursor:pointer;flex:none}.conn:hover{background:#4752c4}.conn.tg{background:#229ED9}.conn.tg:hover{background:#1c86b9}.conn:disabled{opacity:.6}
+.conn{font:inherit;font-size:.85rem;color:#fff;background:#5865F2;border:0;border-radius:6px;padding:7px 0;width:148px;text-align:center;margin-right:6px;cursor:pointer;flex:none}.conn:hover{background:#4752c4}.conn.tg{background:#229ED9}.conn.tg:hover{background:#1c86b9}.conn.ed{background:transparent;border:1px solid var(--line2);width:auto;padding:6px 16px}.conn.ed:hover{background:transparent;border-color:#fff}.conn:disabled{opacity:.6}
 .fi.nc i{display:none}.fi.nc input::placeholder{color:#777}.fi.nc input{padding-left:12px}
 .fi .ok{color:#4ade80;font-size:.85rem;margin-right:12px;flex:none}.fi input[readonly],.fi input:disabled{color:#e8e8e8;-webkit-text-fill-color:#e8e8e8;opacity:1;cursor:default;caret-color:transparent;pointer-events:none}.fi.lock,.fi.lock:focus-within{border-color:var(--line2);background:#101010}
 .fi .ic{width:18px;height:18px;margin-left:12px;opacity:.7;flex:none}
@@ -279,7 +279,7 @@ main{padding-bottom:20px}
     <label class="fl">Email</label><div class="fixed"><span id="pmEmail" style="color:#e8e8e8;font-size:1rem;word-break:break-all"></span></div>
     <label class="fl" for="pmDc">Discord username</label><div class="fi"><svg class="ic" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.44.87-.61 1.25a18.3 18.3 0 0 0-5.49 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04 19.7 19.7 0 0 0-4.88 1.52.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-1.99a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.89a.08.08 0 0 0-.04.11c.36.7.78 1.36 1.23 1.99a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.09-2.15-2.42s.95-2.42 2.15-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"/></svg><i>@</i><input id="pmDc" maxlength="33" placeholder="yourname" autocomplete="off"><button type="button" class="conn" id="pmDcConn">Connect Discord</button><span class="ok hide" id="pmDcOk">✓ Connected</span></div>
     <label class="fl" for="pmTg">Telegram username</label><div class="fi"><svg class="ic" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg><i>@</i><input id="pmTg" maxlength="33" placeholder="yourname" autocomplete="off"><button type="button" class="conn tg" id="pmTgConn">Connect Telegram</button><span class="ok hide" id="pmTgOk">✓ Connected</span></div>
-    <label class="fl" for="pmX">X (Twitter) username</label><div class="fi"><svg class="ic" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><i>@</i><input id="pmX" maxlength="16" placeholder="yourname" autocomplete="off"></div>
+    <label class="fl" for="pmX">X (Twitter) username</label><div class="fi"><svg class="ic" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><i>@</i><input id="pmX" maxlength="16" placeholder="yourname" autocomplete="off"><button type="button" class="conn ed" id="pmXEd">Edit</button></div>
     <p class="pnote">Used only to send rewards and check community tasks. Only Midnight Sri Lanka admins can see these.</p>
     <p class="pmsg" id="pmMsg" aria-live="polite"></p>
     <div class="acts"><button class="btn alt" id="pmClose">Close</button><button class="btn" id="pmSave">Save</button></div>
@@ -442,9 +442,11 @@ function renderWho(){var w=$("who");w.textContent="";w.title="Signed in as "+NAM
   w.append(a,t,d)}
 function maskMail(e){if(!e)return "";var p=e.split("@");return p[0].slice(0,2)+"\u2026@"+(p[1]||"")}
 var CONTACTS=null;
-function applyContacts(d){$("pmX").value=(d&&d.x_handle)||"";setTelegram(d&&d.telegram,!!(d&&d.telegram_verified));setDiscord(d&&d.discord,!!(d&&d.discord_verified))}
+function setX(v){var i=$("pmX"),has=!!v;i.value=v||"";i.readOnly=has;i.disabled=has;i.tabIndex=has?-1:0;i.parentNode.classList.toggle("lock",has);$("pmXEd").classList.toggle("hide",!has)}
+$("pmXEd").onclick=function(){var i=$("pmX");i.readOnly=false;i.disabled=false;i.tabIndex=0;i.parentNode.classList.remove("lock");this.classList.add("hide");i.focus();i.setSelectionRange(i.value.length,i.value.length)};
+function applyContacts(d){setX(d&&d.x_handle);setTelegram(d&&d.telegram,!!(d&&d.telegram_verified));setDiscord(d&&d.discord,!!(d&&d.discord_verified))}
 function loadingContacts(){["pmDc","pmTg"].forEach(function(id){var i=$(id);i.value="";i.placeholder="Loading\u2026";i.disabled=true;i.parentNode.classList.add("nc");i.parentNode.classList.remove("lock")});
-  ["pmDcConn","pmTgConn","pmDcOk","pmTgOk"].forEach(function(id){$(id).classList.add("hide")});$("pmX").value=""}
+  ["pmDcConn","pmTgConn","pmDcOk","pmTgOk"].forEach(function(id){$(id).classList.add("hide")});setX("")}
 async function fetchContacts(){
   var r=await sb.from("user_contacts").select("x_handle,telegram,discord,discord_verified,telegram_verified").eq("user_id",USER.id).maybeSingle();
   var d=(!r.error&&r.data)||{};
@@ -519,7 +521,7 @@ $("pmSave").onclick=async function(){
   var r=await sb.rpc("save_contacts",{p_x:x,p_telegram:t,p_discord:d});
   $("pmSave").disabled=false;
   if(r.error){say("pmMsg","Could not save. Check the usernames and try again.");return}
-  if(CONTACTS)CONTACTS.x_handle=x||null;
+  if(CONTACTS)CONTACTS.x_handle=x||null;setX(x);
   say("pmMsg","Saved \u2713");setTimeout(closeProfile,700)
 };
 function afterProfile(n){NAME=n;renderWho();CONTACTS=null;fetchContacts().catch(function(){});setTimeout(afterLink,0);renderCards();show("home");loadPlayed();loadLB();loadPosts()}
