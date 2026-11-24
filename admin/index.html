@@ -66,7 +66,7 @@ function render(){
     cell(tr,handle(r.x,"https://x.com/"));
     var tg=cell(tr,handle(r.telegram,"https://t.me/"));
     if(r.telegram){var b=document.createElement("button");b.className="cp";b.textContent="copy";b.onclick=function(){navigator.clipboard.writeText("@"+r.telegram).then(function(){toast("Copied @"+r.telegram)})};tg.appendChild(b)}
-    cell(tr,handle(r.discord,null));
+    var dc=cell(tr,handle(r.discord,null));if(r.discord&&r.discord_verified){var ok=document.createElement("span");ok.textContent=" \u2713";ok.title="Connected (verified by Discord)";ok.style.color="#4ade80";dc.appendChild(ok)}
     cell(tr,new Date(r.joined).toLocaleDateString("en-US",{month:"short",day:"numeric"}));
     tb.appendChild(tr)
   });
