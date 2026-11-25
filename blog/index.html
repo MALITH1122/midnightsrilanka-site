@@ -124,14 +124,20 @@
   function fmtDate(t){return t?new Date(t).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}
   function plain(html){return new DOMParser().parseFromString(html||"","text/html").body.textContent.replace(/\s+/g," ").trim()}
   function bigImg(u){return u.replace(/\/s72(-[^/]*)?-c\//,"/w1200-h675-c/").replace(/=s72(-[^=]*)?-c$/,"=w1200-h675-c")}
-  function card(e){
-    var a=document.createElement("a");a.className="upd";a.href="/blog/?p="+pid(e);
-    var t=e["media$thumbnail"]&&e["media$thumbnail"].url;
-    if(t){var i=document.createElement("img");i.className="thumb";i.loading="lazy";i.alt="";i.src=bigImg(t);a.appendChild(i)}
+  var LOCAL="/blog/posts/index.json",LOCALCACHE=null;
+  function fromBlogger(e){var t=e["media$thumbnail"]&&e["media$thumbnail"].url;return{id:pid(e),title:(e.title&&e.title.$t)||"Untitled",date:e.published&&e.published.$t,thumb:t?bigImg(t):"",text:plain((e.content||e.summary||{}).$t)}}
+  function fromLocal(x){return{id:x.slug,local:true,title:x.title,date:x.date,thumb:x.cover,text:x.summary||""}}
+  function loadLocal(cb){if(LOCALCACHE)return cb(LOCALCACHE);fetch(LOCAL,{cache:"no-cache"}).then(function(r){return r.ok?r.json():[]}).then(function(d){LOCALCACHE=Array.isArray(d)?d:[];cb(LOCALCACHE)},function(){cb([])})}
+  function allPosts(n,cb){loadLocal(function(L){var loc=L.map(fromLocal);
+    jsonp(BLOG+"/feeds/posts/default?max-results="+n,function(d){var b=((d.feed&&d.feed.entry)||[]).map(fromBlogger);cb(sortP(loc.concat(b)),true)},function(){cb(sortP(loc),false)})})}
+  function sortP(a){return a.sort(function(x,y){return new Date(y.date)-new Date(x.date)})}
+  function card(o){
+    var a=document.createElement("a");a.className="upd";a.href="/blog/?p="+o.id;
+    if(o.thumb){var i=document.createElement("img");i.className="thumb";i.loading="lazy";i.alt="";i.src=o.thumb;a.appendChild(i)}
     var b=document.createElement("div");b.className="body";
-    var d=document.createElement("span");d.className="small";d.textContent=fmtDate(e.published&&e.published.$t);
-    var h=document.createElement("h3");h.textContent=(e.title&&e.title.$t)||"Untitled";
-    var txt=plain((e.content||e.summary||{}).$t);var p=document.createElement("p");p.textContent=txt.length>170?txt.slice(0,167)+"…":txt;
+    var d=document.createElement("span");d.className="small";d.textContent=fmtDate(o.date);
+    var h=document.createElement("h3");h.textContent=o.title;
+    var txt=o.text||"";var p=document.createElement("p");p.textContent=txt.length>170?txt.slice(0,167)+"…":txt;
     var m=document.createElement("span");m.className="more";m.innerHTML='Read more <span aria-hidden="true">→</span>';
     b.appendChild(d);b.appendChild(h);b.appendChild(p);b.appendChild(m);a.appendChild(b);return a;
   }
@@ -192,31 +198,41 @@
     return root.innerHTML;
   }
   function showList(){
-    jsonp(BLOG+"/feeds/posts/default?max-results=50",function(d){
-      var box=$("posts");box.innerHTML="";var es=(d.feed&&d.feed.entry)||[];
-      es.forEach(function(e){box.appendChild(card(e))});
-      if(!es.length)box.innerHTML='<p class="state">No posts yet.</p>';
-    },function(){$("posts").innerHTML='<p class="state">Posts can’t be loaded right now. Please try again in a moment.</p>'});
+    allPosts(50,function(all,ok){
+      var box=$("posts");box.innerHTML="";
+      all.forEach(function(o){box.appendChild(card(o))});
+      if(!all.length)box.innerHTML=ok?'<p class="state">No posts yet.</p>':'<p class="state">Posts can’t be loaded right now. Please try again in a moment.</p>';
+    });
+  }
+  function fillPost(id,title,date,html,cover){
+    $("ptitle").textContent=title;document.title=title+" | Midnight Sri Lanka";
+    $("pdate").textContent=fmtDate(date);
+    var words=plain(html).split(" ").length;
+    $("pread").textContent=Math.max(1,Math.round(words/180))+" min read";
+    $("pbody").innerHTML=(cover?'<figure><img src="'+cover+'" alt=""></figure>':"")+clean(html);
+    var url=location.origin+"/blog/?p="+id;
+    $("sharex").href="https://x.com/intent/post?text="+encodeURIComponent(title)+"&url="+encodeURIComponent(url);
+    $("sharetg").href="https://t.me/share/url?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(title);
+    $("copylink").onclick=function(){var b=this;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){b.textContent="Copied ✓"},function(){b.textContent="Copy failed"});setTimeout(function(){b.textContent="Copy link"},1600)};
+    allPosts(6,function(all){var box=$("moreposts");all.filter(function(x){return x.id!==id}).slice(0,3).forEach(function(x){box.appendChild(card(x))});if(!box.children.length)box.parentElement.hidden=true});
+  }
+  function showLocal(slug){
+    $("list").hidden=true;$("post").hidden=false;$("ptitle").textContent="Loading…";
+    loadLocal(function(L){
+      var x=L.filter(function(i){return i.slug===slug})[0];
+      if(!x){$("ptitle").textContent="Post not found";return}
+      fetch("/blog/posts/"+slug+".html",{cache:"no-cache"}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(h){fillPost(slug,x.title,x.date,h,x.cover)},function(){$("ptitle").textContent="This post can’t be loaded right now."});
+    });
   }
   function showPost(id){
     $("list").hidden=true;$("post").hidden=false;
     $("ptitle").textContent="Loading…";
     jsonp(BLOG+"/feeds/posts/default/"+encodeURIComponent(id),function(d){
       var e=d.entry;if(!e){$("ptitle").textContent="Post not found";return}
-      var title=(e.title&&e.title.$t)||"Untitled";
-      $("ptitle").textContent=title;document.title=title+" | Midnight Sri Lanka";
-      $("pdate").textContent=fmtDate(e.published&&e.published.$t);
-      var html=(e.content&&e.content.$t)||"";var words=plain(html).split(" ").length;
-      $("pread").textContent=Math.max(1,Math.round(words/180))+" min read";
-      $("pbody").innerHTML=clean(html);
-      var url=location.origin+"/blog/?p="+id;
-      $("sharex").href="https://x.com/intent/post?text="+encodeURIComponent(title)+"&url="+encodeURIComponent(url);
-      $("sharetg").href="https://t.me/share/url?url="+encodeURIComponent(url)+"&text="+encodeURIComponent(title);
-      $("copylink").onclick=function(){var b=this;(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(function(){b.textContent="Copied ✓"},function(){b.textContent="Copy failed"});setTimeout(function(){b.textContent="Copy link"},1600)};
-      jsonp(BLOG+"/feeds/posts/default?max-results=4",function(f){var box=$("moreposts");((f.feed&&f.feed.entry)||[]).filter(function(x){return pid(x)!==id}).slice(0,3).forEach(function(x){box.appendChild(card(x))});if(!box.children.length)box.parentElement.hidden=true},function(){$("moreposts").parentElement.hidden=true});
+      fillPost(id,(e.title&&e.title.$t)||"Untitled",e.published&&e.published.$t,(e.content&&e.content.$t)||"");
     },function(){$("ptitle").textContent="This post can’t be loaded right now.";$("pbody").innerHTML='<p><a href="'+BLOG+'" target="_blank" rel="noopener">Open the blog on Blogger ↗</a></p>'});
   }
-  if(PID&&/^\d+$/.test(PID))showPost(PID);else showList();
+  if(PID&&/^\d+$/.test(PID))showPost(PID);else if(PID&&/^[a-z0-9-]{1,80}$/.test(PID))showLocal(PID);else showList();
 })();
 </script>
 <script src="/assets/site.js"></script>

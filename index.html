@@ -521,38 +521,38 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
   });
 
   var BLOG="https://midnight-srilanka.blogspot.com";
-  window.renderPosts=function(data){
+  function plainTxt(raw){return new DOMParser().parseFromString(raw||"","text/html").body.textContent.replace(/\s+/g," ").trim()}
+  function postCard(o){
+    var a=document.createElement("a");a.className="upd";a.href="/blog/?p="+o.id;
+    if(o.thumb){var img=document.createElement("img");img.className="thumb";img.loading="lazy";img.alt="";img.src=o.thumb;a.appendChild(img)}
+    var body=document.createElement("div");body.className="body";
+    var date=document.createElement("span");date.className="small";
+    date.textContent=o.date?new Date(o.date).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"";
+    var h=document.createElement("h3");h.textContent=o.title;
+    var p=document.createElement("p");var txt=o.text||"";p.textContent=txt.length>160?txt.slice(0,157)+"…":txt;
+    body.appendChild(date);body.appendChild(h);body.appendChild(p);a.appendChild(body);return a;
+  }
+  function drawPosts(list,ok){
     var box=document.getElementById("posts");box.innerHTML="";
-    var entries=(data&&data.feed&&data.feed.entry)||[];
-    if(!entries.length){box.innerHTML='<p class="mute">No posts yet.</p>';return}
-    entries.forEach(function(e){
-      var link=(e.link||[]).filter(function(l){return l.rel==="alternate"})[0];
-      var href=link&&link.href;
-      if(!href||href.indexOf(BLOG)!==0)return;
-      var pm=(e.id&&e.id.$t||"").match(/post-(\d+)/);var a=document.createElement("a");a.className="upd";if(pm){a.href="/blog/?p="+pm[1]}else{a.href=href;a.target="_blank";a.rel="noopener"}
-      var thumb=e["media$thumbnail"]&&e["media$thumbnail"].url;
-      if(thumb){
-        var img=document.createElement("img");img.className="thumb";img.loading="lazy";img.alt="";
-        img.src=thumb.replace(/\/s72(-[^/]*)?-c\//,"/w1200-h675-c/").replace(/=s72(-[^=]*)?-c$/,"=w1200-h675-c");
-        a.appendChild(img);
-      }
-      var body=document.createElement("div");body.className="body";
-      var date=document.createElement("span");date.className="small";
-      var pub=e.published&&e.published.$t;
-      date.textContent=pub?new Date(pub).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"";
-      var h=document.createElement("h3");h.textContent=(e.title&&e.title.$t)||"Untitled";
-      var raw=(e.summary&&e.summary.$t)||(e.content&&e.content.$t)||"";
-      var txt=new DOMParser().parseFromString(raw,"text/html").body.textContent.replace(/\s+/g," ").trim();
-      var p=document.createElement("p");p.textContent=txt.length>160?txt.slice(0,157)+"…":txt;
-      body.appendChild(date);body.appendChild(h);body.appendChild(p);a.appendChild(body);box.appendChild(a);
-      if(window.__observeReveal)window.__observeReveal(a);
+    list.sort(function(x,y){return new Date(y.date)-new Date(x.date)}).slice(0,6).forEach(function(o){box.appendChild(postCard(o));if(window.__observeReveal)window.__observeReveal(box.lastChild)});
+    if(!box.children.length)box.innerHTML=ok?'<p class="mute">No posts yet.</p>':'<p class="mute">The latest posts can’t be loaded right now. Use “View all posts” below.</p>';
+  }
+  var LOCALP=[];
+  window.renderPosts=function(data){
+    var out=[];((data&&data.feed&&data.feed.entry)||[]).forEach(function(e){
+      var pm=(e.id&&e.id.$t||"").match(/post-(\d+)/);if(!pm)return;
+      var t=e["media$thumbnail"]&&e["media$thumbnail"].url;
+      out.push({id:pm[1],title:(e.title&&e.title.$t)||"Untitled",date:e.published&&e.published.$t,thumb:t?t.replace(/\/s72(-[^/]*)?-c\//,"/w1200-h675-c/").replace(/=s72(-[^=]*)?-c$/,"=w1200-h675-c"):"",text:plainTxt((e.summary&&e.summary.$t)||(e.content&&e.content.$t))});
     });
-    if(!box.children.length)box.innerHTML='<p class="mute">No posts yet.</p>';
+    drawPosts(LOCALP.concat(out),true);
   };
-  var s=document.createElement("script");
-  s.src=BLOG+"/feeds/posts/default?alt=json-in-script&max-results=6&callback=renderPosts";
-  s.onerror=function(){document.getElementById("posts").innerHTML='<p class="mute">The latest posts can’t be loaded right now. Use “View all posts” below.</p>'};
-  document.body.appendChild(s);
+  function loadBlogger(){
+    var s=document.createElement("script");
+    s.src=BLOG+"/feeds/posts/default?alt=json-in-script&max-results=6&callback=renderPosts";
+    s.onerror=function(){drawPosts(LOCALP.slice(),false)};
+    document.body.appendChild(s);
+  }
+  fetch("/blog/posts/index.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():[]}).then(function(d){LOCALP=(Array.isArray(d)?d:[]).map(function(x){return{id:x.slug,title:x.title,date:x.date,thumb:x.cover,text:x.summary||""}});loadBlogger()},function(){loadBlogger()});
 })();
 
 /* ---- motion & effects ---- */
