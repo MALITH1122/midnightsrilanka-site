@@ -3,42 +3,42 @@
   "slug": "state-of-the-network",
   "title": "Midnight නොවැම්බර් 2026: මාසයේ ලොකුම updates",
   "date": "2026-11-25T12:00:00+05:30",
-  "cover": "/blog/posts/img/state-of-the-network-v2.jpg",
+  "cover": "/blog/posts/img/state-of-the-network-v3.jpg",
   "summary": "නොවැම්බර් මාසය Midnight Network එකට ගොඩක් වැදගත් මාසයක් වුණා. UK බැංකුවක් Midnight එකට ආවා, Ledger 9 upgrade එක mainnet එකට ආවා, අලුත් apps තුනක් live වුණා. මෙන්න කෙටියෙන්ම දැනගන්න ඕන දේවල්."
  },
  {
   "slug": "privacy-and-compliance",
   "title": "Privacy සහ Compliance එකට යන්න පුළුවන්: Midnight Foundation ලෝක regulators ලට කියපු දේ",
   "date": "2026-11-24T12:00:00+05:30",
-  "cover": "/blog/posts/img/privacy-and-compliance-v2.jpg",
+  "cover": "/blog/posts/img/privacy-and-compliance-v3.jpg",
   "summary": "Crypto ගැන නීති හදන අය ගොඩක් වෙලාවට හිතන්නේ privacy කියන්නේ නීතියට විරුද්ධ දෙයක් කියලා. Midnight Foundation එක 2026 පුරාම US, UK සහ EU regulators ලට කියන්නේ ඒක එහෙම නොවෙයි කියලා. නොවැම්බර් 24 ඒ වැඩ ගැන update එකක් දුන්නා."
  },
  {
   "slug": "monument-bank-tokenized-deposits",
   "title": "UK බැංකුවක් Midnight එකේ tokenized deposits launch කළා",
   "date": "2026-11-17T12:00:00+05:30",
-  "cover": "/blog/posts/img/monument-bank-tokenized-deposits-v2.jpg",
+  "cover": "/blog/posts/img/monument-bank-tokenized-deposits-v3.jpg",
   "summary": "නොවැම්බර් 17 Monument Bank, public blockchain එකක retail deposits tokenize කරපු UK එකේ පළමු බැංකුව වුණා. ඒකට පාවිච්චි කළේ Midnight Network."
  },
  {
   "slug": "after-midnight-livestream",
   "title": "After Midnight: Midnight team එකේ අලුත් livestream series එක",
   "date": "2026-11-16T12:00:00+05:30",
-  "cover": "/blog/posts/img/after-midnight-livestream-v2.jpg",
+  "cover": "/blog/posts/img/after-midnight-livestream-v3.jpg",
   "summary": "Midnight team එක After Midnight කියලා අලුත් livestream series එකක් පටන් ගත්තා. Network updates, අලුත් features සහ ecosystem එකේ builders ලා ගැන මෙහි කතා කරනවා."
  },
  {
   "slug": "ledger-9-mainnet",
   "title": "Ledger 9 upgrade එක: Midnight mainnet එකට ආපු අලුත් දේවල්",
   "date": "2026-11-06T12:00:00+05:30",
-  "cover": "/blog/posts/img/ledger-9-mainnet-v2.jpg",
+  "cover": "/blog/posts/img/ledger-9-mainnet-v3.jpg",
   "summary": "නොවැම්බර් 6 Midnight mainnet එක Ledger 8 සිට Ledger 9 ට hard fork එකක් හරහා upgrade වුණා. Developers ලට සහ institutions ලට මේක ලොකු පියවරක්."
  },
  {
   "slug": "privacy-is-security",
   "title": "Privacy කියන්නේ security: Shielded assets ඔබව ආරක්ෂා කරන හැටි",
   "date": "2026-11-05T12:00:00+05:30",
-  "cover": "/blog/posts/img/privacy-is-security-v2.jpg",
+  "cover": "/blog/posts/img/privacy-is-security-v3.jpg",
   "summary": "සාමාන්‍ය blockchains වල ඔබේ balance එකයි transactions ටිකයි ඕන කෙනෙකුට බලන්න පුළුවන්. Hackers ලා ඒ data පාවිච්චි කරලා ඉලක්ක හොයනවා. Midnight Foundation CTO Sebastien Guillemot කියන්නේ privacy කියන්නේ security එකක් කියලා."
  }
 ]
