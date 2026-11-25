@@ -182,6 +182,18 @@ main .btn.alt:hover{border-color:#fff}
 .msout:hover{background:#1a1a1a}
 #boot{text-align:center;padding:120px 0;color:var(--mute)}
 main{padding-bottom:20px}
+
+/* two-tone tasks: quiz = navy, community = purple */
+.two>.col:nth-child(1){--acc:#1f3fd1;--tint:#0b1633;--edge:#1c3270}
+.two>.col:nth-child(2){--acc:#8b45f5;--tint:#170f2e;--edge:#3a2470}
+.two>.col .ttab{background:var(--acc)}
+.two>.col .tbody{background:var(--tint);border-color:var(--edge);border-top-color:var(--acc)}
+.two>.col:nth-child(1) .ttab{background:#132a8a}
+.two>.col:nth-child(1) .mypts b{color:#9db1ff}
+.two>.col:nth-child(2) .mypts b{color:#cdb2ff}
+.two>.col:nth-child(2) .ab{background:rgba(139,69,245,.12);border-color:rgba(139,69,245,.4)}
+.two>.col:nth-child(2) .ab.done,.two>.col:nth-child(2) .ab.claimed{background:rgba(139,69,245,.28);border-color:#8b45f5}
+.two>.col:nth-child(2) .ab .pts{color:#cdb2ff}
 </style>
 </head>
 <body>
