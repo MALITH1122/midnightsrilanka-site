@@ -506,8 +506,8 @@ async function afterX(){
     try{if(p.auth&&p.auth.logout)await p.auth.logout()}catch(e){}
     if(res.ok&&d.verified){setX(d.x,true);if(CONTACTS){CONTACTS.x_handle=d.x;CONTACTS.x_verified=true}say("pmMsg","X connected \u2713");return true}
     var m={already_used:"That X account is already used by another player.",no_username:"Could not read your X username. Try again.",no_identity_token:"X connect isn\u2019t fully set up yet. Please tell an admin."};
-    say("pmMsg",m[d.error]||"Could not connect X. Try again.");
-  }catch(e){console.error(e);say("pmMsg","X was not connected. Try again.")}
+    say("pmMsg",m[d.error]||("Could not connect X. Try again. ("+(d.error||res.status)+")"));
+  }catch(e){console.error(e);say("pmMsg","X was not connected. Try again. ("+String(e&&e.message||e).slice(0,80)+")")}
   return true;
 }
 function applyContacts(d){setX(d&&d.x_handle,!!(d&&d.x_verified));setTelegram(d&&d.telegram,!!(d&&d.telegram_verified));setDiscord(d&&d.discord,!!(d&&d.discord_verified))}
