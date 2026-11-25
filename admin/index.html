@@ -117,6 +117,8 @@ function render(){
     var ac=document.createElement("div");ac.className="ra";
     if(!r.is_admin){
       ac.append(btn("Bonus","",function(){askBonus(r)}),btn("Reset","",function(){askReset(r)}),btn(r.banned?"Unban":"Ban","",function(){askBan(r)}),btn("Remove","red",function(){askRemove(r)}));
+    }else{
+      ac.append(btn("Reset","",function(){askReset(r)}));
     }
     cell(tr,ac);
     tb.appendChild(tr)
