@@ -479,7 +479,7 @@ function renderWho(){var w=$("who");w.textContent="";w.title="Signed in as "+NAM
   w.append(a,t,d)}
 function maskMail(e){if(!e)return "";var p=e.split("@");return p[0].slice(0,2)+"\u2026@"+(p[1]||"")}
 var CONTACTS=null;
-var X_ON=(function(){try{if(/[?&]xbeta=1/.test(location.search))localStorage.setItem("msl_xbeta","1");return localStorage.getItem("msl_xbeta")==="1"}catch(e){return false}})();
+var X_ON=true;
 function setX(v,ok){var i=$("pmX");
   if(X_ON||ok){connectOnly(i,v,ok);$("pmXOk").classList.toggle("hide",!ok);$("pmXConn").classList.toggle("hide",!!ok);$("pmXConn").disabled=false;$("pmXEd").classList.add("hide");return}
   var has=!!v;i.value=v||"";i.placeholder="yourname";i.readOnly=has;i.disabled=has;i.tabIndex=has?-1:0;i.parentNode.classList.remove("nc");i.parentNode.classList.toggle("lock",has);$("pmXEd").classList.toggle("hide",!has);$("pmXConn").classList.add("hide");$("pmXOk").classList.add("hide")}
