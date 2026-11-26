@@ -239,6 +239,66 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
   <span><em>Average block time</em>6 s</span>
 </div></div>
 
+<style>
+#community .cn4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}
+#community .cnc{position:relative;border:1px solid var(--line2,#2a2a2a);border-radius:16px;padding:22px 22px 20px;background:linear-gradient(160deg,#0b1633 0%,#111 70%)}
+#community .cnc:nth-child(2){background:linear-gradient(160deg,#170f2e 0%,#111 70%)}
+#community .cnn{font-size:clamp(2.2rem,4.2vw,3.4rem);font-weight:500;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+#community .cnn sup{font-size:.45em;color:#8b9bff;margin-left:2px}
+#community .cnl{margin-top:10px;color:#ddd}#community .cns{margin-top:4px;color:var(--mute,#999);font-size:.85rem}
+#community .smp{position:absolute;top:10px;right:10px;font-size:.62rem;letter-spacing:.1em;background:#f59e0b;color:#000;border-radius:4px;padding:2px 6px}
+#community .cn2{display:grid;grid-template-columns:1fr 1.3fr;gap:16px;margin-top:16px}
+#community .box{border:1px solid var(--line2,#2a2a2a);border-radius:16px;padding:22px;background:#111}
+#community .box h3{margin:0 0 16px;font-weight:500;font-size:1.05rem}
+#community .rk{display:grid;grid-template-columns:78px 1fr 34px;align-items:center;gap:12px;margin:10px 0;font-size:.92rem}
+#community .rk .tr{height:12px;border-radius:9px;background:#1d1d28;overflow:hidden}
+#community .rk .tr i{display:block;height:100%;width:0;border-radius:9px;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+#community .rk b{font-weight:500;text-align:right}
+#community .tl{list-style:none;margin:0;padding:0;position:relative}
+#community .tl:before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(#1f3fd1,#8b45f5)}
+#community .tl li{position:relative;padding:0 0 14px 30px}#community .tl li:last-child{padding-bottom:0}
+#community .tl li:before{content:"";position:absolute;left:1px;top:5px;width:14px;height:14px;border-radius:50%;background:#000;border:2px solid #8b9bff}
+#community .tl li.now:before{background:#8b45f5;border-color:#c9a6ff;box-shadow:0 0 0 5px rgba(139,69,245,.25)}
+#community .tl time{display:block;color:var(--mute,#999);font-size:.8rem}
+@media (max-width:900px){#community .cn4{grid-template-columns:repeat(2,1fr)}#community .cn2{grid-template-columns:1fr}}
+</style>
+<section class="block" id="community"><div class="wrap">
+  <span class="label">Midnight Sri Lanka • Community in numbers</span>
+  <h2 class="h2">ලංකාවේ Midnight community එක වර්ධනය වෙන හැටි</h2>
+  <div class="cn4">
+    <div class="cnc"><span class="smp">SAMPLE</span><div class="cnn" data-to="1250">0</div><div class="cnl">Telegram members</div><div class="cns">+38% in the last 3 months</div></div>
+    <div class="cnc"><div class="cnn" data-to="30">0</div><div class="cnl">Nightforce ambassadors</div><div class="cns">18 Bravo · 9 Alpha · 2 Recruit</div></div>
+    <div class="cnc"><span class="smp">SAMPLE</span><div class="cnn" data-to="850">0</div><div class="cnl">X followers</div><div class="cns">@MidnightSL</div></div>
+    <div class="cnc"><div class="cnn" data-to="6" data-plus="1">0</div><div class="cnl">Sinhala articles</div><div class="cns">Official news, in our language</div></div>
+  </div>
+  <div class="cn2">
+    <div class="box"><h3>Nightforce ranks</h3>
+      <div class="rk"><span>Leader</span><span class="tr"><i data-w="5.5" style="background:#fff"></i></span><b>1</b></div>
+      <div class="rk"><span>Bravo</span><span class="tr"><i data-w="100" style="background:linear-gradient(90deg,#1f3fd1,#2d50ea)"></i></span><b>18</b></div>
+      <div class="rk"><span>Alpha</span><span class="tr"><i data-w="50" style="background:linear-gradient(90deg,#6d35d8,#8b45f5)"></i></span><b>9</b></div>
+      <div class="rk"><span>Recruit</span><span class="tr"><i data-w="11" style="background:#4b4b66"></i></span><b>2</b></div>
+    </div>
+    <div class="box"><h3>Milestones</h3>
+      <ol class="tl">
+        <li><time>2025 <span class="smp" style="position:static;margin-left:6px">SAMPLE</span></time>Midnight Sri Lanka community started</li>
+        <li><time>2026</time>First Nightforce ambassadors from Sri Lanka</li>
+        <li><time>Nov 2026</time>midnightsrilanka.xyz launched: Midnight guide in Sinhala</li>
+        <li><time>Nov 2026</time>Sinhala blog and Nightforce Awards</li>
+        <li class="now"><time>Now</time>Community quiz with points and rewards</li>
+      </ol>
+    </div>
+  </div>
+</div></section>
+<script>
+(function(){var s=document.getElementById("community");if(!s)return;var done=false;
+function run(){if(done)return;done=true;
+ s.querySelectorAll(".cnn").forEach(function(e){var to=+e.dataset.to,p=e.dataset.plus,t0=null,d=1400;
+  function f(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/d),v=Math.round(to*(1-Math.pow(1-k,3)));e.innerHTML=v.toLocaleString()+(k===1&&p?"<sup>+</sup>":"");if(k<1)requestAnimationFrame(f)}
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){e.innerHTML=to.toLocaleString()+(p?"<sup>+</sup>":"")}else requestAnimationFrame(f)});
+ s.querySelectorAll(".rk i").forEach(function(i){i.style.width=i.dataset.w+"%"})}
+if("IntersectionObserver"in window){var o=new IntersectionObserver(function(es){if(es.some(function(x){return x.isIntersecting})){run();o.disconnect()}},{threshold:.25});o.observe(s)}else run()})();
+</script>
+
 <section class="block" id="about"><div class="wrap">
   <span class="label">01 • Overview, rational privacy &amp; Midnight City</span>
   <h2 class="h2">Midnight යනු කුමක්ද? Web3 වලට ඇත්තටම Privacy ඕනද?</h2>
