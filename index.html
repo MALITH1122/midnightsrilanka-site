@@ -297,8 +297,8 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
 #community .vplay{position:relative;flex:none;width:min(310px,100%);margin:0 auto;aspect-ratio:9/16;border-radius:14px;overflow:hidden;border:1px solid #3a4aa0;background:#000}
 #community .vplay video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
 #community .vbig{position:absolute;inset:0;border:0;background:transparent;cursor:pointer;display:block;padding:0}#community .vbig span{position:absolute;left:50%;top:32.3%;transform:translate(-50%,-50%)}#community .vbig:hover span{transform:translate(-50%,-50%) scale(1.08)}
-#community .vbig span{display:grid;place-items:center;width:68px;height:68px;border-radius:50%;background:#1f3fd1;color:#fff;font-size:1.3rem;box-shadow:0 0 0 8px rgba(45,80,234,.3);transition:transform .2s}
-#community .vbig:hover span{background:#2d50ea}
+#community .vbig span{display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:#000;border:7px solid #fff;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.25),0 0 28px rgba(139,155,255,.45);transition:transform .2s,box-shadow .2s}#community .vbig span svg{width:22px;height:22px;margin-left:4px}
+#community .vbig:hover span{box-shadow:0 0 0 1px rgba(255,255,255,.4),0 0 40px rgba(139,155,255,.7)}
 #community .vbig[hidden]{display:none}
 #community .vwrap .big{white-space:nowrap;font-size:clamp(2rem,3.2vw,2.9rem);font-weight:500;letter-spacing:-.02em;line-height:1;display:block}#community .vwrap .big i{font-style:normal;color:#8b9bff}
 #community .vwrap .cap{display:block;color:#bbb;margin-top:12px}#community .vwrap .hint{display:block;color:#8b9bff;font-size:.85rem;margin-top:18px}
@@ -316,7 +316,7 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
   <div class="cn2">
     <div class="box jv2"><h3>Our journey</h3>
       <div class="vwrap">
-        <div class="vplay"><video id="vVid" playsinline preload="none" poster="/assets/video/sl-journey.jpg"><source src="/assets/video/sl-journey.mp4" type="video/mp4"></video><button type="button" class="vbig" id="vBig" aria-label="Play our journey video"><span>&#9654;</span></button></div>
+        <div class="vplay"><video id="vVid" playsinline preload="none" poster="/assets/video/sl-journey.jpg"><source src="/assets/video/sl-journey.mp4" type="video/mp4"></video><button type="button" class="vbig" id="vBig" aria-label="Play our journey video"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5v17l14-8.5z" fill="#fff"/></svg></span></button></div>
       </div>
     </div>
     <div class="box"><h3>Milestones</h3>
@@ -328,7 +328,7 @@ ul.places li a,.card p a{color:#fff;text-decoration:underline}
         <li><time>Sep 2026</time>150 members · rewards for our first online event winners</li>
         <li><time>Oct 2026</time>10 Alpha Nightforce ambassadors · 175 members</li>
         <li><time>Nov 2026</time>Supported the Cardano &amp; Midnight UniHack hackathon in Sri Lanka · 200 members</li>
-        <li><time>Nov 2026</time>Official Midnight Sri Lanka website and Sinhala blog</li>
+        <li><time>Nov 2026</time>Official Midnight Sri Lanka website and Sinhala blog · 18 Bravo · 9 Alpha</li>
         <li class="next"><time>Dec 2026 · Upcoming</time>New quiz and community tasks event</li>
       </ol>
     </div>
