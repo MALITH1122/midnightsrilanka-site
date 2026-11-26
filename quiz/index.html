@@ -48,12 +48,25 @@
 .authcard{max-width:440px;margin:8vh auto 0;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:40px 30px 28px;text-align:center}
 .logo{width:84px;height:84px;margin:0 auto 22px;display:grid;place-items:center;color:#fff}
 .logo svg{width:84px;height:84px}
-.authcard h1{font-size:1.9rem;font-weight:400;letter-spacing:-.02em;margin:0 0 24px}
+.authcard h1{font-size:1.9rem;font-weight:400;letter-spacing:-.02em;margin:0 0 24px}.authcard{border-radius:16px}
 .sbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 18px;margin-top:10px;border-radius:4px;border:1px solid var(--line2);background:transparent;color:#fff;font:inherit;font-weight:400;cursor:pointer}
 .sbtn svg{width:20px;height:20px;flex:none}
 .sbtn:hover{border-color:#fff}
 .sbtn.primary{background:#fff;color:#000;border-color:#fff}
 .gsi{margin-top:10px;display:flex;justify-content:center;min-height:44px}.gsi>div{width:100%}
+.asub{color:#9a9aa8;margin:-14px 0 24px;line-height:1.5}.asub b{color:#fff;font-weight:500}
+.authcard .sbtn,.apr,.ain{border-radius:10px;min-height:50px}
+.aor{display:flex;align-items:center;gap:12px;color:#777;font-size:.85rem;margin:20px 0 14px}.aor:before,.aor:after{content:"";flex:1;height:1px;background:var(--line2)}
+.ain{display:block;width:100%;padding:0 16px;border:1px solid var(--line2);background:#0a0a0a;color:#fff;font:inherit;font-size:1rem;text-align:left}
+.ain:focus,.od:focus{outline:0;border-color:#4d6bff;box-shadow:0 0 0 3px rgba(77,107,255,.25)}
+.apr{display:block;width:100%;margin-top:10px;border:0;background:#1f3fd1;color:#fff;font:inherit;font-size:1rem;cursor:pointer;transition:background .2s}.apr:hover{background:#2d50ea}.apr:disabled{opacity:.6;cursor:default}
+.arow{display:flex;gap:10px;margin-top:10px}.arow .sbtn{margin-top:0}
+.amail{width:64px;height:64px;border-radius:50%;background:#0b1633;border:1px solid #2d50ea;display:grid;place-items:center;margin:0 auto 20px}.amail svg{width:28px;height:28px}
+.otp6{display:flex;gap:8px;justify-content:center;margin:4px 0 8px}
+.od{width:52px;height:60px;border-radius:10px;border:1px solid var(--line2);background:#0a0a0a;color:#fff;font:inherit;font-size:1.6rem;font-weight:500;text-align:center;padding:0;caret-color:#8b9bff}
+.alnk{display:flex;justify-content:space-between;gap:10px;margin-top:14px}.alnk button{background:none;border:0;padding:0;font:inherit;font-size:.9rem;cursor:pointer;color:#8b9bff}.alnk button:disabled{color:#777;cursor:default}
+.atip{color:#777;font-size:.85rem;margin:16px 0 0}
+@media (max-width:420px){.otp6{gap:6px}.od{width:42px;height:54px;font-size:1.4rem}}
 .legal{font-size:.85rem;color:var(--mute);margin:22px 0 0}
 .nm{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;text-align:left}
 .nm input{flex:1;min-width:160px;padding:12px 16px;border-radius:4px;border:1px solid var(--line2);background:#0a0a0a;color:#fff;font:inherit}
@@ -243,14 +256,24 @@ main{padding-bottom:20px}
 <section id="auth" class="hide wrap">
   <div class="authcard glowbox">
     <div class="logo"><svg viewBox="0 0 789.37 789.37" fill="currentColor" role="img" aria-label="Midnight"><path d="m394.69,0C176.71,0,0,176.71,0,394.69s176.71,394.69,394.69,394.69,394.69-176.71,394.69-394.69S612.67,0,394.69,0Zm0,716.6c-177.5,0-321.91-144.41-321.91-321.91S217.18,72.78,394.69,72.78s321.91,144.41,321.91,321.91-144.41,321.91-321.91,321.91Z"/><rect x="357.64" y="357.64" width="74.09" height="74.09"/><rect x="357.64" y="240.66" width="74.09" height="74.09"/><rect x="357.64" y="123.69" width="74.09" height="74.09"/></svg></div>
-    <h1>Sign in to start playing</h1>
+    <div id="step1">
+    <h1>Sign in to play</h1>
+    <p class="asub">Learn Midnight, earn points, win rewards</p>
     <div class="gsi hide" id="gsi"></div>
     <button class="sbtn primary" id="b-google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Continue with Google</button>
-    <button class="sbtn" id="b-emailopen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Continue with Email</button>
-    <div class="nm hide" id="emailrow"><input id="email" type="email" placeholder="you@example.com" aria-label="Email address"><button class="btn" id="b-mail">Send code</button></div>
-    <div class="nm hide" id="coderow"><input id="otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="10" placeholder="Enter code" aria-label="Code from email" style="letter-spacing:.3em;font-size:1.15rem;text-align:center"><button class="btn" id="b-otp">Verify</button></div>
-    <button class="sbtn" id="b-discord"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Continue with Discord</button>
-    <button class="sbtn" id="b-x"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Continue with X</button>
+    <div class="aor">or use email</div>
+    <form id="mailform" autocomplete="on" onsubmit="return false"><input class="ain" id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@gmail.com" aria-label="Email address"><button type="submit" class="apr" id="b-mail">Send me a code</button></form>
+    <div class="arow"><button class="sbtn" id="b-discord"><svg viewBox="0 0 24 24" fill="#5865F2" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.3 18.3 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9 0 13.5.3 18a19.9 19.9 0 0 0 6 3l1.3-2a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2a19.8 19.8 0 0 0 6-3c.4-5.2-.7-9.7-3.8-13.6zM8.5 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm7 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>Discord</button><button class="sbtn" id="b-x"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</button></div>
+    </div>
+    <div id="step2" class="hide">
+    <div class="amail"><svg viewBox="0 0 24 24" fill="none" stroke="#8b9bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+    <h1>Check your email</h1>
+    <p class="asub">We sent a 6-digit code to<br><b id="sentTo"></b></p>
+    <div class="otp6" id="otp6" role="group" aria-label="6-digit code"><input class="od" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1"><input class="od" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2"><input class="od" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3"><input class="od" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4"><input class="od" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 5"><input class="od" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 6"></div>
+    <button type="button" class="apr" id="b-otp">Verify &amp; sign in</button>
+    <div class="alnk"><button type="button" id="b-back">&larr; Use a different email</button><button type="button" id="b-resend" disabled>Resend in 60s</button></div>
+    <p class="atip">Can&#39;t find it? Check Spam or Promotions.</p>
+    </div>
     <p class="mute" id="amsg" aria-live="polite" style="margin:12px 0 0;min-height:1.4em"></p>
     <p class="legal">By continuing, you agree to our <a href="/privacy.html">privacy policy</a>. One account gets one attempt per topic.</p>
   </div>
@@ -458,7 +481,6 @@ function oauth(p){
   say("amsg","Opening "+p+"\u2026");
   sb.auth.signInWithOAuth({provider:p,options:{redirectTo:location.origin+"/quiz/"}}).then(function(r){if(r.error)say("amsg","Could not start sign-in: "+r.error.message)})
 }
-$("b-emailopen").onclick=function(){$("emailrow").classList.toggle("hide");$("email").focus()};
 $("b-discord").onclick=function(){oauth("discord")};
 $("b-x").onclick=function(){oauth("x")};
 $("b-google").onclick=function(){oauth("google")};
@@ -481,27 +503,40 @@ async function initGsi(){
     $("gsi").classList.remove("hide");$("b-google").classList.add("hide");
   }catch(e){GSI_DONE=false}
 }
-$("b-mail").onclick=async function(){
-  var em=$("email").value.trim();
-  if(!/^\S+@\S+\.\S+$/.test(em)){say("amsg","Enter a valid email address.");return}
-  say("amsg","Sending\u2026");this.disabled=true;var me=this;
+var MAIL="",RT=null;
+function ods(){return Array.prototype.slice.call(document.querySelectorAll("#otp6 .od"))}
+function codeVal(){return ods().map(function(i){return i.value}).join("")}
+function setStep(n){$("step1").classList.toggle("hide",n!==1);$("step2").classList.toggle("hide",n!==2);var l=document.querySelector("#auth .logo");if(l)l.classList.toggle("hide",n===2)}
+function resendTimer(){var b=$("b-resend"),t=60;clearInterval(RT);b.disabled=true;b.textContent="Resend in 60s";
+  RT=setInterval(function(){t--;if(t<=0){clearInterval(RT);b.disabled=false;b.textContent="Resend code"}else b.textContent="Resend in "+t+"s"},1000)}
+async function sendCode(em,btn){
+  say("amsg","Sending…");if(btn)btn.disabled=true;
   var r=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+"/quiz/"}});
-  if(r.error){me.disabled=false;say("amsg",/rate|seconds/i.test(r.error.message)?"Please wait a minute, then try again.":"Could not send the code: "+r.error.message);return}
-  MAIL=em;$("coderow").classList.remove("hide");$("otp").value="";try{$("otp").focus()}catch(e){}
-  say("amsg","We emailed a code to "+em+". Enter it above (you can also tap the link in the email).");
-  me.textContent="Resend";setTimeout(function(){me.disabled=false},60000)
-};
-var MAIL="";
-async function verifyCode(){var c=$("otp").value.replace(/\D/g,"");
-  if(c.length<6){say("amsg","Enter the code from your email.");return}
-  $("b-otp").disabled=true;say("amsg","Checking\u2026");
+  if(btn)btn.disabled=false;
+  if(r.error){say("amsg",/rate|seconds/i.test(r.error.message)?"Please wait a minute, then try again.":"Could not send the code: "+r.error.message);return false}
+  MAIL=em;$("sentTo").textContent=em;ods().forEach(function(i){i.value=""});setStep(2);say("amsg","");resendTimer();
+  setTimeout(function(){try{ods()[0].focus()}catch(e){}},50);return true}
+$("mailform").onsubmit=function(){var em=$("email").value.trim();
+  if(!/^\S+@\S+\.\S+$/.test(em)){say("amsg","Enter a valid email address.");return false}
+  sendCode(em,$("b-mail"));return false};
+$("b-resend").onclick=function(){if(MAIL)sendCode(MAIL,null)};
+$("b-back").onclick=function(){clearInterval(RT);setStep(1);say("amsg","");try{$("email").focus()}catch(e){}};
+function fill(str,start){var b=ods(),d=String(str).replace(/\D/g,"");for(var k=0;k<d.length&&start+k<b.length;k++)b[start+k].value=d[k];
+  var nx=Math.min(start+d.length,b.length-1);b[nx].focus();if(codeVal().length===b.length)verifyCode()}
+ods().forEach(function(inp,i){
+  inp.addEventListener("input",function(){var v=inp.value.replace(/\D/g,"");if(v.length>1){inp.value="";fill(v,i);return}inp.value=v;if(v&&i<5)ods()[i+1].focus();if(codeVal().length===6)verifyCode()});
+  inp.addEventListener("keydown",function(e){if(e.key==="Backspace"&&!inp.value&&i>0){ods()[i-1].focus();ods()[i-1].value="";e.preventDefault()}else if(e.key==="ArrowLeft"&&i>0)ods()[i-1].focus();else if(e.key==="ArrowRight"&&i<5)ods()[i+1].focus();else if(e.key==="Enter")verifyCode()});
+  inp.addEventListener("paste",function(e){var t=(e.clipboardData||window.clipboardData).getData("text");if(t){e.preventDefault();fill(t,i)}});
+  inp.addEventListener("focus",function(){inp.select()})});
+var VBUSY=false;
+async function verifyCode(){if(VBUSY)return;var c=codeVal();
+  if(c.length<6){say("amsg","Enter all 6 digits from your email.");return}
+  VBUSY=true;$("b-otp").disabled=true;say("amsg","Checking…");
   var r=await sb.auth.verifyOtp({email:MAIL,token:c,type:"email"});
-  $("b-otp").disabled=false;
-  if(r.error){say("amsg",/expired|invalid/i.test(r.error.message)?"That code is wrong or expired. Check the latest email, or tap Resend.":"Could not verify: "+r.error.message);return}
-  say("amsg","Signed in \u2713")}
+  VBUSY=false;$("b-otp").disabled=false;
+  if(r.error){say("amsg",/expired|invalid/i.test(r.error.message)?"That code is wrong or expired. Check the latest email, or tap Resend.":"Could not verify: "+r.error.message);ods().forEach(function(i){i.value=""});ods()[0].focus();return}
+  say("amsg","Signed in ✓");clearInterval(RT);setTimeout(function(){setStep(1)},800)}
 $("b-otp").onclick=verifyCode;
-$("otp").addEventListener("keydown",function(e){if(e.key==="Enter")verifyCode()});
-$("otp").addEventListener("input",function(){var v=this.value.replace(/\D/g,"");if(v!==this.value)this.value=v});
 $("signout").onclick=$("signout2").onclick=async function(){await sb.auth.signOut()};
 function avatarUrl(){var m=(USER&&USER.user_metadata)||{};var u=m.avatar_url||m.picture||"";return /^https:\/\//.test(u)?u:""}
 function avatarEl(cls){var u=avatarUrl(),a;
